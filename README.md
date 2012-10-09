@@ -12,15 +12,16 @@ and got tired of constantly using:
     $BROWSER tmp.html
     rm tmp.html
 
-So instead of making a shell alias like a sane person, I wrote an application
-using Lua and GTK. It converts Markdown to HTML (using Lunamark) and loads
-it in a GtkWebView (using LGI).
+So instead of using an alias or a Makefile like a sane person, I wrote a
+small application in Lua and GTK. It converts Markdown to HTML (using
+Lunamark) and loads it in a WebKitGTK view (using LGI).
 
 Installation
 ------------
 
     luarocks install lunamark
     luarocks install lgi
+
     git clone git://github.com/craigbarnes/mdview.git
     cd mdview
     sudo make install
