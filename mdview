@@ -1,0 +1,73 @@
+#!/usr/bin/lua
+
+-- Fail early if no arguments were given
+if not arg[1] then
+    local basename = arg[0]:match("^.*/(.*)")
+    io.stderr:write("No file was specified\nUsage: " .. basename .. " FILE\n")
+    os.exit(1)
+end
+
+-- Disable stack traces, keep error messages small
+debug.traceback = nil
+
+-- Try to read file before loading GTK
+local file = assert(io.open(arg[1], "r"))
+local text = file:read("*a")
+file:close()
+
+local lunamark = require "lunamark"
+local lgi = require "lgi"
+local markdown = lunamark.reader.markdown.new(lunamark.writer.html5.new())
+local Gtk, Gio, Gdk, WebKit = lgi.Gtk, lgi.Gio, lgi.Gdk, lgi.WebKit
+local app = Gtk.Application.new("org.mdview", Gio.ApplicationFlags.HANDLES_OPEN)
+local webview = WebKit.WebView.new()
+
+local html = ([[
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Markdown Preview</title>
+    <style>
+        a {
+            color: #0099ff;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #ff6600;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    %s
+</body>
+</html>
+]]):format(markdown(text))
+
+function loadpage()
+    webview:load_html_string(html, os.getenv("PWD")) -- load_html() in future
+end
+
+local window = Gtk.Window {
+    type = Gtk.WindowType.TOPLEVEL,
+    title = 'Markdown Preview',
+    application = app,
+    hide_titlebar_when_maximized = true,
+    default_width = 640,
+    default_height = 480,
+    Gtk.ScrolledWindow {webview, expand = true},
+    on_key_press_event = function(widget, event)
+        if Gdk.keyval_name(event.keyval) == "BackSpace" then
+            loadpage()
+            return true
+        end
+    end
+}
+
+function app:on_activate()
+    loadpage()
+end
+
+window:show_all()
+return app:run{...}
