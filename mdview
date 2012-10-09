@@ -2,8 +2,7 @@
 
 -- Fail early if no arguments were given
 if not arg[1] then
-    local basename = arg[0]:match("^.*/(.*)")
-    io.stderr:write("No file was specified\nUsage: " .. basename .. " FILE\n")
+    io.stderr:write "No file was specified\nUsage: mdview FILE\n"
     os.exit(1)
 end
 
