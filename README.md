@@ -30,6 +30,12 @@ Usage
 
     mdview FILE.md
 
+Todo
+----
+
+* Refresh on change, for "real-time" previewing
+* Better stylesheet
+
 License
 -------
 
