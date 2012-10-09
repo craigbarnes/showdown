@@ -14,7 +14,10 @@ and got tired of constantly using:
 
 So instead of using an alias or a Makefile like a sane person, I wrote a
 small application in Lua and GTK. It converts Markdown to HTML (using
-Lunamark) and loads it in a WebKitGTK view (using LGI).
+[Lunamark]) and loads it in a WebKitGTK view (using [LGI]).
+
+[Lunamark]: http://jgm.github.com/lunamark/
+[LGI]: https://github.com/pavouk/lgi
 
 Installation
 ------------
