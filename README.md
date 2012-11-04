@@ -1,21 +1,26 @@
 mdview
 ======
-Simple Markdown viewer
 
-Rationale
----------
-
-I wanted a way of quickly viewing Markdown files from the command-line
-and got tired of constantly using:
+mdview is a simple [Markdown] previewer. It renders Markdown as HTML (using
+[Lunamark]) and loads it in a [WebKitGTK] view (using [LGI]), so instead of
+doing this:
 
     markdown somefile.md > tmp.html
     $BROWSER tmp.html
     rm tmp.html
 
-So instead of using an alias or a Makefile like a sane person, I wrote a
-small application in Lua and GTK. It converts Markdown to HTML (using
-[Lunamark]) and loads it in a WebKitGTK view (using [LGI]).
+you can use:
 
+    mdview somefile.md
+
+The interface is very minimal, since it's only intended purpose is to
+preview Markdown files from the command line as quickly as possible.
+
+If you follow an external link, you can return to the original file by
+pressing Backspace.
+
+[Markdown]: http://daringfireball.net/projects/markdown/
+[WebKitGTK]: http://webkitgtk.org/
 [Lunamark]: http://jgm.github.com/lunamark/
 [LGI]: https://github.com/pavouk/lgi
 
@@ -29,11 +34,6 @@ Installation
     cd mdview
     sudo make install
 
-Usage
------
-
-    mdview FILE.md
-
 Todo
 ----
 
@@ -43,4 +43,4 @@ Todo
 License
 -------
 
-ISC
+GNU GPL v3
