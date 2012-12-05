@@ -76,8 +76,8 @@ local window = Gtk.Window {
     title = filename,
     application = app,
     hide_titlebar_when_maximized = true,
-    default_width = 640,
-    default_height = 480,
+    default_width = 580,
+    default_height = 500,
     Gtk.ScrolledWindow {webview, expand = true},
     on_key_press_event = function(widget, event)
         if Gdk.keyval_name(event.keyval) == "BackSpace" then
