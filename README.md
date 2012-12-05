@@ -19,16 +19,16 @@ preview Markdown files from the command line as quickly as possible.
 If you follow an external link, you can return to the original file by
 pressing Backspace.
 
-[Markdown]: http://daringfireball.net/projects/markdown/
-[WebKitGTK]: http://webkitgtk.org/
-[Lunamark]: http://jgm.github.com/lunamark/
-[LGI]: https://github.com/pavouk/lgi
-
 Installation
 ------------
 
-    luarocks install lunamark
-    luarocks install lgi
+The following dependencies should be installed first:
+
+* [Lua] 5.1/5.2 or [LuaJIT] 2
+* [Lunamark]
+* [LGI]
+
+You can then clone the repository and install with:
 
     git clone git://github.com/craigbarnes/mdview.git
     cd mdview
@@ -43,4 +43,12 @@ Todo
 License
 -------
 
-GNU GPL v3
+[GNU GPL v3](http://www.gnu.org/licenses/gpl-3.0.html)
+
+
+[Markdown]: http://daringfireball.net/projects/markdown/
+[WebKitGTK]: http://webkitgtk.org/
+[Lunamark]: http://jgm.github.com/lunamark/
+[LGI]: https://github.com/pavouk/lgi
+[Lua]: http://lua.org/
+[LuaJIT]: http://luajit.org/
