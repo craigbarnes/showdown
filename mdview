@@ -21,7 +21,7 @@ local markdown = lunamark.reader.markdown.new(lunamark.writer.html5.new())
 local Gtk, Gio, Gdk, WebKit = lgi.Gtk, lgi.Gio, lgi.Gdk, lgi.WebKit
 local app = Gtk.Application.new("org.mdview", Gio.ApplicationFlags.HANDLES_OPEN)
 local webview = WebKit.WebView.new()
-local mainuri, urichanged
+local urichanged = false
 
 local html = ([[
 <!doctype html>
@@ -30,13 +30,38 @@ local html = ([[
     <meta charset="utf-8">
     <title>Markdown Preview</title>
     <style>
+        body {
+            margin: 15px;
+            font: 14px/1.6 Helvetica, arial, freesans, clean, sans-serif;
+            color: #333;
+        }
         a {
-            color: #0099ff;
+            color: #4183C4;
             text-decoration: none;
         }
         a:hover {
             color: #ff6600;
             text-decoration: none;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin: 20px 0 10px;
+            padding: 0;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 24px;
+            line-height: 1.6;
+            border-bottom: 1px solid #CCC;
+        }
+        pre, code, tt {
+            font: normal 12px/19px Consolas, Courier, monospace;
+        }
+        pre {
+            background-color: #F8F8F8;
+            border: 1px solid #CCC;
+            overflow: auto;
+            padding: 6px 10px;
+            border-radius: 3px;
         }
     </style>
 </head>
@@ -51,8 +76,8 @@ local window = Gtk.Window {
     title = filename,
     application = app,
     hide_titlebar_when_maximized = true,
-    default_width = 640,
-    default_height = 480,
+    default_width = 580,
+    default_height = 500,
     Gtk.ScrolledWindow {webview, expand = true},
     on_key_press_event = function(widget, event)
         if Gdk.keyval_name(event.keyval) == "BackSpace" then
@@ -69,8 +94,7 @@ loadpage = function()
 end
 
 webview.on_notify["load-status"] = function(self, pspec)
-    if not mainuri then mainuri = self.uri end
-    if not urichanged and self.uri and self.uri ~= mainuri then
+    if not urichanged and self.uri and self.uri ~= os.getenv("PWD") then
         urichanged = true
         window.title = "Hit Backspace to return to " .. filename
     end
