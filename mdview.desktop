@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=mdview
+GenericName=Markdown Viewer
+Comment=View Markdown files
+Exec=mdview %U
+Terminal=false
+Type=Application
+StartupNotify=true
+Icon=accessories-text-editor
+# This file exists to allow mdview to used as the default Markdown app.
+# It can't be launched without a file argument and so is hidden from menus.
+MimeType=text/x-markdown;
+NoDisplay=true
