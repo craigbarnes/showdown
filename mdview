@@ -70,7 +70,7 @@ local html = ([[
 </html>
 ]]):format(markdown(text))
 
-function init()
+app.on_activate = function()
     local webview = WebKit.WebView.new()
 
     local window = Gtk.Window {
@@ -104,5 +104,4 @@ function init()
     window:show_all()
 end
 
-app.on_activate = init
-return app:run{...}
+return app:run()
