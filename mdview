@@ -1,17 +1,18 @@
 #!/usr/bin/lua
 
--- Fail early if no arguments were given
 local filename = select(1, ...)
+
+-- Disable stack traces, keep error messages small
+debug.traceback = nil
+
+-- Fail early if no filename was given
 if not filename then
     io.stderr:write "No file was specified\nUsage: mdview FILE\n"
     os.exit(1)
 end
 
--- Disable stack traces, keep error messages small
-debug.traceback = nil
-
 -- Try to read file before loading GTK
-local file = assert(io.open(arg[1], "r"))
+local file = assert(io.open(filename, "r"))
 local text = file:read("*a")
 file:close()
 
@@ -80,7 +81,10 @@ app.on_activate = function()
         hide_titlebar_when_maximized = true,
         default_width = 580,
         default_height = 500,
-        Gtk.ScrolledWindow {webview, expand = true},
+        Gtk.ScrolledWindow {
+            expand = true,
+            webview
+        },
         on_show = function()
             webview:load_html_string(html, os.getenv("PWD"))
         end,
