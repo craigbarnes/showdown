@@ -20,7 +20,7 @@ local lunamark = require "lunamark"
 local lgi = require "lgi"
 local markdown = lunamark.reader.markdown.new(lunamark.writer.html5.new())
 local Gtk, Gio, Gdk, WebKit = lgi.Gtk, lgi.Gio, lgi.Gdk, lgi.WebKit
-local app = Gtk.Application.new("org.mdview", Gio.ApplicationFlags.HANDLES_OPEN)
+local app = Gtk.Application.new("org.mdview", Gio.ApplicationFlags.FLAGS_NONE)
 local urichanged = false
 
 local html = ([[
