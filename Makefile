@@ -15,7 +15,7 @@ uninstall:
 	rm -f $(DESTDIR)$(APPDIR)/mdview.desktop
 
 home-install:
-	@$(MAKE) install PREFIX=$(HOME)/.local
+	@$(MAKE) install updatedb PREFIX=$(HOME)/.local
 
 # This should be done post-install/post-uninstall when packaging
 # or immediately after a manual installation
