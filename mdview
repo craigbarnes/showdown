@@ -19,9 +19,8 @@ file:close()
 local lunamark = require "lunamark"
 local lgi = require "lgi"
 local markdown = lunamark.reader.markdown.new(lunamark.writer.html5.new())
-local Gtk, Gdk, WebKit = lgi.Gtk, lgi.Gdk, lgi.WebKit
+local Gtk, Gdk, WebKit2 = lgi.Gtk, lgi.Gdk, lgi.WebKit2
 local app = Gtk.Application.new("org.mdview", 0)
-local urichanged = false
 
 local html = ([[
 <!doctype html>
@@ -72,7 +71,8 @@ local html = ([[
 ]]):format(markdown(text))
 
 app.on_activate = function()
-    local webview = WebKit.WebView.new()
+    local pwd = os.getenv("PWD")
+    local webview = WebKit2.WebView.new()
 
     local window = Gtk.Window {
         type = Gtk.WindowType.TOPLEVEL,
@@ -81,16 +81,13 @@ app.on_activate = function()
         hide_titlebar_when_maximized = true,
         default_width = 580,
         default_height = 500,
-        Gtk.ScrolledWindow {
-            expand = true,
-            webview
-        },
+        webview,
         on_show = function()
-            webview:load_html_string(html, os.getenv("PWD"))
+            webview:load_html(html, pwd)
         end,
         on_key_press_event = function(widget, event)
             if Gdk.keyval_name(event.keyval) == "BackSpace" then
-                webview:load_html_string(html, os.getenv("PWD"))
+                webview:load_html(html, pwd)
                 widget.title = filename
                 urichanged = false
                 return true
@@ -98,9 +95,8 @@ app.on_activate = function()
         end
     }
 
-    webview.on_notify["load-status"] = function(self, pspec)
-        if not urichanged and self.uri and self.uri ~= os.getenv("PWD") then
-            urichanged = true
+    webview.on_load_changed = function(self, event)
+        if event == "STARTED" and self.uri ~= pwd then
             window.title = "Hit Backspace to return to " .. filename
         end
     end
