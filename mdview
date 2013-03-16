@@ -72,9 +72,17 @@ local html = ([[
 
 app.on_activate = function()
     local pwd = os.getenv("PWD")
-    local webview = WebKit2.WebView.new()
+    local webview, window
 
-    local window = Gtk.Window {
+    webview = WebKit2.WebView {
+        on_load_changed = function(self, event)
+            if event == "STARTED" and self.uri ~= pwd then
+                window.title = "Hit Backspace to return to " .. filename
+            end
+        end
+    }
+
+    window = Gtk.Window {
         type = Gtk.WindowType.TOPLEVEL,
         title = filename,
         application = app,
@@ -94,12 +102,6 @@ app.on_activate = function()
             end
         end
     }
-
-    webview.on_load_changed = function(self, event)
-        if event == "STARTED" and self.uri ~= pwd then
-            window.title = "Hit Backspace to return to " .. filename
-        end
-    end
 
     window:show_all()
 end
