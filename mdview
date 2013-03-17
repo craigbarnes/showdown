@@ -19,8 +19,9 @@ file:close()
 local lunamark = require "lunamark"
 local lgi = require "lgi"
 local markdown = lunamark.reader.markdown.new(lunamark.writer.html5.new())
-local Gtk, Gdk, WebKit2 = lgi.Gtk, lgi.Gdk, lgi.WebKit2
-local app = Gtk.Application.new("org.mdview", 0)
+local Gtk, Gio, Gdk, WebKit2 = lgi.Gtk, lgi.Gio, lgi.Gdk, lgi.WebKit2
+local app = Gtk.Application.new("org.mdview", Gio.ApplicationFlags.FLAGS_NONE)
+local window
 
 local html = ([[
 <!doctype html>
@@ -70,11 +71,10 @@ local html = ([[
 </html>
 ]]):format(markdown(text))
 
-app.on_activate = function()
+app.on_startup = function()
     local pwd = os.getenv("PWD")
-    local webview, window
 
-    webview = WebKit2.WebView {
+    local webview = WebKit2.WebView {
         on_load_changed = function(self, event)
             if event == "STARTED" and self.uri ~= pwd then
                 window.title = "Hit Backspace to return to " .. filename
@@ -82,7 +82,7 @@ app.on_activate = function()
         end
     }
 
-    window = Gtk.Window {
+    window = Gtk.ApplicationWindow {
         type = Gtk.WindowType.TOPLEVEL,
         application = app,
         title = filename,
@@ -104,6 +104,39 @@ app.on_activate = function()
         end
     }
 
+    local about = Gtk.AboutDialog {
+        program_name = "mdview",
+        logo_icon_name = "mdview",
+        comments = "Simple Markdown viewer",
+        version = "0.1",
+        authors = {"Craig Barnes"},
+        copyright = "Copyright 2013 Craig Barnes",
+        license_type = Gtk.License.GPL_3_0,
+        website = "https://github.com/craigbarnes/mdview"
+    }
+
+    local appmenu = Gio.Menu.new()
+    appmenu:append("About", "app.about")
+    appmenu:append("Quit", "app.quit")
+    app:set_app_menu(appmenu)
+
+    app:add_action(Gio.SimpleAction {
+        name = "about",
+        on_activate = function()
+            about:run()
+            about:hide()
+        end
+    })
+
+    app:add_action(Gio.SimpleAction {
+        name = "quit",
+        on_activate = function()
+            app:quit()
+        end
+    })
+end
+
+app.on_activate = function()
     window:show_all()
 end
 
