@@ -1,14 +1,21 @@
-VERSION = 0.1
-PREFIX  = /usr/local
-BINDIR  = $(PREFIX)/bin
-DATADIR = $(PREFIX)/share
-APPDIR  = $(DATADIR)/applications
-ICONDIR = $(DATADIR)/icons/hicolor/scalable/apps
+VERSION  = 0.1
+
+PREFIX   = /usr/local
+BINDIR   = $(PREFIX)/bin
+DATADIR  = $(PREFIX)/share
+APPDIR   = $(DATADIR)/applications
+ICONDIR  = $(DATADIR)/icons/hicolor/scalable/apps
+
+SRCROCK  = mdview-$(VERSION)-1.src.rock
+ROCKSPEC = mdview-$(VERSION)-1.rockspec
 
 install:
 	install -Dpm0755 mdview $(DESTDIR)$(BINDIR)/mdview
 	install -Dpm0644 mdview.svg $(DESTDIR)$(ICONDIR)/mdview.svg
 	desktop-file-install --dir=$(DESTDIR)$(APPDIR) mdview.desktop
+
+install-home:
+	@$(MAKE) install updatedb PREFIX=$(HOME)/.local
 
 post-install:
 	update-desktop-database $(APPDIR)
@@ -18,13 +25,23 @@ uninstall:
 	rm -f $(DESTDIR)$(ICONDIR)/mdview.svg
 	rm -f $(DESTDIR)$(APPDIR)/mdview.desktop
 
-check:
-	@desktop-file-validate mdview.desktop
-	@echo 'Desktop file valid'
+rock: $(SRCROCK)
+rockspec: $(ROCKSPEC)
 
-install-home:
-	@$(MAKE) install updatedb PREFIX=$(HOME)/.local
+$(SRCROCK): $(ROCKSPEC)
+	luarocks pack $<
+
+$(ROCKSPEC): rockspec.in
+	@sed 's/@VERSION@/$(VERSION)/g; s/@RELEASE@/1/g' $< > $@
+	@echo 'Generated: $@'
+
+check: $(ROCKSPEC)
+	@desktop-file-validate mdview.desktop && echo 'Desktop file valid'
+	@luarocks lint $(ROCKSPEC) && echo 'Rockspec file valid'
+
+clean:
+	rm -f $(SRCROCK) $(ROCKSPEC)
 
 
-MAKEFLAGS += -Rr --no-print-directory
-.PHONY: install post-install uninstall check install-home
+MAKEFLAGS += --no-print-directory
+.PHONY: install install-home post-install uninstall rock rockspec check clean
