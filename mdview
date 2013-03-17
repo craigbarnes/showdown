@@ -84,8 +84,9 @@ app.on_activate = function()
 
     window = Gtk.Window {
         type = Gtk.WindowType.TOPLEVEL,
-        title = filename,
         application = app,
+        title = filename,
+        icon_name = "mdview",
         hide_titlebar_when_maximized = true,
         default_width = 580,
         default_height = 500,
