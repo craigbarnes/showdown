@@ -6,13 +6,13 @@ DATADIR  = $(PREFIX)/share
 APPDIR   = $(DATADIR)/applications
 ICONDIR  = $(DATADIR)/icons/hicolor/scalable/apps
 
-SRCROCK  = mdview-$(VERSION)-1.src.rock
-ROCKSPEC = mdview-$(VERSION)-1.rockspec
+SRCROCK  = showdown-$(VERSION)-1.src.rock
+ROCKSPEC = showdown-$(VERSION)-1.rockspec
 
 install:
-	install -Dpm0755 mdview $(DESTDIR)$(BINDIR)/mdview
-	install -Dpm0644 mdview.svg $(DESTDIR)$(ICONDIR)/mdview.svg
-	desktop-file-install --dir=$(DESTDIR)$(APPDIR) mdview.desktop
+	install -Dpm0755 showdown $(DESTDIR)$(BINDIR)/showdown
+	install -Dpm0644 showdown.svg $(DESTDIR)$(ICONDIR)/showdown.svg
+	desktop-file-install --dir=$(DESTDIR)$(APPDIR) showdown.desktop
 
 install-home:
 	@$(MAKE) install post-install PREFIX=$(HOME)/.local
@@ -21,9 +21,9 @@ post-install:
 	update-desktop-database $(APPDIR)
 
 uninstall:
-	rm -f $(DESTDIR)$(BINDIR)/mdview
-	rm -f $(DESTDIR)$(ICONDIR)/mdview.svg
-	rm -f $(DESTDIR)$(APPDIR)/mdview.desktop
+	rm -f $(DESTDIR)$(BINDIR)/showdown
+	rm -f $(DESTDIR)$(ICONDIR)/showdown.svg
+	rm -f $(DESTDIR)$(APPDIR)/showdown.desktop
 
 rock: $(SRCROCK)
 rockspec: $(ROCKSPEC)
@@ -36,7 +36,7 @@ $(ROCKSPEC): rockspec.in
 	@echo 'Generated: $@'
 
 check: $(ROCKSPEC)
-	@desktop-file-validate mdview.desktop && echo 'Desktop file valid'
+	@desktop-file-validate showdown.desktop && echo 'Desktop file valid'
 	@luarocks lint $(ROCKSPEC) && echo 'Rockspec file valid'
 
 clean:

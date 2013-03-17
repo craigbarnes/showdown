@@ -1,22 +1,22 @@
-package = 'mdview'
+package = 'showdown'
 version = '@VERSION@-@RELEASE@'
 
 description = {
     summary = 'Simple Markdown viewer',
     detailed = [[
-        mdview is a simple Markdown previewer. It renders Markdown as HTML
+        Showdown is a simple Markdown previewer. It renders Markdown as HTML
         (using Lunamark) and loads it in a WebKitGTK view (using LGI).
         The interface is very minimal, since it's only intended purpose is to
         preview Markdown files from the command line as quickly as possible.
     ]],
     license = 'GPLv3',
-    homepage = 'https://github.com/craigbarnes/mdview'
+    homepage = 'https://github.com/craigbarnes/showdown'
 }
 
 supported_platforms = {'unix'}
 
 source = {
-    url = 'git://github.com/craigbarnes/mdview.git',
+    url = 'git://github.com/craigbarnes/showdown.git',
     tag = '@VERSION@'
 }
 
@@ -30,7 +30,7 @@ build = {
     type = 'none',
     install = {
         bin = {
-            mdview = 'mdview'
+            showdown = 'showdown'
         }
     }
 }

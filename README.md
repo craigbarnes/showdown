@@ -1,7 +1,7 @@
-mdview
+Showdown
 ======
 
-mdview is a simple [Markdown] previewer. It renders Markdown as HTML (using
+Showdown is a simple [Markdown] previewer. It renders Markdown as HTML (using
 [Lunamark]) and loads it in a [WebKitGTK] view (using [LGI]), so instead of
 doing this:
 
@@ -11,7 +11,7 @@ doing this:
 
 you can use:
 
-    mdview somefile.md
+    showdown somefile.md
 
 The interface is very minimal, since it's only intended purpose is to
 preview Markdown files from the command line as quickly as possible.
@@ -30,8 +30,8 @@ The following dependencies should be installed first:
 
 You can then clone the repository and install with:
 
-    git clone git://github.com/craigbarnes/mdview.git
-    cd mdview
+    git clone git://github.com/craigbarnes/showdown.git
+    cd showdown
     sudo make install
 
 Todo

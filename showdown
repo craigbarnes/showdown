@@ -5,7 +5,7 @@ local lunamark = require "lunamark"
 
 local filename = select(1, ...)
 debug.traceback = nil -- Keep error messages short
-assert(filename, "No file was specified\nUsage: mdview FILE\n")
+assert(filename, "No file was specified\nUsage: showdown FILE\n")
 local Gio = lgi.Gio
 local file = Gio.File.new_for_path(filename)
 assert(file:query_exists(), "File doesn't exist")
@@ -15,7 +15,7 @@ local Gdk = lgi.Gdk
 local WebKit2 = lgi.WebKit2
 local markdown = lunamark.reader.markdown.new(lunamark.writer.html5.new())
 
-local app = Gtk.Application.new("org.mdview", Gio.ApplicationFlags.FLAGS_NONE)
+local app = Gtk.Application.new("org.showdown", Gio.ApplicationFlags.FLAGS_NONE)
 local window
 
 local template = [[
@@ -87,7 +87,7 @@ app.on_startup = function()
         type = Gtk.WindowType.TOPLEVEL,
         application = app,
         title = filename,
-        icon_name = "mdview",
+        icon_name = "showdown",
         hide_titlebar_when_maximized = true,
         default_width = 580,
         default_height = 500,
@@ -104,17 +104,17 @@ app.on_startup = function()
             end
         end
     }
-    window:set_wmclass("mdview", "mdview")
+    window:set_wmclass("showdown", "showdown")
 
     local about = Gtk.AboutDialog {
-        program_name = "mdview",
-        logo_icon_name = "mdview",
+        program_name = "Showdown",
+        logo_icon_name = "showdown",
         comments = "Simple Markdown viewer",
         version = "0.1",
         authors = {"Craig Barnes"},
         copyright = "Copyright 2013 Craig Barnes",
         license_type = Gtk.License.GPL_3_0,
-        website = "https://github.com/craigbarnes/mdview"
+        website = "https://github.com/craigbarnes/showdown"
     }
 
     local appmenu = Gio.Menu.new()
