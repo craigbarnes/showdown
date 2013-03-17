@@ -1,3 +1,4 @@
+VERSION = 0.1
 PREFIX  = /usr/local
 BINDIR  = $(PREFIX)/bin
 DATADIR = $(PREFIX)/share
@@ -9,23 +10,21 @@ install:
 	install -Dpm0644 mdview.svg $(DESTDIR)$(ICONDIR)/mdview.svg
 	desktop-file-install --dir=$(DESTDIR)$(APPDIR) mdview.desktop
 
+post-install:
+	update-desktop-database $(APPDIR)
+
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/mdview
 	rm -f $(DESTDIR)$(ICONDIR)/mdview.svg
 	rm -f $(DESTDIR)$(APPDIR)/mdview.desktop
 
-home-install:
-	@$(MAKE) install updatedb PREFIX=$(HOME)/.local
-
-# This should be done post-install/post-uninstall when packaging
-# or immediately after a manual installation
-updatedb:
-	update-desktop-database $(APPDIR)
-
 check:
 	@desktop-file-validate mdview.desktop
 	@echo 'Desktop file valid'
 
+install-home:
+	@$(MAKE) install updatedb PREFIX=$(HOME)/.local
+
 
 MAKEFLAGS += -Rr --no-print-directory
-.PHONY: install uninstall home-install updatedb check
+.PHONY: install post-install uninstall check install-home
