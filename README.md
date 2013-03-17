@@ -1,7 +1,7 @@
 Showdown
 ======
 
-Showdown is a simple [Markdown] previewer. It renders Markdown as HTML (using
+Showdown is a simple [Markdown] viewer. It renders Markdown as HTML (using
 [Lunamark]) and loads it in a [WebKitGTK] view (using [LGI]), so instead of
 doing this:
 
@@ -13,11 +13,8 @@ you can use:
 
     showdown somefile.md
 
-The interface is very minimal, since it's only intended purpose is to
-preview Markdown files from the command line as quickly as possible.
-
-If you follow an external link, you can return to the original file by
-pressing Backspace.
+While running, the open file is monitored, and any changes are quickly and
+automatically reloaded.
 
 Installation
 ------------
