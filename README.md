@@ -37,7 +37,6 @@ You can then clone the repository and install with:
 Todo
 ----
 
-* Refresh on change, for "real-time" previewing
 * Allow opening/browsing directories
 
 License

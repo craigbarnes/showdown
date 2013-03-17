@@ -1,29 +1,24 @@
 #!/usr/bin/env lua
 
-local filename = select(1, ...)
-
--- Disable stack traces, keep error messages small
-debug.traceback = nil
-
--- Fail early if no filename was given
-if not filename then
-    io.stderr:write "No file was specified\nUsage: mdview FILE\n"
-    os.exit(1)
-end
-
--- Try to read file before loading GTK
-local file = assert(io.open(filename, "r"))
-local text = file:read("*a")
-file:close()
-
-local lunamark = require "lunamark"
 local lgi = require "lgi"
+local lunamark = require "lunamark"
+
+local filename = select(1, ...)
+debug.traceback = nil -- Keep error messages short
+assert(filename, "No file was specified\nUsage: mdview FILE\n")
+local Gio = lgi.Gio
+local file = Gio.File.new_for_path(filename)
+assert(file:query_exists(), "File doesn't exist")
+
+local Gtk = lgi.Gtk
+local Gdk = lgi.Gdk
+local WebKit2 = lgi.WebKit2
 local markdown = lunamark.reader.markdown.new(lunamark.writer.html5.new())
-local Gtk, Gio, Gdk, WebKit2 = lgi.Gtk, lgi.Gio, lgi.Gdk, lgi.WebKit2
+
 local app = Gtk.Application.new("org.mdview", Gio.ApplicationFlags.FLAGS_NONE)
 local window
 
-local html = ([[
+local template = [[
 <!doctype html>
 <html lang="en">
 <head>
@@ -69,7 +64,7 @@ local html = ([[
     %s
 </body>
 </html>
-]]):format(markdown(text))
+]]
 
 app.on_startup = function()
     local pwd = os.getenv("PWD")
@@ -82,6 +77,12 @@ app.on_startup = function()
         end
     }
 
+    local function reload()
+        local text = assert(file:load_contents())
+        local html = template:format(markdown(tostring(text)))
+        webview:load_html(html, pwd)
+    end
+
     window = Gtk.ApplicationWindow {
         type = Gtk.WindowType.TOPLEVEL,
         application = app,
@@ -92,11 +93,11 @@ app.on_startup = function()
         default_height = 500,
         webview,
         on_show = function()
-            webview:load_html(html, pwd)
+            reload()
         end,
         on_key_press_event = function(widget, event)
             if Gdk.keyval_name(event.keyval) == "BackSpace" then
-                webview:load_html(html, pwd)
+                reload()
                 widget.title = filename
                 urichanged = false
                 return true
@@ -135,6 +136,13 @@ app.on_startup = function()
             app:quit()
         end
     })
+
+    local monitor = file:monitor(lgi.Gio.FileMonitorFlags.NONE)
+    monitor.on_changed = function(self, file, ud, event)
+        if event == "CHANGED" then
+            reload()
+        end
+    end
 end
 
 app.on_activate = function()
