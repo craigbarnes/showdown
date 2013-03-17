@@ -103,6 +103,7 @@ app.on_startup = function()
             end
         end
     }
+    window:set_wmclass("mdview", "mdview")
 
     local about = Gtk.AboutDialog {
         program_name = "mdview",
