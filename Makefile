@@ -1,29 +1,32 @@
-VERSION  = 0.1
+VERSION    = 0.1
 
-PREFIX   = /usr/local
-BINDIR   = $(PREFIX)/bin
-DATADIR  = $(PREFIX)/share
-APPDIR   = $(DATADIR)/applications
-ICONDIR  = $(DATADIR)/icons/hicolor/scalable/apps
+PREFIX     = /usr/local
+BINDIR     = $(PREFIX)/bin
+DATADIR    = $(PREFIX)/share
+DESKTOPDIR = $(DATADIR)/applications
+ICONDIR    = $(DATADIR)/icons/hicolor
+APPICONDIR = $(ICONDIR)/scalable/apps
 
-SRCROCK  = showdown-$(VERSION)-1.src.rock
-ROCKSPEC = showdown-$(VERSION)-1.rockspec
+SRCROCK    = showdown-$(VERSION)-1.src.rock
+ROCKSPEC   = showdown-$(VERSION)-1.rockspec
 
 install:
 	install -Dpm0755 showdown $(DESTDIR)$(BINDIR)/showdown
-	install -Dpm0644 showdown.svg $(DESTDIR)$(ICONDIR)/showdown.svg
-	desktop-file-install --dir=$(DESTDIR)$(APPDIR) showdown.desktop
+	install -Dpm0644 showdown.svg $(DESTDIR)$(APPICONDIR)/showdown.svg
+	desktop-file-install --dir=$(DESTDIR)$(DESKTOPDIR) showdown.desktop
 
 install-home:
 	@$(MAKE) install post-install PREFIX=$(HOME)/.local
 
-post-install:
-	update-desktop-database $(APPDIR)
-
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/showdown
-	rm -f $(DESTDIR)$(ICONDIR)/showdown.svg
-	rm -f $(DESTDIR)$(APPDIR)/showdown.desktop
+	rm -f $(DESTDIR)$(APPICONDIR)/showdown.svg
+	rm -f $(DESTDIR)$(DESKTOPDIR)/showdown.desktop
+
+post-install post-uninstall:
+	update-desktop-database $(DESKTOPDIR)
+	touch --no-create $(ICONDIR)
+	gtk-update-icon-cache -t $(ICONDIR)
 
 rock: $(SRCROCK)
 rockspec: $(ROCKSPEC)
@@ -44,4 +47,5 @@ clean:
 
 
 MAKEFLAGS += --no-print-directory
-.PHONY: install install-home post-install uninstall rock rockspec check clean
+.PHONY: install install-home uninstall post-install post-uninstall \
+        rock rockspec check clean
