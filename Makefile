@@ -15,7 +15,7 @@ install:
 	desktop-file-install --dir=$(DESTDIR)$(APPDIR) mdview.desktop
 
 install-home:
-	@$(MAKE) install updatedb PREFIX=$(HOME)/.local
+	@$(MAKE) install post-install PREFIX=$(HOME)/.local
 
 post-install:
 	update-desktop-database $(APPDIR)
