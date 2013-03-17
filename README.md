@@ -39,7 +39,6 @@ Todo
 
 * Refresh on change, for "real-time" previewing
 * Allow opening/browsing directories
-* Add rockspec
 
 License
 -------
