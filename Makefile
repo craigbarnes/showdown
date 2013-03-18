@@ -32,10 +32,10 @@ rock: $(SRCROCK)
 rockspec: $(ROCKSPEC)
 
 $(SRCROCK): $(ROCKSPEC)
-	luarocks pack $<
+	luarocks pack $(ROCKSPEC)
 
 $(ROCKSPEC): rockspec.in
-	@sed 's/@VERSION@/$(VERSION)/g; s/@RELEASE@/1/g' $< > $@
+	@sed 's/@VERSION@/$(VERSION)/g; s/@RELEASE@/1/g' rockspec.in > $@
 	@echo 'Generated: $@'
 
 check: $(ROCKSPEC)
