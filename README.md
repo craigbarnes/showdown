@@ -34,6 +34,7 @@ You can then clone the repository and install with:
 Todo
 ----
 
+* Use WebKitFindController to allowing searching documents
 * Allow opening/browsing directories
 
 License
