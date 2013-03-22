@@ -13,8 +13,16 @@ you can use:
 
     showdown somefile.md
 
-While running, the open file is monitored, and any changes are quickly and
-automatically reloaded.
+Features
+--------
+
+* Minimal interface -- launches faster than most web browsers and has no
+  unrelated UI cutter.
+* Extended styling -- the HTML output is rendered into a template with a
+  GitHub-inspired stylesheet
+* Automatic refresh -- the opened file is watched for changes and refreshed
+  immediately when edited. You can have a text editor and Showdown side
+  by side and preview the output as you save.
 
 Installation
 ------------
@@ -34,6 +42,7 @@ You can then clone the repository and install with:
 Todo
 ----
 
+* Keep scroll position after reloading
 * Use WebKitFindController to allowing searching documents
 * Allow opening/browsing directories
 
