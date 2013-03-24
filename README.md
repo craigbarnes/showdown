@@ -19,7 +19,7 @@ Features
 * Minimal interface -- launches faster than most web browsers and has no
   unrelated UI cutter.
 * Extended styling -- the HTML output is rendered into a template with a
-  GitHub-inspired stylesheet
+  Markdown oriented stylesheet
 * Automatic refresh -- the opened file is watched for changes and refreshed
   immediately when edited. You can have a text editor and Showdown side
   by side and preview the output as you save.
@@ -43,8 +43,13 @@ Todo
 ----
 
 * Keep scroll position after reloading
-* Use WebKitFindController to allowing searching documents
+* Use WebKitFindController to allow searching documents
 * Allow opening/browsing directories
+* Add some way of opening files once running to allow launching without
+  command-line arguments
+* Add support for drag and drop
+* Support other to-html languages and use `g_content_type_guess()` to
+  decide how to render
 
 License
 -------
