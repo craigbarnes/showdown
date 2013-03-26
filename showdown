@@ -3,9 +3,11 @@
 local lgi = require "lgi"
 local lunamark = require "lunamark"
 
-local filename = select(1, ...)
 debug.traceback = nil -- Keep error messages short
+
+local filename = select(1, ...)
 assert(filename, "No file was specified\nUsage: showdown FILE\n")
+
 local Gio = lgi.Gio
 local file = Gio.File.new_for_path(filename)
 assert(file:query_exists(), "File doesn't exist")
@@ -111,13 +113,12 @@ app.on_startup = function()
         logo_icon_name = "showdown",
         comments = "Simple Markdown viewer",
         version = "0.1",
-        authors = {"Craig Barnes"},
         copyright = "Copyright 2013 Craig Barnes",
         license_type = Gtk.License.GPL_3_0,
         website = "https://github.com/craigbarnes/showdown"
     }
 
-    local appmenu = Gio.Menu.new()
+    local appmenu = Gio.Menu()
     appmenu:append("About", "app.about")
     appmenu:append("Quit", "app.quit")
     app:set_app_menu(appmenu)
