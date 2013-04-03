@@ -30,7 +30,7 @@ Installation
 The following dependencies should be installed first:
 
 * [Lua] 5.1/5.2 or [LuaJIT] 2
-* [lua-discount]
+* [lua-discount] (**not** the luarocks package)
 * [LGI]
 
 You can then clone the repository and install with:
