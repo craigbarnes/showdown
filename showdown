@@ -42,15 +42,14 @@ local template = [[
             text-decoration: none;
         }
         h1, h2, h3, h4, h5, h6 {
-            display: inline-block;
             margin: 20px 0 5px;
             padding: 0;
             font-weight: bold;
         }
         h2 {
             font-size: larger;
-            line-height: 1.35;
-            border-bottom: 1px solid #ccc;
+            line-height: 1.5;
+            text-decoration: underline;
         }
         pre, code, tt {
             font: normal 0.9em/1.4 Consolas, Courier, monospace;
