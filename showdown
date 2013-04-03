@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 
 local lgi = require "lgi"
-local lunamark = require "lunamark"
+local markdown = require "discount"
 
 debug.traceback = nil -- Keep error messages short
 
@@ -15,7 +15,6 @@ assert(file:query_exists(), "File doesn't exist")
 local Gtk = lgi.Gtk
 local Gdk = lgi.Gdk
 local WebKit2 = lgi.WebKit2
-local markdown = lunamark.reader.markdown.new(lunamark.writer.html5.new())
 
 local app = Gtk.Application.new("org.showdown", Gio.ApplicationFlags.FLAGS_NONE)
 local window

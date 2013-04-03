@@ -2,8 +2,8 @@ Showdown
 ======
 
 Showdown is a simple [Markdown] viewer. It renders Markdown as HTML (using
-[Lunamark]) and loads it in a [WebKitGTK] view (using [LGI]), so instead of
-doing this:
+[lua-discount]) and loads it in a [WebKitGTK] view (using [LGI]), so instead
+of doing this:
 
     markdown somefile.md > tmp.html
     $BROWSER tmp.html
@@ -30,7 +30,7 @@ Installation
 The following dependencies should be installed first:
 
 * [Lua] 5.1/5.2 or [LuaJIT] 2
-* [Lunamark]
+* [lua-discount]
 * [LGI]
 
 You can then clone the repository and install with:
@@ -59,7 +59,7 @@ License
 
 [Markdown]: http://daringfireball.net/projects/markdown/
 [WebKitGTK]: http://webkitgtk.org/
-[Lunamark]: http://jgm.github.com/lunamark/
+[lua-discount]: https://github.com/craigbarnes/lua-discount
 [LGI]: https://github.com/pavouk/lgi
 [Lua]: http://lua.org/
 [LuaJIT]: http://luajit.org/
