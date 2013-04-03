@@ -39,6 +39,24 @@ You can then clone the repository and install with:
     cd showdown
     sudo make install
 
+History
+-------
+
+### 0.2
+
+* Add a table of contents to the rendered output
+* Use a temporary file, to make internal fragment links work correctly
+* Improve template stylesheet
+* Use [lua-discount] instead of Lunamark (faster, fewer dependencies
+  more stable, supports generating table of contents)
+
+### 0.1
+
+* Converted to WebKit2 API
+* Immediately reload document when edited (using GIO file monitoring)
+* Add an application menu
+* Add an application icon
+
 Todo
 ----
 
