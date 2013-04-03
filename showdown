@@ -9,8 +9,9 @@ local filename = select(1, ...)
 assert(filename, "No file was specified\nUsage: showdown FILE\n")
 
 local Gio = lgi.Gio
-local file = Gio.File.new_for_path(filename)
-assert(file:query_exists(), "File doesn't exist")
+local infile = Gio.File.new_for_path(filename)
+assert(infile:query_exists(), "File doesn't exist")
+local outfile = assert(Gio.File.new_tmp())
 
 local Gtk = lgi.Gtk
 local Gdk = lgi.Gdk
@@ -27,8 +28,8 @@ local template = [[
     <title>Markdown Preview</title>
     <style>
         body {
-            margin: 15px;
-            font: 14px/1.6 Helvetica, arial, freesans, clean, sans-serif;
+            margin: 2em;
+            font: 0.9em/1.6 Helvetica, arial, freesans, clean, sans-serif;
             color: #333;
         }
         a {
@@ -40,29 +41,50 @@ local template = [[
             text-decoration: none;
         }
         h1, h2, h3, h4, h5, h6 {
-            margin: 20px 0 10px;
+            display: inline-block;
+            margin: 20px 0 5px;
             padding: 0;
             font-weight: bold;
         }
         h2 {
-            font-size: 24px;
-            line-height: 1.6;
-            border-bottom: 1px solid #CCC;
+            font-size: larger;
+            line-height: 1.35;
+            border-bottom: 1px solid #ccc;
         }
         pre, code, tt {
-            font: normal 12px/19px Consolas, Courier, monospace;
+            font: normal 0.9em/1.4 Consolas, Courier, monospace;
         }
         pre {
             background-color: #F8F8F8;
             border: 1px solid #CCC;
             overflow: auto;
-            padding: 6px 10px;
+            margin: 0.5em 0;
+            padding: 0.7em 1em;
             border-radius: 3px;
+        }
+        #toc {
+            display: block;
+            float: right;
+            clear: right;
+            max-width: 15em;
+            margin: 0 0 1em 2em;
+            padding: 1em;
+            border: 1px solid #ccc;
+        }
+        #toc ul {
+            margin: 0 0 0 1.2em;
+            padding: 0.1em;
+            font-size: small;
         }
     </style>
 </head>
 <body>
-    %s
+    <div id="main">
+        <div id="toc">
+            %s
+        </div>
+        %s
+    </div>
 </body>
 </html>
 ]]
@@ -79,9 +101,11 @@ app.on_startup = function()
     }
 
     local function reload()
-        local text = assert(file:load_contents())
-        local html = template:format(markdown(tostring(text)))
-        webview:load_html(html, pwd)
+        local text = assert(infile:load_contents())
+        local doc, toc = markdown(tostring(text), "toc")
+        local html = template:format(toc, doc)
+        outfile:replace_contents(html, nil, false, 0)
+        webview:load_uri("file://" .. outfile:get_path())
     end
 
     window = Gtk.ApplicationWindow {
@@ -90,8 +114,8 @@ app.on_startup = function()
         title = filename,
         icon_name = "showdown",
         hide_titlebar_when_maximized = true,
-        default_width = 580,
-        default_height = 500,
+        default_width = 640,
+        default_height = 520,
         webview,
         on_show = function()
             reload()
@@ -137,7 +161,7 @@ app.on_startup = function()
         end
     })
 
-    local monitor = file:monitor(lgi.Gio.FileMonitorFlags.NONE)
+    local monitor = infile:monitor(lgi.Gio.FileMonitorFlags.NONE)
     monitor.on_changed = function(self, file, ud, event)
         if event == "CHANGED" then
             reload()
