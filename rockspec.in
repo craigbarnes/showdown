@@ -5,7 +5,7 @@ description = {
     summary = 'Simple Markdown viewer',
     detailed = [[
         Showdown is a simple Markdown previewer. It renders Markdown as HTML
-        (using Lunamark) and loads it in a WebKitGTK view (using LGI).
+        (using ldiscount) and loads it in a WebKitGTK view (using LGI).
         The interface is very minimal, since it's only intended purpose is to
         preview Markdown files from the command line as quickly as possible.
     ]],
@@ -23,7 +23,7 @@ source = {
 dependencies = {
     'lua >= 5.1',
     'lgi',
-    'lua-discount'
+    'ldiscount'
 }
 
 build = {
