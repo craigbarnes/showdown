@@ -13,6 +13,11 @@ you can use:
 
     showdown somefile.md
 
+Screenshot
+----------
+
+![Showdown screenshot](http://cra.igbarn.es/img/showdown.png)
+
 Features
 --------
 
