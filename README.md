@@ -77,4 +77,5 @@ License
 [ldiscount]: https://github.com/craigbarnes/ldiscount
 [LGI]: https://github.com/pavouk/lgi
 [Lua]: http://lua.org/
+[GTK]: http://www.gtk.org/
 [LuaJIT]: http://luajit.org/
