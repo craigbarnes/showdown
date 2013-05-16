@@ -1,9 +1,9 @@
 Showdown
 ======
 
-Showdown is a simple [Markdown] viewer. It renders Markdown as HTML (using
-[ldiscount]) and loads it in a [WebKitGTK] view (using [LGI]), so instead
-of doing this:
+Showdown is a simple, single-purpose [Markdown] viewer written in [Lua] and
+[GTK]. It renders Markdown into HTML and presents it in a [WebKitGTK] view.
+So instead of doing this:
 
     markdown somefile.md > tmp.html
     $BROWSER tmp.html
@@ -13,21 +13,13 @@ you can use:
 
     showdown somefile.md
 
+It also comes with a Markdown-oriented stylesheet, table of contents
+generation and automatic reloading.
+
 Screenshot
 ----------
 
 ![Showdown screenshot](http://cra.igbarn.es/img/showdown.png)
-
-Features
---------
-
-* Minimal interface -- launches faster than most web browsers and has no
-  unrelated UI cutter.
-* Extended styling -- the HTML output is rendered into a template with a
-  Markdown oriented stylesheet
-* Automatic refresh -- the opened file is watched for changes and refreshed
-  immediately when edited. You can have a text editor and Showdown side
-  by side and preview the output as you save.
 
 Installation
 ------------
