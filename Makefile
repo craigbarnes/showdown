@@ -7,9 +7,6 @@ DESKTOPDIR = $(DATADIR)/applications
 ICONDIR    = $(DATADIR)/icons/hicolor
 APPICONDIR = $(ICONDIR)/scalable/apps
 
-SRCROCK    = showdown-$(VERSION)-1.src.rock
-ROCKSPEC   = showdown-$(VERSION)-1.rockspec
-
 install:
 	install -Dpm0755 showdown $(DESTDIR)$(BINDIR)/showdown
 	install -Dpm0644 showdown.svg $(DESTDIR)$(APPICONDIR)/showdown.svg
@@ -28,24 +25,8 @@ post-install post-uninstall:
 	touch --no-create $(ICONDIR)
 	gtk-update-icon-cache -t $(ICONDIR)
 
-rock: $(SRCROCK)
-rockspec: $(ROCKSPEC)
-
-$(SRCROCK): $(ROCKSPEC)
-	luarocks pack $(ROCKSPEC)
-
-$(ROCKSPEC): rockspec.in
-	@sed 's/@VERSION@/$(VERSION)/g; s/@RELEASE@/1/g' rockspec.in > $@
-	@echo 'Generated: $@'
-
-check: $(ROCKSPEC)
+check:
 	@desktop-file-validate showdown.desktop && echo 'Desktop file valid'
-	@luarocks lint $(ROCKSPEC) && echo 'Rockspec file valid'
-
-clean:
-	rm -f $(SRCROCK) $(ROCKSPEC)
 
 
-MAKEFLAGS += --no-print-directory
-.PHONY: install install-home uninstall post-install post-uninstall \
-        rock rockspec check clean
+.PHONY: install install-home uninstall post-install post-uninstall check
