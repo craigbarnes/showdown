@@ -90,14 +90,13 @@ local template = [[
 ]]
 
 app.on_startup = function()
-    local webview = WebKit2.WebView {
-        on_load_changed = function(self, event)
-            if event == "STARTED" and self.uri ~= outuri then
-                window.title = "Hit Backspace to return to " .. filename
-            end
-        end
-    }
+    local webview = WebKit2.WebView()
     webview:get_settings():set_enable_javascript(false)
+    function webview:on_load_changed(event)
+        if event == "STARTED" and self.uri ~= outuri then
+            window.title = "Hit Backspace to return to " .. filename
+        end
+    end
 
     local function reload()
         local text = assert(infile:load_contents())
@@ -115,20 +114,20 @@ app.on_startup = function()
         hide_titlebar_when_maximized = true,
         default_width = 640,
         default_height = 520,
-        webview,
-        on_show = function()
-            reload()
-        end,
-        on_key_press_event = function(widget, event)
-            if Gdk.keyval_name(event.keyval) == "BackSpace" then
-                reload()
-                widget.title = filename
-                urichanged = false
-                return true
-            end
-        end
+        child = webview,
+        on_show = reload
     }
+
     window:set_wmclass("showdown", "showdown")
+
+    function window:on_key_press_event(event)
+        if Gdk.keyval_name(event.keyval) == "BackSpace" then
+            reload()
+            self.title = filename
+            urichanged = false
+            return true
+        end
+    end
 
     local about = Gtk.AboutDialog {
         program_name = "Showdown",
