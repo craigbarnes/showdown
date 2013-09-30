@@ -97,6 +97,7 @@ app.on_startup = function()
             end
         end
     }
+    webview:get_settings():set_enable_javascript(false)
 
     local function reload()
         local text = assert(infile:load_contents())
