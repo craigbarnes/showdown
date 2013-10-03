@@ -1,5 +1,5 @@
 Showdown
-======
+========
 
 Showdown is a simple [Markdown] viewer written in [Lua] and [GTK]. It
 converts Markdown into HTML, then presents it in a [WebKitGTK] view. So

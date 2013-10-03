@@ -11,8 +11,6 @@ assert(filename, "No file was specified\nUsage: showdown FILE\n")
 local Gio = lgi.Gio
 local infile = Gio.File.new_for_path(filename)
 assert(infile:query_exists(), "File doesn't exist")
-local outfile = assert(Gio.File.new_tmp())
-local outuri = "file://" .. outfile:get_path()
 
 local Gtk = lgi.Gtk
 local Gdk = lgi.Gdk
@@ -93,7 +91,7 @@ app.on_startup = function()
     local webview = WebKit2.WebView()
     webview:get_settings():set_enable_javascript(false)
     function webview:on_load_changed(event)
-        if event == "STARTED" and self.uri ~= outuri then
+        if event == "STARTED" and self.uri ~= "about:blank" then
             window.title = "Hit Backspace to return to " .. filename
         end
     end
@@ -102,8 +100,7 @@ app.on_startup = function()
         local text = assert(infile:load_contents())
         local doc, toc = markdown(tostring(text), "toc")
         local html = template:format(toc, doc)
-        outfile:replace_contents(html, nil, false, 0)
-        webview:load_uri(outuri)
+        webview:load_html(html)
     end
 
     window = Gtk.ApplicationWindow {
@@ -161,7 +158,7 @@ app.on_startup = function()
 
     local monitor = infile:monitor(lgi.Gio.FileMonitorFlags.NONE)
     monitor.on_changed = function(self, file, ud, event)
-        if event == "CHANGED" then
+        if event == "CHANGED" or event == "CREATED" then
             reload()
         end
     end
