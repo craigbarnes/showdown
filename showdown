@@ -95,6 +95,9 @@ app.on_startup = function()
     settings.enable_plugins = false
     settings.enable_page_cache = false
 
+    local context = WebKit2.WebContext.get_default()
+    context:set_cache_model(WebKit2.CacheModel.DOCUMENT_VIEWER)
+
     function webview:on_load_changed(event)
         if event == "STARTED" and self.uri ~= "about:blank" then
             window.title = "Hit Backspace to return to " .. filename
