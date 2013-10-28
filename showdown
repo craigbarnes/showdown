@@ -89,7 +89,12 @@ local template = [[
 
 app.on_startup = function()
     local webview = WebKit2.WebView()
-    webview:get_settings():set_enable_javascript(false)
+
+    local settings = webview:get_settings()
+    settings.enable_javascript = false
+    settings.enable_plugins = false
+    settings.enable_page_cache = false
+
     function webview:on_load_changed(event)
         if event == "STARTED" and self.uri ~= "about:blank" then
             window.title = "Hit Backspace to return to " .. filename
