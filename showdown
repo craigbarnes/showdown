@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 
 local lgi = require "lgi"
-local markdown = require "ldiscount"
+local markdown = require "discount"
 
 debug.traceback = nil -- Keep error messages short
 
