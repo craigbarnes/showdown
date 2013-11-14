@@ -115,7 +115,9 @@ function app:on_activate()
     local function reload()
         local text = assert(infile:load_contents())
         local doc = markdown(tostring(text), "toc")
-        local html = template:format(doc.title or filename, doc.index, doc.body)
+        local title = doc.title or filename
+        local html = template:format(title, doc.index, doc.body)
+        window.title = title
         webview:load_html(html)
     end
 
@@ -135,7 +137,6 @@ function app:on_activate()
     function window:on_key_press_event(event)
         if Gdk.keyval_name(event.keyval) == "BackSpace" then
             reload()
-            self.title = filename
             urichanged = false
             return true
         end
