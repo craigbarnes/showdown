@@ -114,8 +114,8 @@ function app:on_activate()
 
     local function reload()
         local text = assert(infile:load_contents())
-        local doc, toc = markdown(tostring(text), "toc")
-        local html = template:format(filename, toc, doc)
+        local doc = markdown(tostring(text), "toc")
+        local html = template:format(doc.title or filename, doc.index, doc.body)
         webview:load_html(html)
     end
 
