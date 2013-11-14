@@ -13,62 +13,63 @@ local app = Gtk.Application {
     flags = Gio.ApplicationFlags.HANDLES_COMMAND_LINE
 }
 
+local stylesheet = [[
+body {
+    margin: 2em;
+    font: 0.9em/1.6 Helvetica, arial, freesans, clean, sans-serif;
+    color: #333;
+}
+a {
+    color: #4183C4;
+    text-decoration: none;
+}
+a:hover {
+    color: #ff6600;
+    text-decoration: none;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 20px 0 5px;
+    padding: 0;
+    font-weight: bold;
+}
+h2 {
+    font-size: larger;
+    line-height: 1.5;
+    text-decoration: underline;
+}
+pre, code, tt {
+    font: normal 0.9em/1.4 Consolas, monospace;
+}
+pre {
+    background-color: #F8F8F8;
+    border: 1px solid #CCC;
+    overflow: auto;
+    margin: 0.5em 0;
+    padding: 0.7em 1em;
+    border-radius: 3px;
+}
+#toc {
+    display: block;
+    float: right;
+    clear: right;
+    max-width: 15em;
+    margin: 0 0 1em 2em;
+    padding: 1em;
+    border: 1px solid #ccc;
+}
+#toc ul {
+    margin: 0 0 0 1.2em;
+    padding: 0.1em;
+    font-size: small;
+}
+]]
+
 local template = [[
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Markdown Preview</title>
-    <style>
-        body {
-            margin: 2em;
-            font: 0.9em/1.6 Helvetica, arial, freesans, clean, sans-serif;
-            color: #333;
-        }
-        a {
-            color: #4183C4;
-            text-decoration: none;
-        }
-        a:hover {
-            color: #ff6600;
-            text-decoration: none;
-        }
-        h1, h2, h3, h4, h5, h6 {
-            margin: 20px 0 5px;
-            padding: 0;
-            font-weight: bold;
-        }
-        h2 {
-            font-size: larger;
-            line-height: 1.5;
-            text-decoration: underline;
-        }
-        pre, code, tt {
-            font: normal 0.9em/1.4 Consolas, monospace;
-        }
-        pre {
-            background-color: #F8F8F8;
-            border: 1px solid #CCC;
-            overflow: auto;
-            margin: 0.5em 0;
-            padding: 0.7em 1em;
-            border-radius: 3px;
-        }
-        #toc {
-            display: block;
-            float: right;
-            clear: right;
-            max-width: 15em;
-            margin: 0 0 1em 2em;
-            padding: 1em;
-            border: 1px solid #ccc;
-        }
-        #toc ul {
-            margin: 0 0 0 1.2em;
-            padding: 0.1em;
-            font-size: small;
-        }
-    </style>
+    <title>%s</title>
 </head>
 <body>
     <div id="main">
@@ -101,6 +102,10 @@ function app:on_activate()
     local context = WebKit2.WebContext.get_default()
     context:set_cache_model(WebKit2.CacheModel.DOCUMENT_VIEWER)
 
+    local viewgroup = webview:get_group()
+    local frameopts = WebKit2.InjectedContentFrames.TOP_ONLY
+    viewgroup:add_user_style_sheet(stylesheet, nil, nil, nil, frameopts)
+
     function webview:on_load_changed(event)
         if event == "STARTED" and self.uri ~= "about:blank" then
             window.title = "Hit Backspace to return to " .. filename
@@ -110,7 +115,7 @@ function app:on_activate()
     local function reload()
         local text = assert(infile:load_contents())
         local doc, toc = markdown(tostring(text), "toc")
-        local html = template:format(toc, doc)
+        local html = template:format(filename, toc, doc)
         webview:load_html(html)
     end
 
