@@ -43,6 +43,7 @@ History
 
 * Switch to new [lua-discount API]
 * Set document/window title from [Pandoc-style header], if available
+* Apply stylesheet via `WebKitWebViewGroup::add_user_style_sheet`
 * Enable `DOCUMENT_VIEWER` cache model via `WebKitWebContext`
 * Disable JavaScript, plugins and page cache via `WebKitSettings`
 * Process command-line arguments via `on_command_line` signal handler
