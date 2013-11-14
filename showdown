@@ -2,22 +2,16 @@
 
 local lgi = require "lgi"
 local markdown = require "discount"
-
-debug.traceback = nil -- Keep error messages short
-
-local filename = select(1, ...)
-assert(filename, "No file was specified\nUsage: showdown FILE\n")
-
 local Gio = lgi.Gio
-local infile = Gio.File.new_for_path(filename)
-assert(infile:query_exists(), "File doesn't exist")
-
 local Gtk = lgi.Gtk
 local Gdk = lgi.Gdk
 local WebKit2 = lgi.WebKit2
 
-local app = Gtk.Application.new("org.showdown", Gio.ApplicationFlags.FLAGS_NONE)
-local window
+local Showdown = lgi.package 'Showdown'
+Showdown:class('Application', Gtk.Application)
+local app_flags = Gio.ApplicationFlags.HANDLES_COMMAND_LINE
+local app = Showdown.Application.new("org.showdown", app_flags)
+local infile, window
 
 local template = [[
 <!doctype html>
@@ -50,7 +44,7 @@ local template = [[
             text-decoration: underline;
         }
         pre, code, tt {
-            font: normal 0.9em/1.4 Consolas, Courier, monospace;
+            font: normal 0.9em/1.4 Consolas, monospace;
         }
         pre {
             background-color: #F8F8F8;
@@ -86,6 +80,15 @@ local template = [[
 </body>
 </html>
 ]]
+
+app.on_command_line = function(self, cmdline)
+    local args = cmdline:get_arguments()
+    local filename = assert(args[1], "No file was specified")
+    infile = cmdline:create_file_for_arg(filename)
+    assert(infile:query_exists(), "File doesn't exist")
+    self:activate()
+    return 0
+end
 
 app.on_startup = function()
     local webview = WebKit2.WebView()
@@ -162,17 +165,16 @@ app.on_startup = function()
             app:quit()
         end
     })
+end
 
+app.on_activate = function()
     local monitor = infile:monitor(lgi.Gio.FileMonitorFlags.NONE)
     monitor.on_changed = function(self, file, ud, event)
         if event == "CHANGED" or event == "CREATED" then
             reload()
         end
     end
-end
-
-app.on_activate = function()
     window:show_all()
 end
 
-return app:run()
+return app:run{...}
