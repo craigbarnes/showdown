@@ -49,9 +49,9 @@ History
 * Switch to new [lua-discount API]
 * Set document/window title from [Pandoc-style header], if available
 * Apply stylesheet via `WebKitWebViewGroup::add_user_style_sheet`
-* Enable `DOCUMENT_VIEWER` cache model via `WebKitWebContext`
+* Enable `DOCUMENT_VIEWER` cache model via `WebKitWebContext::set_cache_model`
 * Disable JavaScript, plugins and page cache via `WebKitSettings`
-* Process command-line arguments via `on_command_line` signal handler
+* Process command-line arguments via `GApplication::command-line`
 * Load document directly, instead of as temporary file (upstream bug
   necessitating this was fixed)
 
