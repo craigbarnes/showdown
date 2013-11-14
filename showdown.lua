@@ -146,25 +146,27 @@ function app:on_activate()
         website = "https://github.com/craigbarnes/showdown"
     }
 
-    local appmenu = Gio.Menu()
-    appmenu:append("About", "app.about")
-    appmenu:append("Quit", "app.quit")
-    self:set_app_menu(appmenu)
-
-    self:add_action(Gio.SimpleAction {
+    local about_action = Gio.SimpleAction {
         name = "about",
         on_activate = function()
             about:run()
             about:hide()
         end
-    })
+    }
 
-    self:add_action(Gio.SimpleAction {
+    local quit_action = Gio.SimpleAction {
         name = "quit",
         on_activate = function()
             self:quit()
         end
-    })
+    }
+
+    local appmenu = Gio.Menu()
+    appmenu:append("About", "app.about")
+    appmenu:append("Quit", "app.quit")
+    self:set_app_menu(appmenu)
+    self:add_action(about_action)
+    self:add_action(quit_action)
 
     local monitor = infile:monitor(lgi.Gio.FileMonitorFlags.NONE)
     function monitor:on_changed(file, ud, event)
