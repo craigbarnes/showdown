@@ -72,12 +72,12 @@ local template = [[
     <title>%s</title>
 </head>
 <body>
-    <div id="main">
-        <div id="toc">
+    <main>
+        <nav id="toc">
             %s
-        </div>
+        </nav>
         %s
-    </div>
+    </main>
 </body>
 </html>
 ]]
