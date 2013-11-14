@@ -81,7 +81,7 @@ local template = [[
 </html>
 ]]
 
-app.on_command_line = function(self, cmdline)
+function app:on_command_line(cmdline)
     local args = cmdline:get_arguments()
     filename = assert(args[1], "No file was specified")
     infile = cmdline:create_file_for_arg(filename)
@@ -90,7 +90,7 @@ app.on_command_line = function(self, cmdline)
     return 0
 end
 
-app.on_activate = function()
+function app:on_activate()
     local webview = WebKit2.WebView()
 
     local settings = webview:get_settings()
@@ -116,7 +116,7 @@ app.on_activate = function()
 
     window = Gtk.ApplicationWindow {
         type = Gtk.WindowType.TOPLEVEL,
-        application = app,
+        application = self,
         title = filename,
         icon_name = "showdown",
         default_width = 750,
@@ -149,9 +149,9 @@ app.on_activate = function()
     local appmenu = Gio.Menu()
     appmenu:append("About", "app.about")
     appmenu:append("Quit", "app.quit")
-    app:set_app_menu(appmenu)
+    self:set_app_menu(appmenu)
 
-    app:add_action(Gio.SimpleAction {
+    self:add_action(Gio.SimpleAction {
         name = "about",
         on_activate = function()
             about:run()
@@ -159,15 +159,15 @@ app.on_activate = function()
         end
     })
 
-    app:add_action(Gio.SimpleAction {
+    self:add_action(Gio.SimpleAction {
         name = "quit",
         on_activate = function()
-            app:quit()
+            self:quit()
         end
     })
 
     local monitor = infile:monitor(lgi.Gio.FileMonitorFlags.NONE)
-    monitor.on_changed = function(self, file, ud, event)
+    function monitor:on_changed(file, ud, event)
         if event == "CHANGED" or event == "CREATED" then
             reload()
         end
