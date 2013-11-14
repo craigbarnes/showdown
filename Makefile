@@ -8,7 +8,7 @@ ICONDIR    = $(DATADIR)/icons/hicolor
 APPICONDIR = $(ICONDIR)/scalable/apps
 
 install:
-	install -Dpm0755 showdown $(DESTDIR)$(BINDIR)/showdown
+	install -Dpm0755 showdown.lua $(DESTDIR)$(BINDIR)/showdown
 	install -Dpm0644 showdown.svg $(DESTDIR)$(APPICONDIR)/showdown.svg
 	desktop-file-install --dir=$(DESTDIR)$(DESKTOPDIR) showdown.desktop
 
