@@ -36,6 +36,11 @@ You can then clone the repository and install with:
     cd showdown
     sudo make install
 
+**Note:** [lua-discount] is not to be confused with the incomplete and
+unmaintained module at <https://github.com/asb/lua-discount/>. This
+module is not compatible with Showdown and should be considered
+deprecated.
+
 History
 -------
 
