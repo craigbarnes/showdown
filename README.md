@@ -39,6 +39,14 @@ You can then clone the repository and install with:
 History
 -------
 
+### Pending release
+
+* Enable `DOCUMENT_VIEWER` cache model via `WebKitWebContext`
+* Disable JavaScript, plugins and page cache via `WebKitSettings`
+* Process command-line arguments via `on_command_line` signal handler
+* Load document directly, instead of as temporary file (upstream bug
+  necessitating this was fixed)
+
 ### 0.2
 
 * Add a table of contents to the rendered output
