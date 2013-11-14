@@ -6,7 +6,7 @@ local Gio = lgi.Gio
 local Gtk = lgi.Gtk
 local Gdk = lgi.Gdk
 local WebKit2 = lgi.WebKit2
-local infile, window
+local filename, infile, window
 
 local app = Gtk.Application {
     application_id = "org.showdown",
@@ -83,14 +83,14 @@ local template = [[
 
 app.on_command_line = function(self, cmdline)
     local args = cmdline:get_arguments()
-    local filename = assert(args[1], "No file was specified")
+    filename = assert(args[1], "No file was specified")
     infile = cmdline:create_file_for_arg(filename)
     assert(infile:query_exists(), "File doesn't exist")
     self:activate()
     return 0
 end
 
-app.on_startup = function()
+app.on_activate = function()
     local webview = WebKit2.WebView()
 
     local settings = webview:get_settings()
@@ -165,15 +165,14 @@ app.on_startup = function()
             app:quit()
         end
     })
-end
 
-app.on_activate = function()
     local monitor = infile:monitor(lgi.Gio.FileMonitorFlags.NONE)
     monitor.on_changed = function(self, file, ud, event)
         if event == "CHANGED" or event == "CREATED" then
             reload()
         end
     end
+
     window:show_all()
 end
 
