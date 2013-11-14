@@ -41,6 +41,8 @@ History
 
 ### Pending release
 
+* Switch to new [lua-discount API]
+* Set document/window title from [Pandoc-style header], if available
 * Enable `DOCUMENT_VIEWER` cache model via `WebKitWebContext`
 * Disable JavaScript, plugins and page cache via `WebKitSettings`
 * Process command-line arguments via `on_command_line` signal handler
@@ -80,9 +82,11 @@ License
 
 
 [Markdown]: http://daringfireball.net/projects/markdown/
+[Lua]: http://lua.org/
+[LuaJIT]: http://luajit.org/
+[LGI]: https://github.com/pavouk/lgi
+[GTK]: http://www.gtk.org/
 [WebKitGTK]: http://webkitgtk.org/
 [lua-discount]: https://github.com/craigbarnes/lua-discount
-[LGI]: https://github.com/pavouk/lgi
-[Lua]: http://lua.org/
-[GTK]: http://www.gtk.org/
-[LuaJIT]: http://luajit.org/
+[lua-discount API]: https://github.com/craigbarnes/lua-discount#usage
+[Pandoc-style header]: http://www.pell.portland.or.us/~orc/Code/discount/#headers
