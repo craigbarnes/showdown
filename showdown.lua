@@ -92,6 +92,7 @@ function app:on_command_line(cmdline)
 end
 
 function app:on_activate()
+    local header = Gtk.HeaderBar{show_close_button = true}
     local webview = WebKit2.WebView()
 
     local settings = webview:get_settings()
@@ -107,8 +108,9 @@ function app:on_activate()
     viewgroup:add_user_style_sheet(stylesheet, nil, nil, nil, frameopts)
 
     function webview:on_load_changed(event)
-        if event == "STARTED" and self.uri ~= "about:blank" then
-            window.title = "Hit Backspace to return to " .. filename
+        if event == "FINISHED" and self.uri ~= "about:blank" then
+            header.title = webview:get_title()
+            header.subtitle = "Hit Backspace to return to " .. filename
         end
     end
 
@@ -117,14 +119,14 @@ function app:on_activate()
         local doc = markdown(tostring(text), "toc")
         local title = doc.title or filename
         local html = template:format(title, doc.index, doc.body)
-        window.title = title
+        header.title = title
+        header.subtitle = (title ~= filename) and filename or nil
         webview:load_html(html)
     end
 
     window = Gtk.ApplicationWindow {
         type = Gtk.WindowType.TOPLEVEL,
         application = self,
-        title = filename,
         icon_name = "showdown",
         default_width = 750,
         default_height = 520,
@@ -132,7 +134,8 @@ function app:on_activate()
         on_show = reload
     }
 
-    window:set_wmclass("showdown", "showdown")
+    window:set_titlebar(header)
+    window:set_wmclass("showdown", "Showdown")
 
     function window:on_key_press_event(event)
         if Gdk.keyval_name(event.keyval) == "BackSpace" then
