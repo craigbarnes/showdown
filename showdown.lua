@@ -110,7 +110,7 @@ function app:on_activate()
     function webview:on_load_changed(event)
         if event == "FINISHED" and self.uri ~= "about:blank" then
             header.title = webview:get_title()
-            header.subtitle = "Hit Backspace to return to " .. filename
+            header.subtitle = "Hit Backspace to return"
         end
     end
 
