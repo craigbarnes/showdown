@@ -29,6 +29,7 @@ local template = [[
 <body>
     <main>
         <nav id="toc">
+            <h2>Contents</h2>
             %s
         </nav>
         %s

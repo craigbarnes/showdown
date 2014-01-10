@@ -7,6 +7,8 @@ body {
     background-color: white;
     padding: 30px;
     color: #333;
+    max-width: 60em;
+    margin: 0 auto;
 }
 
 body > *:first-child {
@@ -127,10 +129,9 @@ li {
 }
 
 hr {
-    border: 0 none;
-    color: #cccccc;
-    height: 4px;
-    padding: 0;
+    margin: 25px 0 10px 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
 }
 
 body > h2:first-child {
@@ -409,11 +410,17 @@ pre code, pre tt {
     border: none;
 }
 
+#toc {
+    margin-bottom: 25px;
+    padding-bottom: 30px;
+    border-bottom: 2px dashed #ccc;
+}
+
 #toc ul {
     margin: 0 0 0 1.2em;
     padding: 0.1em;
 }
 
-#toc > ul:first-child > li:first-child > a {
-    font-size: large;
+#toc > ul:first-of-type > li:first-child > a {
+    font-size: larger;
 }
