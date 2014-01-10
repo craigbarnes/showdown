@@ -2,67 +2,22 @@
 
 local lgi = require "lgi"
 local markdown = require "discount"
+local GLib = lgi.GLib
 local Gio = lgi.Gio
 local Gtk = lgi.Gtk
 local Gdk = lgi.Gdk
 local WebKit2 = lgi.WebKit2
 local filename, infile, window
 
+-- TODO: Better fallback stylesheet
+local user_config_dir = assert(lgi.GLib.get_user_config_dir()) .. "/showdown"
+local user_stylesheet = io.open(user_config_dir .. "/stylesheet.css")
+local stylesheet = user_stylesheet and assert(user_stylesheet:read("*a")) or ""
+
 local app = Gtk.Application {
     application_id = "org.showdown",
     flags = Gio.ApplicationFlags.HANDLES_COMMAND_LINE
 }
-
-local stylesheet = [[
-body {
-    margin: 2em;
-    font: 0.9em/1.6 Helvetica, arial, freesans, clean, sans-serif;
-    color: #333;
-}
-a {
-    color: #4183C4;
-    text-decoration: none;
-}
-a:hover {
-    color: #ff6600;
-    text-decoration: none;
-}
-h1, h2, h3, h4, h5, h6 {
-    margin: 20px 0 5px;
-    padding: 0;
-    font-weight: bold;
-}
-h2 {
-    font-size: larger;
-    line-height: 1.5;
-    text-decoration: underline;
-}
-pre, code, tt {
-    font: normal 0.9em/1.4 Consolas, monospace;
-}
-pre {
-    background-color: #F8F8F8;
-    border: 1px solid #CCC;
-    overflow: auto;
-    margin: 0.5em 0;
-    padding: 0.7em 1em;
-    border-radius: 3px;
-}
-#toc {
-    display: block;
-    float: right;
-    clear: right;
-    max-width: 15em;
-    margin: 0 0 1em 2em;
-    padding: 1em;
-    border: 1px solid #ccc;
-}
-#toc ul {
-    margin: 0 0 0 1.2em;
-    padding: 0.1em;
-    font-size: small;
-}
-]]
 
 local template = [[
 <!doctype html>
