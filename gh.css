@@ -118,8 +118,12 @@ h6 {
     font-size: 14px;
 }
 
-p, blockquote, ul, ol, dl, li, table, pre {
+p, blockquote, ul, ol, dl, table, pre {
     margin: 15px 0;
+}
+
+li {
+    margin: 2px 0;
 }
 
 hr {
@@ -369,6 +373,7 @@ code, tt {
     border: 1px solid #eaeaea;
     background-color: #f8f8f8;
     border-radius: 3px;
+    font-size: 0.9em;
 }
 
 pre code {
@@ -404,18 +409,11 @@ pre code, pre tt {
     border: none;
 }
 
-#toc {
-    display: block;
-    float: right;
-    clear: right;
-    max-width: 15em;
-    margin: 0 0 1em 2em;
-    padding: 1em;
-    border: 1px solid #ccc;
-}
-
 #toc ul {
     margin: 0 0 0 1.2em;
     padding: 0.1em;
-    font-size: small;
+}
+
+#toc > ul:first-child > li:first-child > a {
+    font-size: large;
 }
