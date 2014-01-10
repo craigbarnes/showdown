@@ -7,7 +7,7 @@ local Gio = lgi.Gio
 local Gtk = lgi.Gtk
 local Gdk = lgi.Gdk
 local WebKit2 = lgi.WebKit2
-local filename, infile, window
+local filename, infile, window, last_keypress
 
 -- TODO: Better fallback stylesheet
 local user_config_dir = assert(lgi.GLib.get_user_config_dir()) .. "/showdown"
@@ -49,7 +49,7 @@ end
 
 function app:on_activate()
     local header = Gtk.HeaderBar{show_close_button = true}
-    local webview = WebKit2.WebView()
+    local webview = WebKit2.WebView{vexpand = true, hexpand = true}
 
     local settings = webview:get_settings()
     settings.enable_javascript = false
@@ -66,7 +66,7 @@ function app:on_activate()
     function webview:on_load_changed(event)
         if event == "FINISHED" and self.uri ~= "about:blank" then
             header.title = webview:get_title()
-            header.subtitle = "Hit Backspace to return"
+            header.subtitle = "Hit Alt+Backspace to return"
         end
     end
 
@@ -80,23 +80,46 @@ function app:on_activate()
         webview:load_html(html)
     end
 
+    local find_options = WebKit2.FindOptions.NONE
+    local find_controller = webview:get_find_controller()
+    local search_entry = Gtk.SearchEntry{width = 320}
+    local search_bar = Gtk.SearchBar{search_entry}
+    local search_revealer = Gtk.Revealer{search_bar}
+    search_bar:connect_entry(search_entry)
+
+    function search_entry:on_search_changed()
+        find_controller:search(search_entry.text, find_options, 5000)
+    end
+
     window = Gtk.ApplicationWindow {
         type = Gtk.WindowType.TOPLEVEL,
         application = self,
         icon_name = "showdown",
         default_width = 750,
         default_height = 520,
-        child = webview,
-        on_show = reload
+        on_show = reload,
+        Gtk.Grid {
+            orientation = "VERTICAL",
+            search_revealer,
+            webview
+        }
     }
 
     window:set_titlebar(header)
     window:set_wmclass("showdown", "Showdown")
 
     function window:on_key_press_event(event)
-        if Gdk.keyval_name(event.keyval) == "BackSpace" then
+        if event.time == last_keypress then return false end
+        last_keypress = event.time
+        local key = Gdk.keyval_name(event.keyval)
+        if event.state.MOD1_MASK == true and key == "BackSpace" then
             reload()
             urichanged = false
+            return true
+        elseif event.state.CONTROL_MASK == true and key == "f" then
+            find_controller:search_finish()
+            search_revealer.reveal_child = not search_revealer.reveal_child
+            search_bar.search_mode_enabled = not search_bar.search_mode_enabled
             return true
         end
     end
