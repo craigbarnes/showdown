@@ -80,7 +80,7 @@ function app:on_activate()
         webview:load_html(html)
     end
 
-    local find_options = WebKit2.FindOptions.NONE
+    local find_options = WebKit2.FindOptions{"WRAP_AROUND", "CASE_INSENSITIVE"}
     local find_controller = webview:get_find_controller()
     local search_entry = Gtk.SearchEntry{width = 320}
     local search_bar = Gtk.SearchBar{show_close_button = true, search_entry}
@@ -88,6 +88,17 @@ function app:on_activate()
 
     function search_entry:on_search_changed()
         find_controller:search(self.text, find_options, 5000)
+    end
+
+    function search_entry:on_key_press_event(event)
+        local key = Gdk.keyval_name(event.keyval)
+        if key == "Return" then
+            if event.state.SHIFT_MASK then
+                find_controller:search_previous()
+            else
+                find_controller:search_next()
+            end
+        end
     end
 
     window = Gtk.ApplicationWindow {
