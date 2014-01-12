@@ -83,12 +83,11 @@ function app:on_activate()
     local find_options = WebKit2.FindOptions.NONE
     local find_controller = webview:get_find_controller()
     local search_entry = Gtk.SearchEntry{width = 320}
-    local search_bar = Gtk.SearchBar{search_entry}
-    local search_revealer = Gtk.Revealer{search_bar}
+    local search_bar = Gtk.SearchBar{show_close_button = true, search_entry}
     search_bar:connect_entry(search_entry)
 
     function search_entry:on_search_changed()
-        find_controller:search(search_entry.text, find_options, 5000)
+        find_controller:search(self.text, find_options, 5000)
     end
 
     window = Gtk.ApplicationWindow {
@@ -100,7 +99,7 @@ function app:on_activate()
         on_show = reload,
         Gtk.Grid {
             orientation = "VERTICAL",
-            search_revealer,
+            search_bar,
             webview
         }
     }
@@ -117,8 +116,6 @@ function app:on_activate()
             urichanged = false
             return true
         elseif event.state.CONTROL_MASK == true and key == "f" then
-            find_controller:search_finish()
-            search_revealer.reveal_child = not search_revealer.reveal_child
             search_bar.search_mode_enabled = not search_bar.search_mode_enabled
             return true
         end
