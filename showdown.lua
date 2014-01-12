@@ -139,14 +139,16 @@ function app:on_activate()
         version = "0.2",
         copyright = "Copyright 2013 Craig Barnes",
         license_type = Gtk.License.GPL_3_0,
-        website = "https://github.com/craigbarnes/showdown"
+        website = "https://github.com/craigbarnes/showdown",
+        on_response = function(self, response)
+            self:hide()
+        end,
     }
 
     local about_action = Gio.SimpleAction {
         name = "about",
         on_activate = function()
             about:run()
-            about:hide()
         end
     }
 
