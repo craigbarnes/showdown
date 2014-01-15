@@ -13,8 +13,14 @@ you can use:
 
     showdown somefile.md
 
-...but now you get proper styling, a generated table of contents and
-automatic document reloading.
+Features
+--------
+
+* Uses a GitHub-inspired stylesheet by default
+* Supports custom user stylesheets
+* Generates a hierarchical table of contents from the document outline
+* Automatic, near-instant refresh when the source document is changed
+* Integrated search bar
 
 Requirements
 ------------
