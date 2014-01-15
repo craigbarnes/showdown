@@ -48,11 +48,11 @@ History
 * Switch to new [lua-discount API]
 * Set document/window title from [Pandoc-style header], if available
 * Add a [GtkSearchBar]
-* Load user stylesheet from (`$XDG_CONFIG_HOME/showdown/stylesheet.css`)
-* Apply stylesheet via `WebKitWebViewGroup::add_user_style_sheet`
-* Enable `DOCUMENT_VIEWER` cache model via `WebKitWebContext::set_cache_model`
+* Apply stylesheet using `WebKitWebViewGroup::add_user_style_sheet`
+* Allow loading user stylesheet from `$XDG_CONFIG_HOME/showdown/stylesheet.css`
+* Enable `DOCUMENT_VIEWER` cache model with `WebKitWebContext::set_cache_model`
 * Disable JavaScript, plugins and page cache via `WebKitSettings`
-* Process command-line arguments via `GApplication::command-line`
+* Process command-line arguments using `GApplication::command-line`
 * Load document directly, instead of as temporary file (upstream bug
   necessitating this was fixed)
 
@@ -74,7 +74,6 @@ Todo
 ----
 
 * Keep scroll position after reloading
-* Use WebKitFindController to allow searching documents
 * Allow opening/browsing directories
 * Add some way of opening files once running to allow launching without
   command-line arguments
