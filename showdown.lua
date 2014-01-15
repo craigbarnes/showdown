@@ -9,10 +9,9 @@ local Gdk = lgi.Gdk
 local WebKit2 = lgi.WebKit2
 local filename, infile, window, last_keypress
 
--- TODO: Better fallback stylesheet
-local user_config_dir = assert(lgi.GLib.get_user_config_dir()) .. "/showdown"
-local user_stylesheet = io.open(user_config_dir .. "/stylesheet.css")
-local stylesheet = user_stylesheet and assert(user_stylesheet:read("*a")) or ""
+local style_path = GLib.get_user_config_dir() .. "/showdown/stylesheet.css"
+local style_file = Gio.File.new_for_path(style_path)
+local stylesheet = style_file:load_contents() or ""
 
 local app = Gtk.Application {
     application_id = "org.showdown",
@@ -129,6 +128,8 @@ function app:on_activate()
         elseif event.state.CONTROL_MASK == true and key == "f" then
             search_bar.search_mode_enabled = not search_bar.search_mode_enabled
             return true
+        elseif event.state.CONTROL_MASK == true and key == "w" then
+            window:close()
         end
     end
 
