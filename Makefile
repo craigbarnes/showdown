@@ -13,8 +13,9 @@ help:
 	@echo "   make check           Check validity of .desktop file"
 
 install:
-	install -Dpm0755 showdown.lua $(DESTDIR)$(BINDIR)/showdown
-	install -Dpm0644 showdown.svg $(DESTDIR)$(APPICONDIR)/showdown.svg
+	mkdir -p $(DESTDIR)$(BINDIR) $(DESTDIR)$(APPICONDIR)
+	install -p -m 0755 showdown.lua $(DESTDIR)$(BINDIR)/showdown
+	install -p -m 0644 showdown.svg $(DESTDIR)$(APPICONDIR)/showdown.svg
 	desktop-file-install --dir=$(DESTDIR)$(DESKTOPDIR) showdown.desktop
 
 install-home:
