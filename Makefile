@@ -28,7 +28,7 @@ uninstall:
 
 post-install post-uninstall:
 	update-desktop-database $(DESKTOPDIR)
-	touch --no-create $(ICONDIR)
+	touch -c $(ICONDIR)
 	gtk-update-icon-cache -t $(ICONDIR)
 
 check:
