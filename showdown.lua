@@ -11,7 +11,14 @@ local filename, infile, window, last_keypress
 
 local style_path = GLib.get_user_config_dir() .. "/showdown/stylesheet.css"
 local style_file = Gio.File.new_for_path(style_path)
-local stylesheet = style_file:load_contents() or ""
+local stylesheet = style_file:load_contents()
+
+if not stylesheet then
+    -- @Default stylesheet
+    style_file = Gio.File.new_for_path("gh.css")
+    stylesheet = assert(style_file:load_contents())
+    -- @end
+end
 
 local app = Gtk.Application {
     application_id = "org.showdown",

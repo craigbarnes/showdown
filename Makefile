@@ -5,21 +5,20 @@ DESKTOPDIR = $(DATADIR)/applications
 ICONDIR    = $(DATADIR)/icons/hicolor
 APPICONDIR = $(ICONDIR)/scalable/apps
 
-help:
-	@echo "Usage:"
-	@echo "   make install         Install under $(PREFIX)"
-	@echo "   make install-home    Install under $(HOME)/.local"
-	@echo "   make post-install    Update desktop database and icon cache"
-	@echo "   make check           Check validity of .desktop file"
+all: showdown
 
-install:
+showdown: showdown.lua compile.sed gh.css
+	sed -f compile.sed showdown.lua > $@
+	chmod +x $@
+
+install: all
 	mkdir -p $(DESTDIR)$(BINDIR) $(DESTDIR)$(APPICONDIR)
-	install -p -m 0755 showdown.lua $(DESTDIR)$(BINDIR)/showdown
+	install -p -m 0755 showdown $(DESTDIR)$(BINDIR)/showdown
 	install -p -m 0644 showdown.svg $(DESTDIR)$(APPICONDIR)/showdown.svg
 	desktop-file-install --dir=$(DESTDIR)$(DESKTOPDIR) showdown.desktop
 
 install-home:
-	@$(MAKE) install post-install PREFIX=$(HOME)/.local
+	@$(MAKE) all install post-install PREFIX=$(HOME)/.local
 
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/showdown
@@ -31,8 +30,13 @@ post-install post-uninstall:
 	touch -c $(ICONDIR)
 	gtk-update-icon-cache -t $(ICONDIR)
 
+clean:
+	$(RM) showdown
+
 check:
 	@desktop-file-validate showdown.desktop && echo 'Desktop file valid'
 
 
-.PHONY: help install install-home uninstall post-install post-uninstall check
+.PHONY: all install install-home uninstall post-install post-uninstall
+.PHONY: clean check
+.DELETE_ON_ERROR:
