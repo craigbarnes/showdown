@@ -16,30 +16,23 @@ you can use:
 ...but now you get proper styling, a generated table of contents and
 automatic document reloading.
 
-Screenshot
-----------
-
-![Showdown screenshot](http://cra.igbarn.es/img/showdown.png)
-
-Installation
+Requirements
 ------------
-
-The following dependencies should be installed first:
 
 * [Lua] 5.1/5.2 or [LuaJIT] 2
 * [lua-discount]
 * [LGI]
 
-You can then clone the repository and install with:
+**Note:** [lua-discount] is not to be confused with the unmaintained
+module at <https://github.com/asb/lua-discount/>, which is not
+compatible with Showdown.
+
+Installation
+------------
 
     git clone git://github.com/craigbarnes/showdown.git
     cd showdown
-    sudo make install
-
-**Note:** [lua-discount] is not to be confused with the incomplete and
-unmaintained module at <https://github.com/asb/lua-discount/>. This
-module is not compatible with Showdown and should be considered
-deprecated.
+    [sudo] make install [PREFIX=<prefix>] [DESTDIR=<destdir>]
 
 History
 -------
@@ -48,6 +41,8 @@ History
 
 * Switch to new [lua-discount API]
 * Set document/window title from [Pandoc-style header], if available
+* Add a [GtkSearchBar]
+* Load user stylesheet from (`$XDG_CONFIG_HOME/showdown/stylesheet.css`)
 * Apply stylesheet via `WebKitWebViewGroup::add_user_style_sheet`
 * Enable `DOCUMENT_VIEWER` cache model via `WebKitWebContext::set_cache_model`
 * Disable JavaScript, plugins and page cache via `WebKitSettings`
@@ -92,6 +87,7 @@ License
 [LuaJIT]: http://luajit.org/
 [LGI]: https://github.com/pavouk/lgi
 [GTK]: http://www.gtk.org/
+[GtkSearchBar]: https://developer.gnome.org/gtk3/stable/GtkSearchBar.html
 [WebKitGTK]: http://webkitgtk.org/
 [lua-discount]: https://github.com/craigbarnes/lua-discount
 [lua-discount API]: https://github.com/craigbarnes/lua-discount#usage
