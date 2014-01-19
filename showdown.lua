@@ -109,7 +109,7 @@ function app:on_activate()
 
     window = Gtk.ApplicationWindow {
         type = Gtk.WindowType.TOPLEVEL,
-        application = self,
+        application = app,
         icon_name = "showdown",
         default_width = 750,
         default_height = 520,
@@ -163,16 +163,16 @@ function app:on_activate()
     local quit_action = Gio.SimpleAction {
         name = "quit",
         on_activate = function()
-            self:quit()
+            app:quit()
         end
     }
 
     local appmenu = Gio.Menu()
     appmenu:append("About", "app.about")
     appmenu:append("Quit", "app.quit")
-    self:set_app_menu(appmenu)
-    self:add_action(about_action)
-    self:add_action(quit_action)
+    app:set_app_menu(appmenu)
+    app:add_action(about_action)
+    app:add_action(quit_action)
 
     local monitor = infile:monitor(lgi.Gio.FileMonitorFlags.NONE)
     function monitor:on_changed(file, ud, event)
