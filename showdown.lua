@@ -33,11 +33,10 @@ local template = [[
     <title>%s</title>
 </head>
 <body>
+    <nav id="toc">
+        %s
+    </nav>
     <main>
-        <nav id="toc">
-            <h2>Contents</h2>
-            %s
-        </nav>
         %s
     </main>
 </body>

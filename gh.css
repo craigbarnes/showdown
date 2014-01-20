@@ -7,8 +7,6 @@ body {
     background-color: white;
     padding: 30px;
     color: #333;
-    max-width: 60em;
-    margin: 0 auto;
 }
 
 body > *:first-child {
@@ -22,6 +20,11 @@ body > *:last-child {
 a {
     color: #4183C4;
     text-decoration: none;
+    transition: all 250ms ease-out;
+}
+
+a:hover {
+    color: darkblue;
 }
 
 a.absent {
@@ -416,4 +419,23 @@ pre code, pre tt {
 
 #toc > ul:first-of-type > li:first-child > a {
     font-size: larger;
+}
+
+@media only screen and (min-width: 920px) {
+    #toc {
+        float: left;
+        margin-right: 40px;
+        width: 220px;
+        border-bottom: none;
+    }
+
+    main {
+        float: left;
+        width: calc(100% - 280px);
+        max-width: 75em;
+    }
+
+    h1 {
+        margin-top: 0;
+    }
 }
