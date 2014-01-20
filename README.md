@@ -48,7 +48,8 @@ History
 * Switch to new [lua-discount API]
 * Set document/window title from [Pandoc-style header], if available
 * Add a [GtkSearchBar]
-* Apply stylesheet using `WebKitWebViewGroup::add_user_style_sheet`
+* Improve default stylesheet
+* Apply stylesheets using `WebKitWebViewGroup::add_user_style_sheet`
 * Allow loading user stylesheet from `$XDG_CONFIG_HOME/showdown/stylesheet.css`
 * Enable `DOCUMENT_VIEWER` cache model with `WebKitWebContext::set_cache_model`
 * Disable JavaScript, plugins and page cache via `WebKitSettings`
@@ -84,9 +85,19 @@ Todo
 License
 -------
 
-[GNU GPL v3](http://www.gnu.org/licenses/gpl-3.0.html)
+Copyright (C) 2012-2014 Craig Barnes
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU [General Public License version 3], as published
+by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License version 3 for more details.
 
 
+[General Public License version 3]: http://www.gnu.org/licenses/gpl-3.0.html
 [Markdown]: http://daringfireball.net/projects/markdown/
 [Lua]: http://lua.org/
 [LuaJIT]: http://luajit.org/
