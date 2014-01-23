@@ -25,7 +25,7 @@ Features
 Screenshot
 ----------
 
-<img style="box-shadow: 0 0 5px #777" src=http://cra.igbarn.es/img/showdown.png>
+![Showdown screenshot](http://cra.igbarn.es/img/showdown.png)
 
 Requirements
 ------------
