@@ -22,6 +22,11 @@ Features
 * Automatic, near-instant refresh when the source document is changed
 * Integrated search bar
 
+Screenshot
+----------
+
+<img style="box-shadow: 0 0 5px #777" src=http://cra.igbarn.es/img/showdown.png>
+
 Requirements
 ------------
 
