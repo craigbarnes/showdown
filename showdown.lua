@@ -1,7 +1,8 @@
 #!/usr/bin/env lua
 
 local lgi = require "lgi"
-local markdown = require "discount"
+local discount = require "discount"
+local markdown = discount.compile
 local GLib = lgi.GLib
 local Gio = lgi.Gio
 local Gtk = lgi.Gtk
