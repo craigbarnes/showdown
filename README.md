@@ -45,6 +45,23 @@ Installation
     cd showdown
     [sudo] make install [PREFIX=<prefix>] [DESTDIR=<destdir>]
 
+Usage
+-----
+
+Showdown was originally intended for quickly previewing Markdown files
+from the command-line. As such, it can only be started via a shell with
+a filename argument, e.g. `showdown example.md`. The ability to start as
+a normal application and browse and open files from within the GUI may
+be added later.
+
+### Keyboard commands:
+
+Keys          | Command
+--------------|------------------------------------------------
+Ctrl+f        | Search
+Ctrl+w        | Exit
+Alt+Backspace | Return to document (e.g. after clicking a link)
+
 History
 -------
 
