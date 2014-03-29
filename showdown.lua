@@ -8,7 +8,7 @@ local Gio = lgi.Gio
 local Gtk = lgi.Gtk
 local Gdk = lgi.Gdk
 local WebKit2 = lgi.WebKit2
-local filename, infile, window, last_keypress
+local filename, infile, window
 
 local style_path = GLib.get_user_config_dir() .. "/showdown/stylesheet.css"
 local style_file = Gio.File.new_for_path(style_path)
@@ -124,20 +124,36 @@ function app:on_activate()
     window:set_titlebar(header)
     window:set_wmclass("showdown", "Showdown")
 
-    function window:on_key_press_event(event)
-        if event.time == last_keypress then return false end
-        last_keypress = event.time
-        local key = Gdk.keyval_name(event.keyval)
-        if event.state.MOD1_MASK == true and key == "BackSpace" then
+    local keys = {
+        ctrl_q = function() app:quit() end,
+        ctrl_w = function() window:close() end,
+        ctrl_f = function()
+            search_bar.search_mode_enabled = not search_bar.search_mode_enabled
+            return true
+        end,
+        meta_backspace = function()
             reload()
             urichanged = false
             return true
-        elseif event.state.CONTROL_MASK == true and key == "f" then
-            search_bar.search_mode_enabled = not search_bar.search_mode_enabled
-            return true
-        elseif event.state.CONTROL_MASK == true and key == "w" then
-            window:close()
         end
+    }
+
+    function window:on_key_press_event(event)
+        local hotkey = ""
+        if event.state.CONTROL_MASK == true then hotkey = hotkey .. "ctrl_" end
+        if event.state.MOD1_MASK == true then hotkey = hotkey .. "meta_" end
+        hotkey = hotkey .. string.lower(lgi.Gdk.keyval_name(event.keyval))
+        local val = keys[hotkey]
+        if val then
+            local ok, ret
+            if type(val) == "function" then
+                ok, ret = pcall(val)
+            elseif type(val) == "table" then
+                ok, ret = pcall((table.unpack or unpack)(val))
+            end
+            if ok then return true end
+        end
+        return false
     end
 
     local about = Gtk.AboutDialog {
