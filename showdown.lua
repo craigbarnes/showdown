@@ -125,13 +125,13 @@ function app:on_activate()
     window:set_wmclass("showdown", "Showdown")
 
     local keys = {
-        ctrl_q = function() app:quit() end,
-        ctrl_w = function() window:close() end,
-        ctrl_f = function()
+        ["Ctrl+Q"] = function() app:quit() end,
+        ["Ctrl+W"] = function() window:close() end,
+        ["Ctrl+F"] = function()
             search_bar.search_mode_enabled = not search_bar.search_mode_enabled
             return true
         end,
-        meta_backspace = function()
+        ["Alt+BackSpace"] = function()
             reload()
             urichanged = false
             return true
@@ -139,11 +139,8 @@ function app:on_activate()
     }
 
     function window:on_key_press_event(event)
-        local hotkey = ""
-        if event.state.CONTROL_MASK == true then hotkey = hotkey .. "ctrl_" end
-        if event.state.MOD1_MASK == true then hotkey = hotkey .. "meta_" end
-        hotkey = hotkey .. string.lower(lgi.Gdk.keyval_name(event.keyval))
-        local val = keys[hotkey]
+        local label = Gtk.accelerator_get_label(event.keyval, event.state)
+        local val = keys[label]
         if val then
             local ok, ret
             if type(val) == "function" then
