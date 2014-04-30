@@ -55,7 +55,17 @@ end
 
 function app:on_activate()
     local header = Gtk.HeaderBar{show_close_button = true}
-    local webview = WebKit2.WebView{vexpand = true, hexpand = true}
+
+    local webview = WebKit2.WebView {
+        vexpand = true,
+        hexpand = true,
+        on_load_changed = function(self, event)
+            if event == "FINISHED" and self.uri ~= "about:blank" then
+                header.title = self:get_title()
+                header.subtitle = "Hit Alt+Backspace to return"
+            end
+        end
+    }
 
     local settings = webview:get_settings()
     settings.enable_javascript = false
@@ -69,12 +79,37 @@ function app:on_activate()
     local frameopts = WebKit2.InjectedContentFrames.TOP_ONLY
     viewgroup:add_user_style_sheet(stylesheet, nil, nil, nil, frameopts)
 
-    function webview:on_load_changed(event)
-        if event == "FINISHED" and self.uri ~= "about:blank" then
-            header.title = webview:get_title()
-            header.subtitle = "Hit Alt+Backspace to return"
+    local find_options = WebKit2.FindOptions{"WRAP_AROUND", "CASE_INSENSITIVE"}
+    local find_controller = webview:get_find_controller()
+
+    local search_bar = Gtk.SearchBar {
+        Gtk.SearchEntry {
+            width = 320,
+            on_search_changed = function(self)
+                find_controller:search(self.text, find_options, 5000)
+            end,
+            on_key_press_event = function(self, event)
+                local key = Gdk.keyval_name(event.keyval)
+                if key == "Return" then
+                    if event.state.SHIFT_MASK then
+                        find_controller:search_previous()
+                    else
+                        find_controller:search_next()
+                    end
+                end
+            end
+        }
+    }
+
+    local search_button = Gtk.ToggleButton {
+        active = false,
+        child = Gtk.Image.new_from_icon_name("edit-find-symbolic", 1),
+        on_toggled = function(self)
+            search_bar.search_mode_enabled = self.active
         end
-    end
+    }
+
+    header:pack_end(search_button)
 
     local function reload()
         local text = assert(infile:load_contents())
@@ -84,27 +119,6 @@ function app:on_activate()
         header.title = title
         header.subtitle = (title ~= filename) and filename or nil
         webview:load_html(html)
-    end
-
-    local find_options = WebKit2.FindOptions{"WRAP_AROUND", "CASE_INSENSITIVE"}
-    local find_controller = webview:get_find_controller()
-    local search_entry = Gtk.SearchEntry{width = 320}
-    local search_bar = Gtk.SearchBar{show_close_button = true, search_entry}
-    search_bar:connect_entry(search_entry)
-
-    function search_entry:on_search_changed()
-        find_controller:search(self.text, find_options, 5000)
-    end
-
-    function search_entry:on_key_press_event(event)
-        local key = Gdk.keyval_name(event.keyval)
-        if key == "Return" then
-            if event.state.SHIFT_MASK then
-                find_controller:search_previous()
-            else
-                find_controller:search_next()
-            end
-        end
     end
 
     window = Gtk.ApplicationWindow {
@@ -128,7 +142,7 @@ function app:on_activate()
         ["Ctrl+Q"] = function() app:quit() end,
         ["Ctrl+W"] = function() window:close() end,
         ["Ctrl+F"] = function()
-            search_bar.search_mode_enabled = not search_bar.search_mode_enabled
+            search_button.active = not search_button.active
             return true
         end,
         ["Alt+BackSpace"] = function()
