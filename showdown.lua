@@ -82,26 +82,30 @@ function app:on_activate()
     local find_options = WebKit2.FindOptions{"WRAP_AROUND", "CASE_INSENSITIVE"}
     local find_controller = webview:get_find_controller()
 
+    local search_button
     local search_bar = Gtk.SearchBar {
         Gtk.SearchEntry {
             width = 320,
             on_search_changed = function(self)
                 find_controller:search(self.text, find_options, 5000)
             end,
-            on_key_press_event = function(self, event)
-                local key = Gdk.keyval_name(event.keyval)
-                if key == "Return" then
-                    if event.state.SHIFT_MASK then
-                        find_controller:search_previous()
-                    else
-                        find_controller:search_next()
-                    end
+            on_key_press_event = function(self, ev)
+                local label = Gtk.accelerator_get_label(ev.keyval, ev.state)
+                if label == "Return" then
+                    find_controller:search_next()
+                    return true
+                elseif label == "Shift+Return" then
+                    find_controller:search_previous()
+                    return true
+                elseif label == "Escape" then
+                    search_button.active = not search_button.active
+                    return true
                 end
             end
         }
     }
 
-    local search_button = Gtk.ToggleButton {
+    search_button = Gtk.ToggleButton {
         active = false,
         child = Gtk.Image.new_from_icon_name("edit-find-symbolic", 1),
         on_toggled = function(self)
