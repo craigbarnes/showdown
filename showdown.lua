@@ -143,8 +143,6 @@ function app:on_activate()
     window:set_wmclass("showdown", "Showdown")
 
     local keys = {
-        ["Ctrl+Q"] = function() app:quit() end,
-        ["Ctrl+W"] = function() window:close() end,
         ["Ctrl+F"] = function()
             search_button.active = not search_button.active
             return true
@@ -205,6 +203,7 @@ function app:on_activate()
     app:set_app_menu(appmenu)
     app:add_action(about_action)
     app:add_action(quit_action)
+    app:set_accels_for_action("app.quit", {"<Ctrl>Q", "<Ctrl>W"})
 
     local monitor = infile:monitor(lgi.Gio.FileMonitorFlags.NONE)
     function monitor:on_changed(file, ud, event)
