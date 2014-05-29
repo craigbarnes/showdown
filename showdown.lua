@@ -113,23 +113,6 @@ function app:on_activate()
         webview:load_html(html)
     end
 
-    window = Gtk.ApplicationWindow {
-        type = Gtk.WindowType.TOPLEVEL,
-        application = app,
-        icon_name = "showdown",
-        default_width = 750,
-        default_height = 520,
-        on_show = reload,
-        Gtk.Grid {
-            orientation = "VERTICAL",
-            search_bar,
-            webview
-        }
-    }
-
-    window:set_titlebar(header)
-    window:set_wmclass("showdown", "Showdown")
-
     local bindings = {
         ["Ctrl+F"] = function()
             search_button.active = not search_button.active
@@ -142,14 +125,26 @@ function app:on_activate()
         end
     }
 
-    function window:on_key_press_event(e)
-        local command = bindings[Gtk.accelerator_get_label(e.keyval, e.state)]
-        if command then
-            return command()
-        else
-            return false
-        end
-    end
+    window = Gtk.ApplicationWindow {
+        type = Gtk.WindowType.TOPLEVEL,
+        application = app,
+        icon_name = "showdown",
+        default_width = 750,
+        default_height = 520,
+        on_show = reload,
+        on_key_press_event = function(self, e)
+            local cmd = bindings[Gtk.accelerator_get_label(e.keyval, e.state)]
+            return cmd and cmd() or false
+        end,
+        Gtk.Grid {
+            orientation = "VERTICAL",
+            search_bar,
+            webview
+        }
+    }
+
+    window:set_titlebar(header)
+    window:set_wmclass("showdown", "Showdown")
 
     local about = Gtk.AboutDialog {
         program_name = "Showdown",
