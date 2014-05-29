@@ -130,7 +130,7 @@ function app:on_activate()
     window:set_titlebar(header)
     window:set_wmclass("showdown", "Showdown")
 
-    local keys = {
+    local bindings = {
         ["Ctrl+F"] = function()
             search_button.active = not search_button.active
             return true
@@ -142,19 +142,13 @@ function app:on_activate()
         end
     }
 
-    function window:on_key_press_event(event)
-        local label = Gtk.accelerator_get_label(event.keyval, event.state)
-        local val = keys[label]
-        if val then
-            local ok, ret
-            if type(val) == "function" then
-                ok, ret = pcall(val)
-            elseif type(val) == "table" then
-                ok, ret = pcall((table.unpack or unpack)(val))
-            end
-            if ok then return true end
+    function window:on_key_press_event(e)
+        local command = bindings[Gtk.accelerator_get_label(e.keyval, e.state)]
+        if command then
+            return command()
+        else
+            return false
         end
-        return false
     end
 
     local about = Gtk.AboutDialog {
