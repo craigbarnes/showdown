@@ -60,8 +60,7 @@ Keys          | Command
 --------------|------------------------------------------------
 Ctrl+f        | Open/close search bar
 Alt+Backspace | Return to document (e.g. after clicking a link)
-Ctrl+q        | Quit
-Ctrl+w        | Close window (currently equivalent to Quit)
+Ctrl+q/Ctrl+w | Quit
 
 History
 -------
