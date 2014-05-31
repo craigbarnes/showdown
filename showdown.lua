@@ -46,7 +46,7 @@ local template = [[
 
 function app:on_command_line(cmdline)
     local args = cmdline:get_arguments()
-    filename = assert(args[1], "No file was specified")
+    filename = assert(args[2], "No file was specified")
     infile = cmdline:create_file_for_arg(filename)
     assert(infile:query_exists(), "File doesn't exist")
     self:activate()
@@ -192,4 +192,4 @@ function app:on_activate()
     window:show_all()
 end
 
-return app:run{...}
+return app:run{arg[0], ...}
