@@ -125,12 +125,16 @@ function app:on_activate()
         end
     }
 
+    local screen = assert(Gdk.Screen:get_default())
+    local screen_height = assert(screen:get_height())
+    local screen_width = assert(screen:get_width())
+
     window = Gtk.ApplicationWindow {
         type = Gtk.WindowType.TOPLEVEL,
         application = app,
         icon_name = "showdown",
-        default_width = 750,
-        default_height = 520,
+        default_width = screen_width * 0.8,
+        default_height = screen_height * 0.92,
         on_show = reload,
         on_key_press_event = function(self, e)
             local cmd = bindings[Gtk.accelerator_get_label(e.keyval, e.state)]
