@@ -4,12 +4,17 @@ DATADIR    = $(PREFIX)/share
 DESKTOPDIR = $(DATADIR)/applications
 ICONDIR    = $(DATADIR)/icons/hicolor
 APPICONDIR = $(ICONDIR)/scalable/apps
+VERSION    = $(or $(shell git describe --abbrev=0),$(error No version info))
 
 all: showdown
 
 showdown: showdown.lua compile.sed gh.css
 	sed -f compile.sed showdown.lua > $@
 	chmod +x $@
+
+showdown-%.tar.gz:
+	@git archive --prefix=showdown-$*/ -o $@ $*
+	@echo 'Generated: $@'
 
 install: all
 	mkdir -p $(DESTDIR)$(BINDIR) $(DESTDIR)$(APPICONDIR)
@@ -30,6 +35,9 @@ post-install post-uninstall:
 	touch -c $(ICONDIR)
 	gtk-update-icon-cache -t $(ICONDIR)
 
+dist:
+	@$(MAKE) --no-print-directory showdown-$(VERSION).tar.gz
+
 clean:
 	$(RM) showdown
 
@@ -38,5 +46,5 @@ check:
 
 
 .PHONY: all install install-home uninstall post-install post-uninstall
-.PHONY: clean check
+.PHONY: dist clean check
 .DELETE_ON_ERROR:
