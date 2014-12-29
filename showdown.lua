@@ -32,6 +32,7 @@ local template = [[
 <head>
     <meta charset="utf-8">
     <title>%s</title>
+    <style>%s</style>
 </head>
 <body>
     <nav id="toc">
@@ -75,10 +76,6 @@ function app:on_activate()
     local context = WebKit2.WebContext.get_default()
     context:set_cache_model(WebKit2.CacheModel.DOCUMENT_VIEWER)
 
-    local viewgroup = webview:get_group()
-    local frameopts = WebKit2.InjectedContentFrames.TOP_ONLY
-    viewgroup:add_user_style_sheet(stylesheet, nil, nil, nil, frameopts)
-
     local find_options = WebKit2.FindOptions{"WRAP_AROUND", "CASE_INSENSITIVE"}
     local find_controller = webview:get_find_controller()
 
@@ -107,7 +104,7 @@ function app:on_activate()
         local text = assert(infile:load_contents())
         local doc = markdown(tostring(text), "toc")
         local title = doc.title or filename
-        local html = template:format(title, doc.index, doc.body)
+        local html = template:format(title, stylesheet, doc.index, doc.body)
         header.title = title
         header.subtitle = (title ~= filename) and filename or nil
         webview:load_html(html)
@@ -120,7 +117,6 @@ function app:on_activate()
         end,
         ["Alt+BackSpace"] = function()
             reload()
-            urichanged = false
             return true
         end
     }
