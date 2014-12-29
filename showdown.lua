@@ -3,12 +3,12 @@
 local lgi = require "lgi"
 local discount = require "discount"
 local markdown = discount.compile
-local GLib = lgi.GLib
-local Gio = lgi.Gio
-local Gtk = lgi.Gtk
-local Gdk = lgi.Gdk
+local GLib, Gio, Gtk, Gdk = lgi.GLib, lgi.Gio, lgi.Gtk, lgi.Gdk
 local WebKit2 = lgi.WebKit2
+local assert, tostring = assert, tostring
+local progname = arg[0]
 local filename, infile, window
+local _ENV = nil
 
 local style_path = GLib.get_user_config_dir() .. "/showdown/stylesheet.css"
 local style_file = Gio.File.new_for_path(style_path)
@@ -192,4 +192,4 @@ function app:on_activate()
     window:show_all()
 end
 
-return app:run{arg[0], ...}
+return app:run{progname, ...}
