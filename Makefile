@@ -39,7 +39,7 @@ dist:
 	@$(MAKE) --no-print-directory showdown-$(VERSION).tar.gz
 
 clean:
-	$(RM) showdown
+	$(RM) showdown showdown-*.tar.gz
 
 check:
 	@desktop-file-validate showdown.desktop && echo 'Desktop file valid'
