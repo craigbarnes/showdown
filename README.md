@@ -60,7 +60,7 @@ Keys          | Command
 --------------|------------------------------------------------
 Ctrl+f        | Open/close search bar
 Alt+Backspace | Return to document (e.g. after clicking a link)
-Ctrl+q/Ctrl+w | Quit
+Ctrl+q        | Quit
 
 History
 -------
@@ -71,7 +71,6 @@ History
 * Set document/window title from [Pandoc-style header], if available
 * Add a [GtkSearchBar]
 * Improve default stylesheet
-* Apply stylesheets using `WebKitWebViewGroup::add_user_style_sheet`
 * Allow loading user stylesheet from `$XDG_CONFIG_HOME/showdown/stylesheet.css`
 * Enable `DOCUMENT_VIEWER` cache model with `WebKitWebContext::set_cache_model`
 * Disable JavaScript, plugins and page cache via `WebKitSettings`
@@ -96,13 +95,13 @@ History
 Todo
 ----
 
+* Allow installation via [LuaRocks]
 * Keep scroll position after reloading
-* Allow opening/browsing directories
 * Add some way of opening files once running to allow launching without
   command-line arguments
 * Add support for drag and drop
-* Support other to-html languages and use `g_content_type_guess()` to
-  decide how to render
+* Add support for other compile-to-html languages and use
+  `g_content_type_guess()` to determine how to render
 
 License
 -------
