@@ -180,6 +180,12 @@ function app:on_activate()
             file_chooser:set_default_response(ACCEPT)
             file_chooser:set_transient_for(window)
 
+            if filename then
+                file_chooser:set_filename(filename)
+            else
+                file_chooser:set_current_folder(GLib.get_current_dir())
+            end
+
             local md = Gtk.FileFilter()
             md:add_mime_type("text/x-markdown")
             md:set_name("Markdown files")
