@@ -116,6 +116,7 @@ Public License version 3 for more details.
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
 [Lua]: http://lua.org/
 [LuaJIT]: http://luajit.org/
+[LuaRocks]: http://luarocks.org/
 [LGI]: https://github.com/pavouk/lgi
 [GTK]: http://www.gtk.org/
 [GtkSearchBar]: https://developer.gnome.org/gtk3/stable/GtkSearchBar.html
