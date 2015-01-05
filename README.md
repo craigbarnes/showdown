@@ -88,15 +88,6 @@ History
 * Add an application menu
 * Add an application icon
 
-Todo
-----
-
-* Allow installation via [LuaRocks]
-* Keep scroll position after reloading
-* Add support for drag and drop
-* Add support for other compile-to-html languages and use
-  `g_content_type_guess()` to determine how to render
-
 License
 -------
 
@@ -116,7 +107,6 @@ Public License version 3 for more details.
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
 [Lua]: http://lua.org/
 [LuaJIT]: http://luajit.org/
-[LuaRocks]: http://luarocks.org/
 [LGI]: https://github.com/pavouk/lgi
 [GTK]: http://www.gtk.org/
 [GtkSearchBar]: https://developer.gnome.org/gtk3/stable/GtkSearchBar.html
