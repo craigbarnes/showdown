@@ -19,7 +19,7 @@ Features
 * Uses a GitHub-inspired stylesheet by default
 * Supports custom user stylesheets
 * Generates a hierarchical table of contents from the document outline
-* Automatic, near-instant refresh when the source document is changed
+* Automatic refresh when the source document is changed
 * Integrated search bar
 
 Screenshot
@@ -48,12 +48,6 @@ Installation
 Usage
 -----
 
-Showdown was originally intended for quickly previewing Markdown files
-from the command-line. As such, it can only be started via a shell with
-a filename argument, e.g. `showdown example.md`. The ability to start as
-a normal application and browse and open files from within the GUI may
-be added later.
-
 ### Keyboard commands:
 
 Keys          | Command
@@ -70,6 +64,7 @@ History
 * Switch to new [lua-discount API]
 * Set document/window title from [Pandoc-style header], if available
 * Add a [GtkSearchBar]
+* Allow opening files from within the app via a [GtkFileChooserDialog]
 * Improve default stylesheet
 * Allow loading user stylesheet from `$XDG_CONFIG_HOME/showdown/stylesheet.css`
 * Enable `DOCUMENT_VIEWER` cache model with `WebKitWebContext::set_cache_model`
@@ -97,8 +92,6 @@ Todo
 
 * Allow installation via [LuaRocks]
 * Keep scroll position after reloading
-* Add some way of opening files once running to allow launching without
-  command-line arguments
 * Add support for drag and drop
 * Add support for other compile-to-html languages and use
   `g_content_type_guess()` to determine how to render
@@ -125,6 +118,7 @@ Public License version 3 for more details.
 [LGI]: https://github.com/pavouk/lgi
 [GTK]: http://www.gtk.org/
 [GtkSearchBar]: https://developer.gnome.org/gtk3/stable/GtkSearchBar.html
+[GtkFileChooserDialog]: https://developer.gnome.org/gtk3/stable/GtkFileChooserDialog.html
 [WebKitGTK]: http://webkitgtk.org/
 [lua-discount]: https://github.com/craigbarnes/lua-discount
 [lua-discount API]: https://github.com/craigbarnes/lua-discount#usage

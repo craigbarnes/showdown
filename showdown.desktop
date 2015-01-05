@@ -7,7 +7,4 @@ Terminal=false
 Type=Application
 StartupNotify=true
 Icon=showdown
-# This file exists to allow Showdown to be used as the default Markdown app.
-# It can't be launched without a file argument and so is hidden from menus.
 MimeType=text/x-markdown;
-NoDisplay=true

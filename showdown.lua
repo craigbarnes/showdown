@@ -5,7 +5,8 @@ local discount = require "discount"
 local markdown = discount.compile
 local GLib, Gio, Gtk, Gdk = lgi.GLib, lgi.Gio, lgi.Gtk, lgi.Gdk
 local WebKit2 = lgi.WebKit2
-local assert, tostring = assert, tostring
+local CANCEL, ACCEPT = Gtk.ResponseType.CANCEL, Gtk.ResponseType.ACCEPT
+local assert, tostring, stderr = assert, tostring, io.stderr
 local progname = arg[0]
 local filename, infile, window
 local _ENV = nil
@@ -47,9 +48,13 @@ local template = [[
 
 function app:on_command_line(cmdline)
     local args = cmdline:get_arguments()
-    filename = assert(args[2], "No file was specified")
-    infile = cmdline:create_file_for_arg(filename)
-    assert(infile:query_exists(), "File doesn't exist")
+    filename = args[2]
+    if filename then
+        infile = assert(cmdline:create_file_for_arg(filename))
+        assert(infile:query_exists(), "File doesn't exist")
+        local type = infile:query_file_type(Gio.FileQueryInfoFlags.NONE)
+        assert(type ~= "DIRECTORY", "Expecting file; got directory")
+    end
     self:activate()
     return 0
 end
@@ -92,15 +97,27 @@ function app:on_activate()
     }
 
     local search_button = Gtk.ToggleButton {
-        Gtk.Image.new_from_icon_name("edit-find-symbolic", 1),
+        id = "search_button",
+        child = Gtk.Image.new_from_icon_name("edit-find-symbolic", 1),
     }
 
     search_button:bind_property("active", search_bar, "search-mode-enabled",
                                 "BIDIRECTIONAL")
 
-    header:pack_end(search_button)
-
     local function reload()
+        if not infile or infile:query_exists() == false then
+            if filename then
+                -- TODO: Use Evince-style message banner instead of this
+                stderr:write("Warning: file not found: '", filename, "'\n")
+                header.title = filename
+                header.subtitle = "[File not found]"
+            else
+                header.title = ""
+                header.subtitle = ""
+            end
+            webview:load_uri("about:blank")
+            return
+        end
         local text = assert(infile:load_contents())
         local doc = markdown(tostring(text), "toc")
         local title = doc.title or filename
@@ -112,7 +129,12 @@ function app:on_activate()
 
     local bindings = {
         ["Ctrl+F"] = function()
+            local search_button = header.child.search_button
             search_button.active = not search_button.active
+            return true
+        end,
+        ["Ctrl+O"] = function()
+            header.child.open_button:clicked()
             return true
         end,
         ["Alt+BackSpace"] = function()
@@ -131,7 +153,6 @@ function app:on_activate()
         icon_name = "showdown",
         default_width = screen_width * 0.8,
         default_height = screen_height * 0.92,
-        on_show = reload,
         on_key_press_event = function(self, e)
             local cmd = bindings[Gtk.accelerator_get_label(e.keyval, e.state)]
             return cmd and cmd() or false
@@ -142,6 +163,44 @@ function app:on_activate()
             webview
         }
     }
+
+    local open_button = Gtk.Button {
+        id = "open_button",
+        child = Gtk.Image.new_from_icon_name("document-open-symbolic", 1),
+        on_clicked = function(self)
+            local file_chooser = Gtk.FileChooserDialog {
+                title = "Open",
+                action = Gtk.FileChooserAction.OPEN,
+                parent = window.child._widget,
+                buttons = {
+                    {"_Cancel", CANCEL},
+                    {"_Open", ACCEPT},
+                }
+            }
+            file_chooser:set_default_response(ACCEPT)
+            file_chooser:set_transient_for(window)
+
+            local md = Gtk.FileFilter()
+            md:add_mime_type("text/x-markdown")
+            md:set_name("Markdown files")
+            file_chooser:add_filter(md)
+
+            local all = Gtk.FileFilter()
+            all:add_mime_type("*")
+            all:set_name("All files")
+            file_chooser:add_filter(all)
+
+            if file_chooser:run() == ACCEPT then
+                filename = file_chooser:get_filename()
+                infile = Gio.File.new_for_path(filename)
+                reload()
+            end
+            file_chooser:destroy()
+        end
+    }
+
+    header:pack_start(open_button)
+    header:pack_end(search_button)
 
     window:set_titlebar(header)
     window:set_wmclass("showdown", "Showdown")
@@ -182,11 +241,17 @@ function app:on_activate()
     app:add_action(quit_action)
     app:set_accels_for_action("app.quit", {"<Ctrl>Q", "<Ctrl>W"})
 
+--[[ TODO: Fix this to work properly with the FileChooserDialog
     local monitor = infile:monitor(lgi.Gio.FileMonitorFlags.NONE)
     function monitor:on_changed(file, ud, event)
         if event == "CHANGED" or event == "CREATED" then
             reload()
         end
+    end
+]]
+
+    if infile then
+        reload()
     end
 
     window:show_all()
