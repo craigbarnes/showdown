@@ -41,9 +41,11 @@ compatible with Showdown.
 Installation
 ------------
 
+    luarocks install lgi
+    luarocks install discount
     git clone git://github.com/craigbarnes/showdown.git
     cd showdown
-    [sudo] make install [PREFIX=<prefix>] [DESTDIR=<destdir>]
+    make install
 
 Usage
 -----
