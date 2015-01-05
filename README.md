@@ -50,11 +50,11 @@ Usage
 
 ### Keyboard commands:
 
-Keys          | Command
---------------|------------------------------------------------
-Ctrl+f        | Open/close search bar
-Alt+Backspace | Return to document (e.g. after clicking a link)
-Ctrl+q        | Quit
+Keys    | Command
+--------|------------------------------------------------
+Ctrl+f  | Open/close search bar
+Ctrl+r  | Return to document (e.g. after clicking a link)
+Ctrl+q  | Quit
 
 History
 -------
@@ -65,6 +65,7 @@ History
 * Set document/window title from [Pandoc-style header], if available
 * Add a [GtkSearchBar]
 * Allow opening files from within the app via a [GtkFileChooserDialog]
+* Replace `key-press-event` handler with accelerator keys
 * Improve default stylesheet
 * Allow loading user stylesheet from `$XDG_CONFIG_HOME/showdown/stylesheet.css`
 * Enable `DOCUMENT_VIEWER` cache model with `WebKitWebContext::set_cache_model`
@@ -112,7 +113,7 @@ Public License version 3 for more details.
 
 
 [General Public License version 3]: http://www.gnu.org/licenses/gpl-3.0.html
-[Markdown]: http://daringfireball.net/projects/markdown/
+[Markdown]: https://en.wikipedia.org/wiki/Markdown
 [Lua]: http://lua.org/
 [LuaJIT]: http://luajit.org/
 [LGI]: https://github.com/pavouk/lgi

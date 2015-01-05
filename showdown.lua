@@ -4,6 +4,7 @@ local lgi = require "lgi"
 local discount = require "discount"
 local markdown = discount.compile
 local GLib, Gio, Gtk, Gdk = lgi.GLib, lgi.Gio, lgi.Gtk, lgi.Gdk
+local GClosure = lgi.GObject.Closure
 local WebKit2 = lgi.WebKit2
 local CANCEL, ACCEPT = Gtk.ResponseType.CANCEL, Gtk.ResponseType.ACCEPT
 local assert, tostring, stderr = assert, tostring, io.stderr
@@ -68,7 +69,7 @@ function app:on_activate()
         on_load_changed = function(self, event)
             if event == "FINISHED" and self.uri ~= "about:blank" then
                 header.title = self:get_title()
-                header.subtitle = "Hit Alt+Backspace to return"
+                header.subtitle = "Hit Ctrl+r to return"
             end
         end
     }
@@ -127,22 +128,6 @@ function app:on_activate()
         webview:load_html(html)
     end
 
-    local bindings = {
-        ["Ctrl+F"] = function()
-            local search_button = header.child.search_button
-            search_button.active = not search_button.active
-            return true
-        end,
-        ["Ctrl+O"] = function()
-            header.child.open_button:clicked()
-            return true
-        end,
-        ["Alt+BackSpace"] = function()
-            reload()
-            return true
-        end
-    }
-
     local screen = assert(Gdk.Screen:get_default())
     local screen_height = assert(screen:get_height())
     local screen_width = assert(screen:get_width())
@@ -153,10 +138,6 @@ function app:on_activate()
         icon_name = "showdown",
         default_width = screen_width * 0.8,
         default_height = screen_height * 0.92,
-        on_key_press_event = function(self, e)
-            local cmd = bindings[Gtk.accelerator_get_label(e.keyval, e.state)]
-            return cmd and cmd() or false
-        end,
         Gtk.Grid {
             orientation = "VERTICAL",
             search_bar,
@@ -205,9 +186,16 @@ function app:on_activate()
         end
     }
 
+    local CTRL, LOCKED = Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.LOCKED
+    local accels = Gtk.AccelGroup.new()
+    open_button:add_accelerator("clicked", accels, ("o"):byte(), CTRL, LOCKED)
+    search_button:add_accelerator("clicked", accels, ("f"):byte(), CTRL, LOCKED)
+    accels:connect(("r"):byte(), CTRL, LOCKED, GClosure(reload))
+
     header:pack_start(open_button)
     header:pack_end(search_button)
 
+    window:add_accel_group(accels)
     window:set_titlebar(header)
     window:set_wmclass("showdown", "Showdown")
 
