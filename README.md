@@ -19,7 +19,6 @@ Features
 * Uses a GitHub-inspired stylesheet by default
 * Supports custom user stylesheets
 * Generates a hierarchical table of contents from the document outline
-* Automatic refresh when the source document is changed
 * Integrated search bar
 
 Screenshot
