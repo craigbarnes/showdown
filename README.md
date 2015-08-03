@@ -29,6 +29,7 @@ Screenshot
 Requirements
 ------------
 
+* [Discount] (Likely available via your distribution's package manager)
 * [Lua] 5.1/5.2 or [LuaJIT] 2
 * [lua-discount]
 * [LGI]
@@ -106,6 +107,7 @@ Public License version 3 for more details.
 
 [General Public License version 3]: http://www.gnu.org/licenses/gpl-3.0.html
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
+[Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
 [Lua]: http://lua.org/
 [LuaJIT]: http://luajit.org/
 [LGI]: https://github.com/pavouk/lgi
