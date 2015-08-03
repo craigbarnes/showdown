@@ -30,6 +30,7 @@ Screenshot
 Requirements
 ------------
 
+* [Discount]
 * [Lua] 5.1/5.2 or [LuaJIT] 2
 * [lua-discount]
 * [LGI]
@@ -46,6 +47,12 @@ Installation
     git clone git://github.com/craigbarnes/showdown.git
     cd showdown
     make install
+
+If you need install [Discount] do so via your package manager. For example, in Ubuntu:
+
+    sudo apt-get install discount libmarkdown2 libmarkdown2-dev
+
+Or you can [build Discount from source] to ensure the latest version.
 
 Usage
 -----
@@ -107,6 +114,8 @@ Public License version 3 for more details.
 
 [General Public License version 3]: http://www.gnu.org/licenses/gpl-3.0.html
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
+[Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
+[build Discount from source]: https://github.com/Orc/discount/blob/master/INSTALL
 [Lua]: http://lua.org/
 [LuaJIT]: http://luajit.org/
 [LGI]: https://github.com/pavouk/lgi
