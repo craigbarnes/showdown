@@ -239,7 +239,7 @@ function app:on_activate()
     app:set_app_menu(appmenu)
     app:add_action(about_action)
     app:add_action(quit_action)
-    app:set_accels_for_action("app.quit", {"<Ctrl>Q", "<Ctrl>W"})
+    app:add_accelerator ("<Primary>q", "app.quit", null)
 
     if infile then
         reload()
