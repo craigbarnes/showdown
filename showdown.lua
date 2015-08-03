@@ -122,7 +122,11 @@ function app:on_activate()
         local text = assert(infile:load_contents())
         local doc = markdown(tostring(text), "toc")
         local title = doc.title or filename
-        local html = template:format(title, stylesheet, doc.index, doc.body)
+        index = doc.index
+        if doc.index == nil then
+            index = ""
+        end
+        local html = template:format(title, stylesheet, index, doc.body)
         header.title = title
         header.subtitle = (title ~= filename) and filename or nil
         webview:load_html(html)
