@@ -126,6 +126,12 @@ function app:on_activate()
         header.title = title
         header.subtitle = (title ~= filename) and filename or nil
         webview:load_html(html)
+        local monitor = infile:monitor(lgi.Gio.FileMonitorFlags.NONE)
+            function monitor:on_changed(file, ud, event)
+            if event == "CHANGED" or event == "CREATED" then
+                reload()
+            end
+        end
     end
 
     local screen = assert(Gdk.Screen:get_default())
@@ -234,15 +240,6 @@ function app:on_activate()
     app:add_action(about_action)
     app:add_action(quit_action)
     app:set_accels_for_action("app.quit", {"<Ctrl>Q", "<Ctrl>W"})
-
---[[ TODO: Fix this to work properly with the FileChooserDialog
-    local monitor = infile:monitor(lgi.Gio.FileMonitorFlags.NONE)
-    function monitor:on_changed(file, ud, event)
-        if event == "CHANGED" or event == "CREATED" then
-            reload()
-        end
-    end
-]]
 
     if infile then
         reload()
