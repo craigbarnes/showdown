@@ -9,7 +9,7 @@ local WebKit2 = lgi.WebKit2
 local CANCEL, ACCEPT = Gtk.ResponseType.CANCEL, Gtk.ResponseType.ACCEPT
 local assert, tostring, stderr = assert, tostring, io.stderr
 local progname = arg[0]
-local filename, infile, window
+local baseuri, filename, infile, window
 local _ENV = nil
 
 local style_path = GLib.get_user_config_dir() .. "/showdown/stylesheet.css"
@@ -52,6 +52,7 @@ function app:on_command_line(cmdline)
     filename = args[2]
     if filename then
         infile = assert(cmdline:create_file_for_arg(filename))
+        baseuri = "file://"..filename
         assert(infile:query_exists(), "File doesn't exist")
         local type = infile:query_file_type(Gio.FileQueryInfoFlags.NONE)
         assert(type ~= "DIRECTORY", "Expecting file; got directory")
@@ -67,7 +68,7 @@ function app:on_activate()
         vexpand = true,
         hexpand = true,
         on_load_changed = function(self, event)
-            if event == "FINISHED" and self.uri ~= "about:blank" then
+            if event == "FINISHED" and self.uri ~= baseuri then
                 header.title = self:get_title()
                 header.subtitle = "Hit Ctrl+r to return"
             end
@@ -129,7 +130,7 @@ function app:on_activate()
         local html = template:format(title, stylesheet, index, doc.body)
         header.title = title
         header.subtitle = (title ~= filename) and filename or nil
-        webview:load_html(html)
+        webview:load_html(html, baseuri)
         local monitor = infile:monitor(lgi.Gio.FileMonitorFlags.NONE)
             function monitor:on_changed(file, ud, event)
             if event == "CHANGED" or event == "CREATED" then
@@ -190,6 +191,7 @@ function app:on_activate()
             if file_chooser:run() == ACCEPT then
                 filename = file_chooser:get_filename()
                 infile = Gio.File.new_for_path(filename)
+                baseuri = "file://"..filename
                 reload()
             end
             file_chooser:destroy()
