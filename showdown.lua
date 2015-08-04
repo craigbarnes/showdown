@@ -23,8 +23,11 @@ if not stylesheet then
     -- @end
 end
 
+math.randomseed (os.time())
+id_suffix = math.random(333)
+
 local app = Gtk.Application {
-    application_id = "org.showdown",
+    application_id = "org.showdown"..id_suffix,
     flags = Gio.ApplicationFlags.HANDLES_COMMAND_LINE
 }
 
