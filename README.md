@@ -1,7 +1,7 @@
 Showdown
 ========
 
-Showdown is a simple [Markdown] viewer written in [Lua] and [GTK]. It
+Showdown is a simple [Markdown] viewer written in [Vala] and [GTK]. It
 converts Markdown into HTML, then presents it in a [WebKitGTK] view. So
 instead of doing this:
 
@@ -29,22 +29,17 @@ Screenshot
 Requirements
 ------------
 
-* [Lua] 5.1/5.2 or [LuaJIT] 2
-* [lua-discount]
-* [LGI]
+* [Vala] compiler
+* [GNU Make] `>= 3.81`
 
-**Note:** [lua-discount] is not to be confused with the unmaintained
-module at <https://github.com/asb/lua-discount/>, which is not
-compatible with Showdown.
 
 Installation
 ------------
 
-    luarocks install lgi
-    luarocks install discount
     git clone git://github.com/craigbarnes/showdown.git
     cd showdown
-    make install
+    make
+    sudo make install
 
 Usage
 -----
@@ -56,38 +51,6 @@ Keys    | Command
 Ctrl+f  | Open/close search bar
 Ctrl+r  | Return to document (e.g. after clicking a link)
 Ctrl+q  | Quit
-
-History
--------
-
-### Pending release
-
-* Switch to new [lua-discount API]
-* Set document/window title from [Pandoc-style header], if available
-* Add a [GtkSearchBar]
-* Allow opening files from within the app via a [GtkFileChooserDialog]
-* Replace `key-press-event` handler with accelerator keys
-* Improve default stylesheet
-* Allow loading user stylesheet from `$XDG_CONFIG_HOME/showdown/stylesheet.css`
-* Enable `DOCUMENT_VIEWER` cache model with `WebKitWebContext::set_cache_model`
-* Disable JavaScript, plugins and page cache via `WebKitSettings`
-* Process command-line arguments using `GApplication::command-line`
-* Load document directly, instead of as temporary file (upstream bug
-  necessitating this was fixed)
-
-### 0.2
-
-* Add a table of contents to the rendered output
-* Use a temporary file, to make internal fragment links work correctly
-* Improve template stylesheet
-* Use [lua-discount] instead of Lunamark
-
-### 0.1
-
-* Converted to WebKit2 API
-* Immediately reload document when edited (using GIO file monitoring)
-* Add an application menu
-* Add an application icon
 
 License
 -------
@@ -106,13 +69,7 @@ Public License version 3 for more details.
 
 [General Public License version 3]: http://www.gnu.org/licenses/gpl-3.0.html
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
-[Lua]: http://lua.org/
-[LuaJIT]: http://luajit.org/
-[LGI]: https://github.com/pavouk/lgi
+[Vala]: https://wiki.gnome.org/Projects/Vala
 [GTK]: http://www.gtk.org/
-[GtkSearchBar]: https://developer.gnome.org/gtk3/stable/GtkSearchBar.html
-[GtkFileChooserDialog]: https://developer.gnome.org/gtk3/stable/GtkFileChooserDialog.html
+[GNU Make]: https://www.gnu.org/software/make/
 [WebKitGTK]: http://webkitgtk.org/
-[lua-discount]: https://github.com/craigbarnes/lua-discount
-[lua-discount API]: https://github.com/craigbarnes/lua-discount#usage
-[Pandoc-style header]: http://www.pell.portland.or.us/~orc/Code/discount/#headers
