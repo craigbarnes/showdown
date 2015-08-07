@@ -1,24 +1,67 @@
 namespace Showdown {
 
 class Window: Gtk.ApplicationWindow {
+    public File? infile = null;
+    public Gtk.HeaderBar header;
+    public Gtk.SearchBar search_bar;
+    public Gtk.ToggleButton search_button;
+    public WebKit.WebView webview;
+
     public Window(Application app) {
         Object(application: app, title: "Showdown");
 
-        var header = new Gtk.HeaderBar();
+        var search_entry = new Gtk.SearchEntry();
+        search_entry.width_chars = 42;
+        search_bar = new Gtk.SearchBar();
+        search_bar.add(search_entry);
+
+        var search_icon = new Gtk.Image.from_icon_name (
+            "edit-find-symbolic",
+            Gtk.IconSize.MENU
+        );
+
+        var accels = new Gtk.AccelGroup();
+        add_accel_group(accels);
+
+        search_button = new Gtk.ToggleButton();
+        search_button.add(search_icon);
+        search_button.bind_property (
+            "active",
+            search_bar, "search-mode-enabled",
+            BindingFlags.BIDIRECTIONAL
+        );
+        search_button.add_accelerator (
+            "clicked", accels,
+            'f', Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.LOCKED
+        );
+
+        header = new Gtk.HeaderBar();
         header.show_close_button = true;
-        header.set_title("Showdown");
+        header.pack_end(search_button);
         set_titlebar(header);
+
+        webview = new WebKit.WebView();
+        webview.vexpand = true;
+        webview.hexpand = true;
 
         var screen = Gdk.Screen.get_default();
         var height = screen.get_height() * 0.8;
         var width = screen.get_width() * 0.92;
         set_default_size((int)width, (int)height);
 
-        var label = new Gtk.Label("TODO");
-        add(label);
-        set_border_width(20);
+        var grid = new Gtk.Grid();
+        grid.orientation = Gtk.Orientation.VERTICAL;
+        grid.add(search_bar);
+        grid.add(webview);
+        add(grid);
 
         show_all();
+    }
+
+    public void open_file(File file) {
+        infile = file;
+        header.title = file.get_path();
+        webview.load_uri("https://wikipedia.org/");
     }
 }
 
@@ -26,8 +69,32 @@ class Application: Gtk.Application {
     public Application() {
         Object (
             application_id: "org.showdown",
-            flags: 0 // ApplicationFlags.HANDLES_COMMAND_LINE
+            flags: ApplicationFlags.HANDLES_COMMAND_LINE
         );
+    }
+
+    public override int command_line(ApplicationCommandLine cmdline) {
+        hold();
+        var window = new Window(this);
+        add_window(window);
+
+        var args = cmdline.get_arguments();
+        if (args.length >= 2) {
+            var path = args[1];
+            var file = cmdline.create_file_for_arg(path);
+            if (file.query_exists() == false) {
+                stderr.printf("File doesn't exist: %s\n", path);
+                Process.exit(1);
+            }
+            if (file.query_file_type(0) == FileType.DIRECTORY) {
+                stderr.printf("Expecting file; got directory: %s\n", path);
+                Process.exit(1);
+            }
+            window.open_file(file);
+        }
+
+        release();
+        return 0;
     }
 
     void about() {
@@ -38,9 +105,8 @@ class Application: Gtk.Application {
             "comments", "Simple Markdown viewer",
             "copyright", "Copyright 2015 Craig Barnes",
             "logo-icon-name", "showdown",
-            "license-type", Gtk.License.GPL_3_0_ONLY,
-            "website", "https://github.com/craigbarnes/showdown",
-            "website-label", "https://github.com/craigbarnes/showdown"
+            "license-type", Gtk.License.GPL_3_0,
+            "website", "https://github.com/craigbarnes/showdown"
         );
     }
 
@@ -48,11 +114,6 @@ class Application: Gtk.Application {
         {"about", about},
         {"quit", quit},
     };
-
-    protected override void activate() {
-        var window = new Window(this);
-        add_window(window);
-    }
 
     protected override void startup() {
         base.startup();
