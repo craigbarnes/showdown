@@ -2,6 +2,7 @@ namespace Showdown {
 
 class Window: Gtk.ApplicationWindow {
     public File? infile = null;
+    public string? filename = null;
     public Gtk.HeaderBar header;
     public Gtk.SearchBar search_bar;
     public Gtk.ToggleButton search_button;
@@ -72,10 +73,31 @@ class Window: Gtk.ApplicationWindow {
         show_all();
     }
 
-    public void open_file(File file) {
-        infile = file;
-        header.title = file.get_path();
-        webview.load_uri("https://wikipedia.org/");
+    public void reload() {
+        if (infile == null || infile.query_exists() == false) {
+            if (filename != null) {
+                // TODO: Use Evince-style message banner instead of this
+                stderr.printf("Warning: file not found: '%s'\n", filename);
+                header.title = filename;
+                header.subtitle = "[File not found]";
+            } else {
+                header.title = "";
+                header.subtitle = "";
+            }
+            webview.load_uri("about:blank");
+            return;
+        }
+        try {
+            uint8[] text;
+            infile.load_contents(null, out text, null);
+            // TODO: Convert Markdown input text to HTML
+            // TODO: Inject stylesheet and table of contents
+            header.title = infile.get_basename();
+            header.subtitle = infile.get_parent().get_path();
+            webview.load_html((string)text, infile.get_uri());
+        } catch (Error e) {
+            stderr.printf("Error: %s\n", e.message);
+        }
     }
 }
 
@@ -104,7 +126,9 @@ class Application: Gtk.Application {
                 stderr.printf("Expecting file; got directory: %s\n", path);
                 Process.exit(1);
             }
-            window.open_file(file);
+            window.filename = path;
+            window.infile = file;
+            window.reload();
         }
 
         release();
