@@ -6,10 +6,14 @@ ICONDIR    = $(DATADIR)/icons/hicolor
 APPICONDIR = $(ICONDIR)/scalable/apps
 VERSION    = $(or $(shell git describe --abbrev=0),$(error No version info))
 
+PKGCONFIG  = pkg-config --silence-errors 2>/dev/null
+PRE312GTK  = $(shell $(PKGCONFIG) --exists 'gtk+-3.0 < 3.12' && echo 1)
+VALAFLAGS += $(if $(PRE312GTK), -D HAVE_PRE_3_12_GTK)
+
 all: showdown
 
 showdown: showdown.vala
-	valac --pkg gtk+-3.0 --pkg webkit2gtk-4.0 -o $@ $<
+	valac $(VALAFLAGS) --pkg gtk+-3.0 --pkg webkit2gtk-4.0 -o $@ $<
 
 showdown-%.tar.gz:
 	@git archive --prefix=showdown-$*/ -o $@ $*

@@ -187,10 +187,12 @@ class Application: Gtk.Application {
         menu.freeze();
         set_app_menu(menu);
 
+#if HAVE_PRE_3_12_GTK
+        add_accelerator("<Primary>Q", "app.quit", null);
+#else
         const string[] quit_accels = {"<Primary>Q", null};
         set_accels_for_action("app.quit", quit_accels);
-        // TODO: Use the following (now deprecated) API for pre-3.12 GTK:
-        // add_accelerator("<Primary>Q", "app.quit", null);
+#endif
     }
 
     public static int main(string[] args) {
