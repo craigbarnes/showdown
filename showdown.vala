@@ -6,12 +6,25 @@ class Window: Gtk.ApplicationWindow {
     public Gtk.SearchBar search_bar;
     public Gtk.ToggleButton search_button;
     public WebKit.WebView webview;
+    public WebKit.FindController find_controller;
 
     public Window(Application app) {
-        Object(application: app, title: "Showdown");
+        Object(application: app, title: "Showdown", icon_name: "showdown");
 
         var search_entry = new Gtk.SearchEntry();
         search_entry.width_chars = 42;
+
+        search_entry.search_changed.connect(() => {
+            var find_options =
+                WebKit.FindOptions.WRAP_AROUND +
+                WebKit.FindOptions.CASE_INSENSITIVE;
+            find_controller.search(search_entry.text, find_options, 5000);
+        });
+
+        search_entry.activate.connect(() => {
+            find_controller.search_next();
+        });
+
         search_bar = new Gtk.SearchBar();
         search_bar.add(search_entry);
 
@@ -43,6 +56,7 @@ class Window: Gtk.ApplicationWindow {
         webview = new WebKit.WebView();
         webview.vexpand = true;
         webview.hexpand = true;
+        find_controller = webview.get_find_controller();
 
         var screen = Gdk.Screen.get_default();
         var height = screen.get_height() * 0.8;
