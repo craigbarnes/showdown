@@ -2,7 +2,7 @@ Showdown
 ========
 
 Showdown is a simple [Markdown] viewer written in [Vala] and [GTK]. It
-converts Markdown into HTML, then presents it in a [WebKitGTK] view. So
+converts Markdown into HTML, then presents it in a [WebKit2GTK] view. So
 instead of doing this:
 
     markdown somefile.md > tmp.html
@@ -31,7 +31,7 @@ Requirements
 
 * [Vala] compiler
 * [GNU Make] `>= 3.81`
-
+* [WebKit2GTK] `2.8.4`
 
 Installation
 ------------
@@ -72,4 +72,4 @@ Public License version 3 for more details.
 [Vala]: https://wiki.gnome.org/Projects/Vala
 [GTK]: http://www.gtk.org/
 [GNU Make]: https://www.gnu.org/software/make/
-[WebKitGTK]: http://webkitgtk.org/
+[WebKit2GTK]: http://webkitgtk.org/
