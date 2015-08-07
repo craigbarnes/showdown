@@ -183,7 +183,7 @@ class Application: Gtk.Application {
         unowned List<Gtk.Window> windows = get_windows();
         Gtk.show_about_dialog(windows != null ? windows.data : null,
             "program-name", "Showdown",
-            "version", "0.1",
+            "version", "0.4",
             "comments", "Simple Markdown viewer",
             "copyright", "Copyright 2015 Craig Barnes",
             "logo-icon-name", "showdown",
