@@ -112,13 +112,33 @@ class Window: Gtk.ApplicationWindow {
             return;
         }
         try {
-            uint8[] text;
-            infile.load_contents(null, out text, null);
-            // TODO: Convert Markdown input text to HTML
-            // TODO: Inject stylesheet and table of contents
-            header.title = infile.get_basename();
-            header.subtitle = infile.get_parent().get_path();
-            webview.load_html((string)text, infile.get_uri());
+            string output, errors;
+            string[] argv = {
+                "pandoc", // TODO: Make this configurable
+                "-f", "markdown",
+                "-t", "html5",
+                filename,
+                null
+            };
+            bool ok = Process.spawn_sync (
+                null, // Working directory; null to inherit
+                argv,
+                null, // Enviroment; null to inherit
+                SpawnFlags.SEARCH_PATH,
+                null,
+                out output,
+                out errors,
+                null
+            );
+            if (ok) {
+                header.title = infile.get_basename();
+                header.subtitle = infile.get_parent().get_path();
+                // TODO: Inject stylesheet and table of contents
+                webview.load_html(output, infile.get_uri());
+            } else {
+                // TODO: proper error handling
+                stderr.printf("%s\n", errors);
+            }
         } catch (Error e) {
             stderr.printf("Error: %s\n", e.message);
         }
