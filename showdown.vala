@@ -34,9 +34,6 @@ class Window: Gtk.ApplicationWindow {
             Gtk.IconSize.MENU
         );
 
-        var accels = new Gtk.AccelGroup();
-        add_accel_group(accels);
-
         search_button = new Gtk.ToggleButton();
         search_button.add(search_icon);
         search_button.bind_property (
@@ -44,10 +41,13 @@ class Window: Gtk.ApplicationWindow {
             search_bar, "search-mode-enabled",
             BindingFlags.BIDIRECTIONAL
         );
-        search_button.add_accelerator (
-            "clicked", accels,
-            'f', Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.LOCKED
-        );
+
+        var accels = new Gtk.AccelGroup();
+        const Gdk.ModifierType CTRL = Gdk.ModifierType.CONTROL_MASK;
+        const Gtk.AccelFlags LOCKED = Gtk.AccelFlags.LOCKED;
+        search_button.add_accelerator("clicked", accels, 'f', CTRL, LOCKED);
+        accels.connect('r', CTRL, LOCKED, reload_cb);
+        add_accel_group(accels);
 
         header = new Gtk.HeaderBar();
         header.show_close_button = true;
@@ -58,6 +58,25 @@ class Window: Gtk.ApplicationWindow {
         webview.vexpand = true;
         webview.hexpand = true;
         find_controller = webview.get_find_controller();
+
+        webview.load_changed.connect((self, event) => {
+            if (
+                event == WebKit.LoadEvent.FINISHED &&
+                self.uri != "about:blank" &&
+                self.uri != infile.get_uri()
+            ) {
+                header.title = self.get_title();
+                header.subtitle = "Hit Ctrl+r to return";
+            }
+        });
+
+        var settings = webview.get_settings();
+        settings.enable_javascript = false;
+        settings.enable_plugins = false;
+        settings.enable_page_cache = false;
+
+        var context = WebKit.WebContext.get_default();
+        context.set_cache_model(WebKit.CacheModel.DOCUMENT_VIEWER);
 
         var screen = Gdk.Screen.get_default();
         var height = screen.get_height() * 0.8;
@@ -71,6 +90,11 @@ class Window: Gtk.ApplicationWindow {
         add(grid);
 
         show_all();
+    }
+
+    bool reload_cb(Gtk.AccelGroup g, Object o, uint key, Gdk.ModifierType m) {
+        reload();
+        return true;
     }
 
     public void reload() {
