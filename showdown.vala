@@ -29,28 +29,37 @@ class Window: Gtk.ApplicationWindow {
         search_bar = new Gtk.SearchBar();
         search_bar.add(search_entry);
 
-        var search_icon = new Gtk.Image.from_icon_name (
-            "edit-find-symbolic",
-            Gtk.IconSize.MENU
-        );
-
         search_button = new Gtk.ToggleButton();
-        search_button.add(search_icon);
+        search_button.add(get_menu_icon("edit-find-symbolic"));
         search_button.bind_property (
             "active",
             search_bar, "search-mode-enabled",
             BindingFlags.BIDIRECTIONAL
         );
 
+        var open_button = new Gtk.Button();
+        open_button.add(get_menu_icon("document-open-symbolic"));
+        open_button.clicked.connect(() => {
+            var dialog = new OpenDialog(this, filename);
+            if (dialog.run() == Gtk.ResponseType.ACCEPT) {
+                filename = dialog.get_filename();
+                infile = File.new_for_path(filename);
+                reload();
+            }
+            dialog.destroy();
+        });
+
         var accels = new Gtk.AccelGroup();
         const Gdk.ModifierType CTRL = Gdk.ModifierType.CONTROL_MASK;
         const Gtk.AccelFlags LOCKED = Gtk.AccelFlags.LOCKED;
+        open_button.add_accelerator("clicked", accels, 'o', CTRL, LOCKED);
         search_button.add_accelerator("clicked", accels, 'f', CTRL, LOCKED);
         accels.connect('r', CTRL, LOCKED, reload_cb);
         add_accel_group(accels);
 
         header = new Gtk.HeaderBar();
         header.show_close_button = true;
+        header.pack_start(open_button);
         header.pack_end(search_button);
         set_titlebar(header);
 
@@ -219,6 +228,10 @@ class Application: Gtk.Application {
         var app = new Application();
         return app.run(args);
     }
+}
+
+private Gtk.Image get_menu_icon(string name) {
+    return new Gtk.Image.from_icon_name(name, Gtk.IconSize.MENU);
 }
 
 }

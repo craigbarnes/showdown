@@ -12,8 +12,8 @@ VALAFLAGS += $(if $(PRE312GTK), -D HAVE_PRE_3_12_GTK)
 
 all: showdown
 
-showdown: showdown.vala
-	valac $(VALAFLAGS) --pkg gtk+-3.0 --pkg webkit2gtk-4.0 -o $@ $<
+showdown: showdown.vala open.vala
+	valac $(VALAFLAGS) --pkg gtk+-3.0 --pkg webkit2gtk-4.0 -o $@ $^
 
 showdown-%.tar.gz:
 	@git archive --prefix=showdown-$*/ -o $@ $*
