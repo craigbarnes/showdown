@@ -1,7 +1,10 @@
-/-- @Default stylesheet/ {
-    r gh.css
-    i stylesheet = [=[
-    a ]=]
+/^$TEMPLATE/ {
+    r template.html
+    d
 }
 
-/-- @Default stylesheet/, /-- @end/d
+/^$STYLESHEET/ {
+    r gh.css
+    d
+}
+

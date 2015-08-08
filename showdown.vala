@@ -142,8 +142,13 @@ class Window: Gtk.ApplicationWindow {
             if (ok) {
                 header.title = infile.get_basename();
                 header.subtitle = infile.get_parent().get_path();
-                // TODO: Inject stylesheet and table of contents
-                webview.load_html(output, infile.get_uri());
+                var html = document_template.printf(
+                    "TODO: Page Title",
+                    default_stylesheet,
+                    "TODO: Table of Contents",
+                    output
+                );
+                webview.load_html(html, infile.get_uri());
             } else {
                 // TODO: proper error handling
                 stderr.printf("%s\n", errors);

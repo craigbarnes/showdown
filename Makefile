@@ -8,12 +8,16 @@ VERSION    = $(or $(shell git describe --abbrev=0),$(error No version info))
 
 PKGCONFIG  = pkg-config --silence-errors 2>/dev/null
 PRE312GTK  = $(shell $(PKGCONFIG) --exists 'gtk+-3.0 < 3.12' && echo 1)
+VALAFLAGS  = -X '-Wno-incompatible-pointer-types'
 VALAFLAGS += $(if $(PRE312GTK), -D HAVE_PRE_3_12_GTK)
 
 all: showdown
 
-showdown: showdown.vala open.vala
+showdown: showdown.vala open.vala resources.vala
 	valac $(VALAFLAGS) --pkg gtk+-3.0 --pkg webkit2gtk-4.0 -o $@ $^
+
+resources.vala: resources.vala.in template.html gh.css compile.sed
+	sed -f compile.sed $< > $@
 
 showdown-%.tar.gz:
 	@git archive --prefix=showdown-$*/ -o $@ $*
@@ -42,7 +46,7 @@ dist:
 	@$(MAKE) --no-print-directory showdown-$(VERSION).tar.gz
 
 clean:
-	$(RM) showdown showdown-*.tar.gz
+	$(RM) resources.vala showdown showdown-*.tar.gz
 
 check:
 	@desktop-file-validate showdown.desktop && echo 'Desktop file valid'

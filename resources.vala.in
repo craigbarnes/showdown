@@ -1,0 +1,12 @@
+namespace Showdown {
+
+static const string document_template = """
+$TEMPLATE
+""";
+
+static const string default_stylesheet = """
+$STYLESHEET
+""";
+
+}
+
