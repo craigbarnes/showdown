@@ -41,6 +41,14 @@ Installation
     make
     sudo make install
 
+If you're compiling and installing for personal use, also run the
+following command to update the desktop file and icon caches:
+
+    sudo make post-install
+
+For packaging purposes, most distros have equivalent
+post-install/post-uninstall macros that should be used instead.
+
 Usage
 -----
 
