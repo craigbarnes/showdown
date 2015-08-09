@@ -56,7 +56,8 @@ Usage
 
 Keys    | Command
 --------|------------------------------------------------
-Ctrl+f  | Open/close search bar
+Ctrl+o  | Open file
+Ctrl+f  | Show search bar
 Ctrl+r  | Return to document (e.g. after clicking a link)
 Ctrl+q  | Quit
 
