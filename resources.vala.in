@@ -4,6 +4,10 @@ static const string document_template = """
 $TEMPLATE
 """;
 
+static const string error_template = """
+$ERROR_TEMPLATE
+""";
+
 static const string default_stylesheet = """
 $STYLESHEET
 """;

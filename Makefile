@@ -16,7 +16,7 @@ all: showdown
 showdown: showdown.vala open.vala resources.vala
 	valac $(VALAFLAGS) --pkg gtk+-3.0 --pkg webkit2gtk-4.0 -o $@ $^
 
-resources.vala: resources.vala.in template.html gh.css compile.sed
+resources.vala: resources.vala.in template.html error.html gh.css compile.sed
 	sed -f compile.sed $< > $@
 
 showdown-%.tar.gz:

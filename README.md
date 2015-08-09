@@ -31,7 +31,7 @@ Requirements
 
 * [Vala] compiler
 * [GNU Make] `>= 3.81`
-* [WebKit2GTK] `2.8.4`
+* [WebKit2GTK] `>= 2.8.4`
 
 Installation
 ------------

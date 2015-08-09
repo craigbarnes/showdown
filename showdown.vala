@@ -1,7 +1,6 @@
 namespace Showdown {
 
 class Window: Gtk.ApplicationWindow {
-    public File? infile = null;
     public string? filename = null;
     public Gtk.HeaderBar header;
     public Gtk.SearchBar search_bar;
@@ -43,7 +42,6 @@ class Window: Gtk.ApplicationWindow {
             var dialog = new OpenDialog(this, filename);
             if (dialog.run() == Gtk.ResponseType.ACCEPT) {
                 filename = dialog.get_filename();
-                infile = File.new_for_path(filename);
                 reload();
             }
             dialog.destroy();
@@ -58,6 +56,7 @@ class Window: Gtk.ApplicationWindow {
         add_accel_group(accels);
 
         header = new Gtk.HeaderBar();
+        header.title = "Markdown Viewer";
         header.show_close_button = true;
         header.pack_start(open_button);
         header.pack_end(search_button);
@@ -72,9 +71,9 @@ class Window: Gtk.ApplicationWindow {
             if (
                 event == WebKit.LoadEvent.FINISHED &&
                 self.uri != "about:blank" &&
-                self.uri != infile.get_uri()
+                self.uri != File.new_for_path(filename).get_uri()
             ) {
-                header.title = self.get_title();
+                header.title = webview.uri;
                 header.subtitle = "Hit Ctrl+r to return";
             }
         });
@@ -107,17 +106,21 @@ class Window: Gtk.ApplicationWindow {
     }
 
     public void reload() {
-        if (infile == null || infile.query_exists() == false) {
-            if (filename != null) {
-                // TODO: Use Evince-style message banner instead of this
-                stderr.printf("Warning: file not found: '%s'\n", filename);
-                header.title = filename;
-                header.subtitle = "[File not found]";
-            } else {
-                header.title = "";
-                header.subtitle = "";
-            }
-            webview.load_uri("about:blank");
+        if (filename == null) {
+            return;
+        }
+        string? failed = null;
+        var file = File.new_for_path(filename);
+        if (file.query_exists() == false) {
+            failed = "File doesn't exist";
+        } else if (file.query_file_type(0) == FileType.DIRECTORY) {
+            failed = "Can't open a directory";
+        }
+        if (failed != null) {
+            header.title = "Markdown Viewer";
+            header.subtitle = "";
+            var html = error_template.printf(file.get_uri(), failed);
+            webview.load_alternate_html(html, "about:blank", null);
             return;
         }
         try {
@@ -140,15 +143,15 @@ class Window: Gtk.ApplicationWindow {
                 null
             );
             if (ok) {
-                header.title = infile.get_basename();
-                header.subtitle = infile.get_parent().get_path();
+                header.title = file.get_basename();
+                header.subtitle = file.get_parent().get_path();
                 var html = document_template.printf(
                     "TODO: Page Title",
                     default_stylesheet,
                     "TODO: Table of Contents",
                     output
                 );
-                webview.load_html(html, infile.get_uri());
+                webview.load_html(html, file.get_uri());
             } else {
                 // TODO: proper error handling
                 stderr.printf("%s\n", errors);
@@ -170,25 +173,12 @@ class Application: Gtk.Application {
     public override int command_line(ApplicationCommandLine cmdline) {
         hold();
         var window = new Window(this);
-        add_window(window);
-
         var args = cmdline.get_arguments();
         if (args.length >= 2) {
-            var path = args[1];
-            var file = cmdline.create_file_for_arg(path);
-            if (file.query_exists() == false) {
-                stderr.printf("File doesn't exist: %s\n", path);
-                Process.exit(1);
-            }
-            if (file.query_file_type(0) == FileType.DIRECTORY) {
-                stderr.printf("Expecting file; got directory: %s\n", path);
-                Process.exit(1);
-            }
-            window.filename = path;
-            window.infile = file;
+            window.filename = args[1];
             window.reload();
         }
-
+        add_window(window);
         release();
         return 0;
     }
