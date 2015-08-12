@@ -87,8 +87,8 @@ class Window: Gtk.ApplicationWindow {
         context.set_cache_model(WebKit.CacheModel.DOCUMENT_VIEWER);
 
         var screen = Gdk.Screen.get_default();
-        var height = screen.get_height() * 0.8;
-        var width = screen.get_width() * 0.92;
+        var height = screen.get_height() * 0.92;
+        var width = screen.get_width() * 0.8;
         set_default_size((int)width, (int)height);
 
         var grid = new Gtk.Grid();
