@@ -129,6 +129,9 @@ class Window: Gtk.ApplicationWindow {
                 "pandoc", // TODO: Make this configurable
                 "-f", "markdown",
                 "-t", "html5",
+                "--template", "pandoc-template.html",
+                "--toc",
+                // "--toc-depth", "2",
                 filename,
                 null
             };
@@ -148,7 +151,6 @@ class Window: Gtk.ApplicationWindow {
                 var html = document_template.printf(
                     "TODO: Page Title",
                     default_stylesheet,
-                    "TODO: Table of Contents",
                     output
                 );
                 webview.load_html(html, file.get_uri());
