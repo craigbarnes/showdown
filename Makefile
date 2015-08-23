@@ -20,8 +20,8 @@ all: showdown
 showdown: $(VALAFILES) libcmark.vapi
 	valac $(VALAFLAGS) $(VALAPKGS) -o $@ $(VALAFILES)
 
-resources.vala: resources.vala.in template.html error.html gh.css compile.sed
-	sed -f compile.sed $< > $@
+resources.vala: resources.vala.in resources.sed template.html error.html gh.css
+	sed -f resources.sed $< > $@
 
 showdown-%.tar.gz:
 	@git archive --prefix=showdown-$*/ -o $@ $*
