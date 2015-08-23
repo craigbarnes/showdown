@@ -123,41 +123,26 @@ class Window: Gtk.ApplicationWindow {
             webview.load_alternate_html(html, "about:blank", null);
             return;
         }
+        uint8[] text;
         try {
-            string output, errors;
-            string[] argv = {
-                "pandoc", // TODO: Make this configurable
-                "-f", "markdown",
-                "-t", "html5",
-                filename,
-                null
-            };
-            bool ok = Process.spawn_sync (
-                null, // Working directory; null to inherit
-                argv,
-                null, // Enviroment; null to inherit
-                SpawnFlags.SEARCH_PATH,
-                null,
-                out output,
-                out errors,
-                null
-            );
-            if (ok) {
-                header.title = file.get_basename();
-                header.subtitle = file.get_parent().get_path();
-                var html = document_template.printf(
-                    "TODO: Page Title",
-                    default_stylesheet,
-                    "TODO: Table of Contents",
-                    output
-                );
-                webview.load_html(html, file.get_uri());
-            } else {
-                // TODO: proper error handling
-                stderr.printf("%s\n", errors);
-            }
+            file.load_contents(null, out text, null);
         } catch (Error e) {
             stderr.printf("Error: %s\n", e.message);
+            return;
+        }
+        CMark.Node document = CMark.parse_document(text, text.length);
+        if (document.get_type() != CMark.NodeType.NONE) {
+            header.title = file.get_basename();
+            header.subtitle = file.get_parent().get_path();
+            var html = document_template.printf (
+                "TODO: Page Title",
+                default_stylesheet,
+                document.render_html_toc(),
+                document.render_html()
+            );
+            webview.load_html(html, file.get_uri());
+        } else {
+            stderr.puts("Error parsing document\n");
         }
     }
 }

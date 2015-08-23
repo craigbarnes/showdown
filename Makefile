@@ -1,3 +1,5 @@
+-include local.mk
+
 PREFIX     = /usr/local
 BINDIR     = $(PREFIX)/bin
 DATADIR    = $(PREFIX)/share
@@ -10,11 +12,13 @@ PKGCONFIG  = pkg-config --silence-errors 2>/dev/null
 PRE312GTK  = $(shell $(PKGCONFIG) --exists 'gtk+-3.0 < 3.12' && echo 1)
 VALAFLAGS  = -X '-Wno-incompatible-pointer-types'
 VALAFLAGS += $(if $(PRE312GTK), -D HAVE_PRE_3_12_GTK)
+VALAPKGS   = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libcmark
+VALAFILES  = showdown.vala open.vala resources.vala
 
 all: showdown
 
-showdown: showdown.vala open.vala resources.vala
-	valac $(VALAFLAGS) --pkg gtk+-3.0 --pkg webkit2gtk-4.0 -o $@ $^
+showdown: $(VALAFILES) libcmark.vapi
+	valac $(VALAFLAGS) $(VALAPKGS) -o $@ $(VALAFILES)
 
 resources.vala: resources.vala.in template.html error.html gh.css compile.sed
 	sed -f compile.sed $< > $@

@@ -31,6 +31,7 @@ Requirements
 
 * [Vala] compiler
 * [GNU Make] `>= 3.81`
+* [cmark] `>= 0.21.0`
 * [WebKit2GTK] `>= 2.8.4`
 
 Installation
@@ -81,4 +82,5 @@ Public License version 3 for more details.
 [Vala]: https://wiki.gnome.org/Projects/Vala
 [GTK]: http://www.gtk.org/
 [GNU Make]: https://www.gnu.org/software/make/
+[cmark]: https://github.com/jgm/cmark
 [WebKit2GTK]: http://webkitgtk.org/
