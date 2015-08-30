@@ -130,7 +130,7 @@ class Window: Gtk.ApplicationWindow {
             stderr.printf("Error: %s\n", e.message);
             return;
         }
-        CMark.Node document = CMark.parse_document(text, text.length);
+        var document = CMark.parse_document(text, text.length);
         if (document.get_type() != CMark.NodeType.NONE) {
             header.title = file.get_basename();
             header.subtitle = file.get_parent().get_path();

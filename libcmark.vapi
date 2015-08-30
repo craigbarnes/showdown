@@ -4,25 +4,11 @@ namespace CMark {
     public enum NodeType {
         NONE,
         // Block
-        DOCUMENT,
-        BLOCK_QUOTE,
-        LIST,
-        ITEM,
-        CODE_BLOCK,
-        HTML,
-        PARAGRAPH,
-        HEADER,
-        HRULE,
+        DOCUMENT, BLOCK_QUOTE, LIST, ITEM, CODE_BLOCK, HTML, PARAGRAPH,
+        HEADER, HRULE,
         // Inline
-        TEXT,
-        SOFTBREAK,
-        LINEBREAK,
-        CODE,
-        INLINE_HTML,
-        EMPH,
-        STRONG,
-        LINK,
-        IMAGE,
+        TEXT, SOFTBREAK, LINEBREAK, CODE, INLINE_HTML, EMPH, STRONG,
+        LINK, IMAGE,
     }
 
     [Compact]
