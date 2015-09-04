@@ -31,19 +31,31 @@ Requirements
 
 * [Vala] compiler
 * [GNU Make] `>= 3.81`
-* [cmark] `>= 0.21.0`
 * [WebKit2GTK] `>= 2.8.4`
+* [Discount] `>= 2.1.7`
 
 Installation
 ------------
 
+First, install the requirements...
+
+    # Debian/Ubuntu:
+    sudo apt-get -y install valac gcc make gir1.2-webkit2-4.0 libmarkdown2-dev
+
+    # Fedora:
+    sudo dnf -y install vala gcc make webkitgtk4-devel libmarkdown-devel
+
+then clone the repository:
+
     git clone git://github.com/craigbarnes/showdown.git
     cd showdown
-    make
-    sudo make install
 
-If you're compiling and installing for personal use, also run the
-following command to update the desktop file and icon caches:
+...and compile and install:
+
+    make && sudo make install
+
+If you're installing for personal use, also run the following command to
+update the desktop file and icon caches:
 
     sudo make post-install
 
@@ -82,5 +94,5 @@ Public License version 3 for more details.
 [Vala]: https://wiki.gnome.org/Projects/Vala
 [GTK]: http://www.gtk.org/
 [GNU Make]: https://www.gnu.org/software/make/
-[cmark]: https://github.com/jgm/cmark
+[Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
 [WebKit2GTK]: http://webkitgtk.org/

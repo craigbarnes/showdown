@@ -130,20 +130,16 @@ class Window: Gtk.ApplicationWindow {
             stderr.printf("Error: %s\n", e.message);
             return;
         }
-        var document = CMark.parse_document(text, text.length);
-        if (document.get_type() != CMark.NodeType.NONE) {
-            header.title = file.get_basename();
-            header.subtitle = file.get_parent().get_path();
-            var html = document_template.printf (
-                "TODO: Page Title",
-                default_stylesheet,
-                document.render_html_toc(),
-                document.render_html()
-            );
-            webview.load_html(html, file.get_uri());
-        } else {
-            stderr.puts("Error parsing document\n");
-        }
+        var document = Markdown.parse((string)text);
+        header.title = file.get_basename();
+        header.subtitle = file.get_parent().get_path();
+        var html = document_template.printf (
+            "TODO: Page Title",
+            default_stylesheet,
+            document.render_html_toc(),
+            document.render_html()
+        );
+        webview.load_html(html, file.get_uri());
     }
 }
 

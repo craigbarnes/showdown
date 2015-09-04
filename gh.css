@@ -407,7 +407,6 @@ pre code, pre tt {
 }
 
 #toc {
-    display: none; /* TODO: Remove this line when ToC is working properly */
     margin-bottom: 25px;
     padding-bottom: 30px;
     border-bottom: 2px dashed #ccc;
@@ -422,7 +421,6 @@ pre code, pre tt {
     font-size: larger;
 }
 
-/* TODO: Uncomment this block when ToC is working properly
 @media only screen and (min-width: 920px) {
     #toc {
         float: left;
@@ -442,4 +440,3 @@ pre code, pre tt {
         margin-top: 0;
     }
 }
-*/
