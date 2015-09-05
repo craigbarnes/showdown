@@ -59,6 +59,7 @@ class Window: Gtk.ApplicationWindow {
         accels.connect('r', CTRL, LOCKED, () => {reload(); return true;});
         accels.connect('o', CTRL, LOCKED, () => {open(); return true;});
         accels.connect('p', CTRL, LOCKED, () => {print(); return true;});
+        accels.connect('w', CTRL, LOCKED, () => {close(); return true;});
         add_accel_group(accels);
 
         header = new Gtk.HeaderBar();
