@@ -1,5 +1,7 @@
 namespace Showdown {
 
+private string stylesheet;
+
 class Window: Gtk.ApplicationWindow {
     public string? filename = null;
     public Gtk.HeaderBar header;
@@ -135,7 +137,7 @@ class Window: Gtk.ApplicationWindow {
         header.subtitle = file.get_parent().get_path();
         var html = document_template.printf (
             "TODO: Page Title",
-            default_stylesheet,
+            stylesheet,
             document.render_html_toc(),
             document.render_html()
         );
@@ -198,6 +200,20 @@ class Application: Gtk.Application {
             const string[] quit_accels = {"<Primary>Q", null};
             set_accels_for_action("app.quit", quit_accels);
         #endif
+
+        var config_dir = GLib.Environment.get_user_config_dir();
+        var style_path = config_dir + "/showdown/stylesheet.css";
+        var style_file = File.new_for_path(style_path);
+        try {
+            uint8[] text;
+            if (style_file.load_contents(null, out text, null)) {
+                stylesheet = (string)text;
+            } else {
+                stylesheet = default_stylesheet;
+            }
+        } catch (Error e) {
+            stylesheet = default_stylesheet;
+        }
     }
 
     public static int main(string[] args) {
