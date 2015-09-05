@@ -8,8 +8,15 @@ class Window: Gtk.ApplicationWindow {
     public WebKit.WebView webview;
     public WebKit.FindController find_controller;
 
+    const ActionEntry[] actions = {
+        {"open", open},
+        {"reload", reload},
+        {"print", print},
+    };
+
     public Window(Application app) {
         Object(application: app, title: "Showdown", icon_name: "showdown");
+        add_action_entries(actions, this);
 
         var search_entry = new Gtk.SearchEntry();
         search_entry.width_chars = 42;
@@ -36,30 +43,29 @@ class Window: Gtk.ApplicationWindow {
             BindingFlags.BIDIRECTIONAL
         );
 
-        var open_button = new Gtk.Button();
-        open_button.add(get_menu_icon("document-open-symbolic"));
-        open_button.clicked.connect(() => {
-            var dialog = new OpenDialog(this, filename);
-            if (dialog.run() == Gtk.ResponseType.ACCEPT) {
-                filename = dialog.get_filename();
-                reload();
-            }
-            dialog.destroy();
-        });
+        var menu_model = new Menu();
+        menu_model.append("Open", "win.open");
+        menu_model.append("Reload", "win.reload");
+        // TODO: menu_model.append("Print", "win.print");
+
+        var menu_button = new Gtk.MenuButton();
+        menu_button.menu_model = menu_model;
+        menu_button.add(get_menu_icon("open-menu-symbolic"));
 
         var accels = new Gtk.AccelGroup();
         const Gdk.ModifierType CTRL = Gdk.ModifierType.CONTROL_MASK;
         const Gtk.AccelFlags LOCKED = Gtk.AccelFlags.LOCKED;
-        open_button.add_accelerator("clicked", accels, 'o', CTRL, LOCKED);
         search_button.add_accelerator("clicked", accels, 'f', CTRL, LOCKED);
-        accels.connect('r', CTRL, LOCKED, reload_cb);
+        accels.connect('r', CTRL, LOCKED, () => {reload(); return true;});
+        accels.connect('o', CTRL, LOCKED, () => {open(); return true;});
+        accels.connect('p', CTRL, LOCKED, () => {print(); return true;});
         add_accel_group(accels);
 
         header = new Gtk.HeaderBar();
         header.title = "Markdown Viewer";
         header.show_close_button = true;
-        header.pack_start(open_button);
-        header.pack_end(search_button);
+        header.pack_start(search_button);
+        header.pack_end(menu_button);
         set_titlebar(header);
 
         webview = new WebKit.WebView();
@@ -100,9 +106,17 @@ class Window: Gtk.ApplicationWindow {
         show_all();
     }
 
-    bool reload_cb(Gtk.AccelGroup g, Object o, uint key, Gdk.ModifierType m) {
-        reload();
-        return true;
+    void open() {
+        var dialog = new OpenDialog(this, filename);
+        if (dialog.run() == Gtk.ResponseType.ACCEPT) {
+            filename = dialog.get_filename();
+            reload();
+        }
+        dialog.destroy();
+    }
+
+    void print() {
+        stderr.puts("TODO\n");
     }
 
     public void reload() {
