@@ -2,11 +2,11 @@ namespace Showdown {
 
 class Window: Gtk.ApplicationWindow {
     public string? filename = null;
-    public Gtk.HeaderBar header;
-    public Gtk.SearchBar search_bar;
-    public Gtk.ToggleButton search_button;
-    public WebKit.WebView webview;
-    public WebKit.FindController find_controller;
+    Gtk.HeaderBar header;
+    Gtk.SearchBar search_bar;
+    Gtk.ToggleButton search_button;
+    WebKit.WebView webview;
+    WebKit.FindController find_controller;
 
     const ActionEntry[] actions = {
         {"open", open},
@@ -115,11 +115,7 @@ class Window: Gtk.ApplicationWindow {
         dialog.destroy();
     }
 
-    void print() {
-        stderr.puts("TODO\n");
-    }
-
-    public void reload() {
+    internal void reload() {
         if (filename == null) {
             return;
         }
@@ -148,12 +144,16 @@ class Window: Gtk.ApplicationWindow {
         header.title = file.get_basename();
         header.subtitle = file.get_parent().get_path();
         var html = document_template.printf (
-            "TODO: Page Title",
+            file.get_basename(),
             stylesheet,
             document.render_html_toc(),
             document.render_html()
         );
         webview.load_html(html, file.get_uri());
+    }
+
+    void print() {
+        stderr.puts("TODO\n");
     }
 }
 

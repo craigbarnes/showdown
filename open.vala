@@ -5,11 +5,11 @@ public class OpenDialog: Gtk.FileChooserDialog {
     public OpenDialog(Gtk.ApplicationWindow parent_window, string? filename) {
         title = "Open";
         action = Gtk.FileChooserAction.OPEN;
+        transient_for = parent_window;
 
         add_button("_Cancel", CANCEL);
         add_button("_Open", ACCEPT);
         set_default_response(ACCEPT);
-        set_transient_for(parent_window);
 
         if (filename != null) {
             set_filename(filename);
