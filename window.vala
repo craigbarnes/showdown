@@ -69,10 +69,21 @@ class Window: Gtk.ApplicationWindow {
         header.pack_end(menu_button);
         set_titlebar(header);
 
-        webview = new WebKit.WebView();
+        var ucm = new WebKit.UserContentManager();
+        webview = new WebKit.WebView.with_user_content_manager(ucm);
         webview.vexpand = true;
         webview.hexpand = true;
         find_controller = webview.get_find_controller();
+
+        if (user_stylesheet != null) {
+            ucm.add_style_sheet(new WebKit.UserStyleSheet (
+                user_stylesheet,
+                WebKit.UserContentInjectedFrames.TOP_FRAME,
+                WebKit.UserStyleLevel.USER,
+                null, // whitelist
+                null // blacklist
+            ));
+        }
 
         webview.decide_policy.connect((self, decision, type) => {
             if (type == WebKit.PolicyDecisionType.RESPONSE) {
@@ -164,7 +175,7 @@ class Window: Gtk.ApplicationWindow {
         }
 
         var basename = file.get_basename();
-        var doc = document_template.printf(basename, stylesheet, toc, body);
+        var doc = document_template.printf(basename, default_stylesheet, toc, body);
         header.title = basename;
         header.subtitle = file.get_parent().get_path();
         webview.load_html(doc, file.get_uri());

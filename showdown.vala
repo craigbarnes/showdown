@@ -1,6 +1,6 @@
 namespace Showdown {
 
-private string stylesheet;
+private string? user_stylesheet;
 
 class Application: Gtk.Application {
     public Application() {
@@ -70,12 +70,10 @@ class Application: Gtk.Application {
             set_accels_for_action("app.new_window", new_window_accels);
             set_accels_for_action("app.quit", quit_accels);
         #endif
-
         var config_dir = GLib.Environment.get_user_config_dir();
         var style_path = config_dir + "/showdown/stylesheet.css";
         var style_file = File.new_for_path(style_path);
-        var style_text = read_file(style_file);
-        stylesheet = style_text == null ? default_stylesheet : style_text;
+        user_stylesheet = read_file(style_file);
     }
 
     public static int main(string[] args) {
