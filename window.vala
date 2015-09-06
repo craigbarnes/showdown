@@ -74,15 +74,30 @@ class Window: Gtk.ApplicationWindow {
         webview.hexpand = true;
         find_controller = webview.get_find_controller();
 
-        webview.load_changed.connect((self, event) => {
-            if (
-                event == WebKit.LoadEvent.FINISHED &&
-                self.uri != "about:blank" &&
-                self.uri != File.new_for_path(filename).get_uri()
-            ) {
-                header.title = webview.uri;
-                header.subtitle = "Hit Ctrl+r to return";
+        webview.decide_policy.connect((self, decision, type) => {
+            if (type == WebKit.PolicyDecisionType.RESPONSE) {
+                var d = decision as WebKit.ResponsePolicyDecision;
+                if (d.response.mime_type == "text/markdown") {
+                    // TODO: Rework the reload() function
+                    // to make this kind of hack unnecessary
+                    try {
+                        filename = Filename.from_uri(d.response.uri, null);
+                        reload();
+                    } catch (ConvertError e) {
+                        stderr.printf("%s\n", e.message);
+                    }
+                } else {
+                    var ctx = new AppLaunchContext();
+                    try {
+                        AppInfo.launch_default_for_uri(d.response.uri, ctx);
+                    } catch (Error e) {
+                        stderr.printf("%s\n", e.message);
+                    }
+                }
+                decision.ignore();
+                return false;
             }
+            return true;
         });
 
         var settings = webview.get_settings();
