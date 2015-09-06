@@ -13,10 +13,10 @@ namespace Markdown {
             return (string)html;
         }
 
-        public string render_html_toc() {
+        public string? render_html_toc() {
             char **html;
             int size = this.toc(out html);
-            return (string)html;
+            return html != null ? (string)html : null;
         }
     }
 

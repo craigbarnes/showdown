@@ -156,16 +156,20 @@ class Window: Gtk.ApplicationWindow {
             stderr.printf("Error: %s\n", e.message);
             return;
         }
-        var document = Markdown.parse((string)text);
-        header.title = file.get_basename();
+        var md = Markdown.parse((string)text);
+        var body = md.render_html();
+        var toc = md.render_html_toc();
+
+        if (toc == null) {
+            toc = "";
+            // TODO: Also hide the #toc element
+        }
+
+        var basename = file.get_basename();
+        var doc = document_template.printf(basename, stylesheet, toc, body);
+        header.title = basename;
         header.subtitle = file.get_parent().get_path();
-        var html = document_template.printf (
-            file.get_basename(),
-            stylesheet,
-            document.render_html_toc(),
-            document.render_html()
-        );
-        webview.load_html(html, file.get_uri());
+        webview.load_html(doc, file.get_uri());
     }
 
     void print() {
