@@ -150,14 +150,11 @@ class Window: Gtk.ApplicationWindow {
             webview.load_alternate_html(html, "about:blank", null);
             return;
         }
-        uint8[] text;
-        try {
-            file.load_contents(null, out text, null);
-        } catch (Error e) {
-            stderr.printf("Error: %s\n", e.message);
+        var text = read_file(file, true);
+        if (text == null) {
             return;
         }
-        var md = Markdown.parse((string)text);
+        var md = Markdown.parse(text);
         var body = md.render_html();
         var toc = md.render_html_toc();
 
@@ -176,10 +173,6 @@ class Window: Gtk.ApplicationWindow {
     void print() {
         stderr.puts("TODO\n");
     }
-}
-
-private Gtk.Image get_menu_icon(string name) {
-    return new Gtk.Image.from_icon_name(name, Gtk.IconSize.MENU);
 }
 
 }

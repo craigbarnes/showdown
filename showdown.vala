@@ -74,16 +74,8 @@ class Application: Gtk.Application {
         var config_dir = GLib.Environment.get_user_config_dir();
         var style_path = config_dir + "/showdown/stylesheet.css";
         var style_file = File.new_for_path(style_path);
-        try {
-            uint8[] text;
-            if (style_file.load_contents(null, out text, null)) {
-                stylesheet = (string)text;
-            } else {
-                stylesheet = default_stylesheet;
-            }
-        } catch (Error e) {
-            stylesheet = default_stylesheet;
-        }
+        var style_text = read_file(style_file);
+        stylesheet = style_text == null ? default_stylesheet : style_text;
     }
 
     public static int main(string[] args) {

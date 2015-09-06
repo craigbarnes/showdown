@@ -13,7 +13,7 @@ PRE312GTK  = $(shell $(PKGCONFIG) --exists 'gtk+-3.0 < 3.12' && echo 1)
 VALAFLAGS  = -X '-lmarkdown' -X '-Wno-incompatible-pointer-types'
 VALAFLAGS += $(if $(PRE312GTK), -D HAVE_PRE_3_12_GTK)
 VALAPKGS   = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
-VALAFILES  = showdown.vala window.vala open.vala resources.vala
+VALAFILES  = showdown.vala window.vala open.vala utils.vala resources.vala
 
 all: showdown
 
