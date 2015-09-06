@@ -77,7 +77,8 @@ class Window: Gtk.ApplicationWindow {
         webview.decide_policy.connect((self, decision, type) => {
             if (type == WebKit.PolicyDecisionType.RESPONSE) {
                 var d = decision as WebKit.ResponsePolicyDecision;
-                if (d.response.mime_type == "text/markdown") {
+                var mt = d.response.mime_type;
+                if (mt == "text/markdown" || mt == "text/x-markdown") {
                     // TODO: Rework the reload() function
                     // to make this kind of hack unnecessary
                     try {

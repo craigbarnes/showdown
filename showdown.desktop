@@ -7,4 +7,4 @@ Terminal=false
 Type=Application
 StartupNotify=true
 Icon=showdown
-MimeType=text/x-markdown;
+MimeType=text/markdown;text/x-markdown;
