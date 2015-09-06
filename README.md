@@ -40,7 +40,7 @@ Installation
 First, install the requirements...
 
     # Debian/Ubuntu:
-    sudo apt-get -y install valac gcc make gir1.2-webkit2-4.0 libmarkdown2-dev
+    sudo apt-get -y install valac gcc make libwebkit2gtk-4.0-dev libmarkdown2-dev
 
     # Fedora:
     sudo dnf -y install vala gcc make webkitgtk4-devel libmarkdown-devel
