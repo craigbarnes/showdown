@@ -13,3 +13,7 @@
     d
 }
 
+/^$TOC_STYLESHEET/ {
+    r toc.css
+    d
+}

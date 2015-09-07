@@ -168,14 +168,16 @@ class Window: Gtk.ApplicationWindow {
         var md = Markdown.parse(text);
         var body = md.render_html();
         var toc = md.render_html_toc();
+        var stylesheet = default_stylesheet;
 
         if (toc == null) {
             toc = "";
-            // TODO: Also hide the #toc element
+        } else {
+            stylesheet += toc_stylesheet;
         }
 
         var basename = file.get_basename();
-        var doc = document_template.printf(basename, default_stylesheet, toc, body);
+        var doc = document_template.printf(basename, stylesheet, toc, body);
         header.title = basename;
         header.subtitle = file.get_parent().get_path();
         webview.load_html(doc, file.get_uri());

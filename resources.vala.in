@@ -12,5 +12,9 @@ static const string default_stylesheet = """
 $STYLESHEET
 """;
 
+static const string toc_stylesheet = """
+$TOC_STYLESHEET
+""";
+
 }
 
