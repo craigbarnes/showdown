@@ -3,6 +3,20 @@ namespace Showdown {
 private string? user_stylesheet;
 
 class Application: Gtk.Application {
+    private static string? open_in_current_window = null;
+    public static const OptionEntry[] options = {
+        {
+            "open-in-current-window",
+            'w',
+            0,
+            OptionArg.FILENAME,
+            ref open_in_current_window,
+            "Open file in currently focused window",
+            null
+        },
+        {null}
+    };
+
     public Application() {
         Object (
             application_id: "org.showdown",
@@ -12,13 +26,37 @@ class Application: Gtk.Application {
 
     public override int command_line(ApplicationCommandLine cmdline) {
         hold();
-        var window = new Window(this);
         var args = cmdline.get_arguments();
-        if (args.length >= 2) {
-            window.filename = args[1];
-            window.reload();
+        unowned string[] argv = args;
+        var ctx = new OptionContext("[FILE…]");
+        ctx.add_main_entries(options, null);
+        ctx.add_group(Gtk.get_option_group(true));
+        try {
+            ctx.parse(ref argv);
+        } catch (OptionError e) {
+            stderr.printf("Failed to parse options: %s\n", e.message);
+            Process.exit(1);
         }
-        add_window(window);
+        if (open_in_current_window != null) {
+            unowned List<Gtk.Window> windows = get_windows();
+            if (windows.length() > 0) {
+                unowned Showdown.Window w = windows.data as Showdown.Window;
+                w.filename = open_in_current_window;
+                w.reload();
+            } else {
+                var window = new Window(this);
+                window.filename = open_in_current_window;
+                window.reload();
+                add_window(window);
+            }
+        } else {
+            var window = new Window(this);
+            if (args.length >= 2) {
+                window.filename = args[1];
+                window.reload();
+            }
+            add_window(window);
+        }
         release();
         return 0;
     }
