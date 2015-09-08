@@ -44,9 +44,9 @@ class Window: Gtk.ApplicationWindow {
         );
 
         var menu_model = new Menu();
-        menu_model.append("Open", "win.open");
-        menu_model.append("Reload", "win.reload");
-        menu_model.append("Print", "win.print");
+        menu_model.append("_Open", "win.open");
+        menu_model.append("_Reload", "win.reload");
+        menu_model.append("_Print", "win.print");
 
         var menu_button = new Gtk.MenuButton();
         menu_button.menu_model = menu_model;
