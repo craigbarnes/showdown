@@ -1,3 +1,4 @@
+*.vala.c
 local.mk
 resources.vala
 showdown
