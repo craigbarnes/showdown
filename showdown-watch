@@ -1,9 +1,8 @@
 #!/bin/sh
-# Proof-of-concept directory watcher that continuously opens the
-# most recently edited Markdown document in Showdown.
+# This script monitors a given directory via inotify and continuously
+# opens the most recently edited Markdown document in Showdown.
 
 set -e
-export POSIXLY_CORRECT=1
 
 abort() {
     echo "Error: $1" >&2
