@@ -20,6 +20,7 @@ public class OpenDialog: Gtk.FileChooserDialog {
         }
 
         var md = new Gtk.FileFilter();
+        md.add_mime_type("text/markdown");
         md.add_mime_type("text/x-markdown");
         md.set_name("Markdown files");
         add_filter(md);
