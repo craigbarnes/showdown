@@ -1,6 +1,4 @@
-namespace Showdown {
-
-class Window: Gtk.ApplicationWindow {
+class Showdown.Window: Gtk.ApplicationWindow {
     public string? filename = null;
     Gtk.HeaderBar header;
     Gtk.SearchBar search_bar;
@@ -75,9 +73,9 @@ class Window: Gtk.ApplicationWindow {
         webview.hexpand = true;
         find_controller = webview.get_find_controller();
 
-        if (user_stylesheet != null) {
+        if (app.user_stylesheet != null) {
             ucm.add_style_sheet(new WebKit.UserStyleSheet (
-                user_stylesheet,
+                app.user_stylesheet,
                 WebKit.UserContentInjectedFrames.TOP_FRAME,
                 WebKit.UserStyleLevel.USER,
                 null, // whitelist
@@ -187,6 +185,4 @@ class Window: Gtk.ApplicationWindow {
         var p = new WebKit.PrintOperation(webview);
         p.run_dialog(this);
     }
-}
-
 }

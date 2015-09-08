@@ -1,6 +1,4 @@
-namespace Showdown {
-
-public class OpenDialog: Gtk.FileChooserDialog {
+public class Showdown.OpenDialog: Gtk.FileChooserDialog {
     const Gtk.ResponseType ACCEPT = Gtk.ResponseType.ACCEPT;
     const Gtk.ResponseType CANCEL = Gtk.ResponseType.CANCEL;
 
@@ -30,6 +28,4 @@ public class OpenDialog: Gtk.FileChooserDialog {
         all.set_name("All files");
         add_filter(all);
     }
-}
-
 }

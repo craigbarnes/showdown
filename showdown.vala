@@ -1,8 +1,5 @@
-namespace Showdown {
-
-private string? user_stylesheet;
-
-class Application: Gtk.Application {
+class Showdown.Application: Gtk.Application {
+    internal string? user_stylesheet = null;
     private static string? wflag = null;
     public static const OptionEntry[] options = {
         {
@@ -118,6 +115,4 @@ class Application: Gtk.Application {
         var app = new Application();
         return app.run(args);
     }
-}
-
 }
