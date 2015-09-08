@@ -1,20 +1,23 @@
 #!/bin/sh
-set -e
-
 # Proof-of-concept directory watcher that continuously opens the
 # most recently edited Markdown document in Showdown.
 
-# TODO: Check that inotify and xdg-mime exist before proceeding
+set -e
+export POSIXLY_CORRECT=1
 
-watch() {
-    inotifywait -m -r -e create,modify,moved_to --format '%w%f' "$1"
-}
+for command in inotifywait xdg-mime showdown; do
+    if test -z $(which "$command" 2>/dev/null); then
+        echo "Error: '$command' is required but could not be found" >&2
+        exit 1
+    fi
+done
 
-watch "$1" | while read filename; do
+inotifywait -m -r -e create,modify,moved_to --format '%w%f' "$1" |
+while read filename; do
     if test -f "$filename"; then
         m=$(xdg-mime query filetype "$filename" 2>/dev/null || :)
         if test "$m" = "text/markdown" -o "$m" = "text/x-markdown"; then
-            ./showdown -w "$filename" &
+            showdown -w "$filename" &
         fi
     fi
 done
