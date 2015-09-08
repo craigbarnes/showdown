@@ -103,15 +103,11 @@ class Application: Gtk.Application {
         app_menu.freeze();
         set_app_menu(app_menu);
 
-        #if HAVE_PRE_3_12_GTK
-            add_accelerator("<Primary>N", "app.new_window", null);
-            add_accelerator("<Primary>Q", "app.quit", null);
-        #else
-            const string[] new_window_accels = {"<Primary>N", null};
-            const string[] quit_accels = {"<Primary>Q", null};
-            set_accels_for_action("app.new_window", new_window_accels);
-            set_accels_for_action("app.quit", quit_accels);
-        #endif
+        const string[] new_window_accels = {"<Primary>N", null};
+        const string[] quit_accels = {"<Primary>Q", null};
+        set_accels_for_action("app.new_window", new_window_accels);
+        set_accels_for_action("app.quit", quit_accels);
+
         var config_dir = Environment.get_user_config_dir();
         var style_path = config_dir + "/showdown/stylesheet.css";
         var style_file = File.new_for_path(style_path);

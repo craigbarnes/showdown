@@ -31,6 +31,8 @@ Requirements
 
 * [Vala] compiler
 * [GNU Make] `>= 3.81`
+* [GTK] `>= 3.14`
+* [GLib] `>= 2.42`
 * [WebKit2GTK] `>= 2.8.4`
 * [Discount] `>= 2.1.7`
 
@@ -39,10 +41,10 @@ Installation
 
 First, install the requirements...
 
-    # Debian/Ubuntu:
+    # Debian 8+/Ubuntu 15.04+:
     sudo apt-get -y install valac gcc make libgtk-3-dev libwebkit2gtk-4.0-dev libmarkdown2-dev
 
-    # Fedora:
+    # Fedora 21+:
     sudo dnf -y install vala gcc make webkitgtk4-devel libmarkdown-devel
 
 then clone the repository:
@@ -93,6 +95,7 @@ Public License version 3 for more details.
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
 [Vala]: https://wiki.gnome.org/Projects/Vala
 [GTK]: http://www.gtk.org/
+[GLib] https://developer.gnome.org/glib/
 [GNU Make]: https://www.gnu.org/software/make/
 [Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
 [WebKit2GTK]: http://webkitgtk.org/
