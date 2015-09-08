@@ -3,14 +3,14 @@ namespace Showdown {
 private string? user_stylesheet;
 
 class Application: Gtk.Application {
-    private static string? open_in_current_window = null;
+    private static string? wflag = null;
     public static const OptionEntry[] options = {
         {
             "open-in-current-window",
             'w',
             0,
             OptionArg.FILENAME,
-            ref open_in_current_window,
+            ref wflag,
             "Open file in currently focused window",
             null
         },
@@ -26,6 +26,7 @@ class Application: Gtk.Application {
 
     public override int command_line(ApplicationCommandLine cmdline) {
         hold();
+        var cwd = cmdline.get_cwd();
         var args = cmdline.get_arguments();
         unowned string[] argv = args;
         var ctx = new OptionContext("[FILE…]");
@@ -37,22 +38,24 @@ class Application: Gtk.Application {
             stderr.printf("Failed to parse options: %s\n", e.message);
             Process.exit(1);
         }
-        if (open_in_current_window != null) {
+        if (wflag != null) {
+            var file = File.new_for_commandline_arg_and_cwd(wflag, cwd);
             unowned List<Gtk.Window> windows = get_windows();
             if (windows.length() > 0) {
                 unowned Showdown.Window w = windows.data as Showdown.Window;
-                w.filename = open_in_current_window;
+                w.filename = file.get_path();
                 w.reload();
             } else {
                 var window = new Window(this);
-                window.filename = open_in_current_window;
+                window.filename = file.get_path();
                 window.reload();
                 add_window(window);
             }
         } else {
             var window = new Window(this);
             if (args.length >= 2) {
-                window.filename = args[1];
+                var file = File.new_for_commandline_arg_and_cwd(args[1], cwd);
+                window.filename = file.get_path();
                 window.reload();
             }
             add_window(window);
