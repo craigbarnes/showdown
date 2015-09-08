@@ -1,4 +1,4 @@
-/^$TEMPLATE/ {
+/^$DOCUMENT_TEMPLATE/ {
     r template.html
     d
 }
@@ -8,8 +8,8 @@
     d
 }
 
-/^$STYLESHEET/ {
-    r gh.css
+/^$MAIN_STYLESHEET/ {
+    r main.css
     d
 }
 

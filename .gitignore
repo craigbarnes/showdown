@@ -1,5 +1,5 @@
 *.vala.c
 local.mk
-resources.vala
+strings.vala
 showdown
 showdown-*.tar.gz

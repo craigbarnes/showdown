@@ -13,15 +13,15 @@ PRE312GTK  = $(shell $(PKGCONFIG) --exists 'gtk+-3.0 < 3.12' && echo 1)
 VALAFLAGS  = -X '-lmarkdown' -X '-Wno-incompatible-pointer-types'
 VALAFLAGS += $(if $(PRE312GTK), -D HAVE_PRE_3_12_GTK)
 VALAPKGS   = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
-VALAFILES  = showdown.vala window.vala open.vala utils.vala resources.vala
+VALAFILES  = showdown.vala window.vala open.vala utils.vala strings.vala
 
 all: showdown
 
 showdown: $(VALAFILES) libmarkdown.vapi
 	valac $(VALAFLAGS) $(VALAPKGS) -o $@ $(VALAFILES)
 
-resources.vala: resources.vala.in resources.sed template.html error.html gh.css
-	sed -f resources.sed $< > $@
+strings.vala: strings.vala.in template.html error.html main.css toc.css
+	sed -f strings.sed $< > $@
 
 showdown-%.tar.gz:
 	@git archive --prefix=showdown-$*/ -o $@ $*
@@ -50,7 +50,7 @@ dist:
 	@$(MAKE) --no-print-directory showdown-$(VERSION).tar.gz
 
 clean:
-	$(RM) showdown resources.vala *.vala.c showdown-*.tar.gz
+	$(RM) showdown strings.vala *.vala.c showdown-*.tar.gz
 
 check:
 	@desktop-file-validate showdown.desktop && echo 'Desktop file valid'

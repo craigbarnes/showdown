@@ -1,7 +1,7 @@
 namespace Showdown {
 
 static const string document_template = """
-$TEMPLATE
+$DOCUMENT_TEMPLATE
 """;
 
 static const string error_template = """
@@ -9,7 +9,7 @@ $ERROR_TEMPLATE
 """;
 
 static const string default_stylesheet = """
-$STYLESHEET
+$MAIN_STYLESHEET
 """;
 
 static const string toc_stylesheet = """
