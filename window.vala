@@ -46,7 +46,7 @@ class Window: Gtk.ApplicationWindow {
         var menu_model = new Menu();
         menu_model.append("Open", "win.open");
         menu_model.append("Reload", "win.reload");
-        // TODO: menu_model.append("Print", "win.print");
+        menu_model.append("Print", "win.print");
 
         var menu_button = new Gtk.MenuButton();
         menu_button.menu_model = menu_model;
@@ -184,7 +184,8 @@ class Window: Gtk.ApplicationWindow {
     }
 
     void print() {
-        stderr.puts("TODO\n");
+        var p = new WebKit.PrintOperation(webview);
+        p.run_dialog(this);
     }
 }
 
