@@ -1,3 +1,5 @@
+namespace Showdown {
+
 public class OpenDialog: Gtk.FileChooserDialog {
     const Gtk.ResponseType ACCEPT = Gtk.ResponseType.ACCEPT;
     const Gtk.ResponseType CANCEL = Gtk.ResponseType.CANCEL;
@@ -14,7 +16,7 @@ public class OpenDialog: Gtk.FileChooserDialog {
         if (filename != null) {
             set_filename(filename);
         } else {
-            set_current_folder(GLib.Environment.get_current_dir());
+            set_current_folder(Environment.get_current_dir());
         }
 
         var md = new Gtk.FileFilter();
@@ -27,4 +29,6 @@ public class OpenDialog: Gtk.FileChooserDialog {
         all.set_name("All files");
         add_filter(all);
     }
+}
+
 }
