@@ -5,12 +5,19 @@
 set -e
 export POSIXLY_CORRECT=1
 
+abort() {
+    echo "Error: $1" >&2
+    exit 1
+}
+
 for command in inotifywait xdg-mime showdown; do
-    if test -z $(which "$command" 2>/dev/null); then
-        echo "Error: '$command' is required but could not be found" >&2
-        exit 1
+    if test -z "$(which $command 2>/dev/null)"; then
+        abort "'$command' is required but could not be found"
     fi
 done
+
+test -n "$1" || abort "argument missing"
+test -d "$1" || abort "'$1' is not a directory"
 
 inotifywait -m -r -e create,modify,moved_to --format '%w%f' "$1" |
 while read filename; do
