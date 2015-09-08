@@ -106,9 +106,12 @@ class Showdown.Application: Gtk.Application {
         set_accels_for_action("app.quit", quit_accels);
 
         var config_dir = Environment.get_user_config_dir();
-        var style_path = config_dir + "/showdown/stylesheet.css";
-        var style_file = File.new_for_path(style_path);
-        user_stylesheet = read_file(style_file);
+        var user_stylesheet_path = config_dir + "/showdown/stylesheet.css";
+        try {
+            FileUtils.get_contents(user_stylesheet_path, out user_stylesheet);
+        } catch (FileError e) {
+            user_stylesheet = null;
+        }
     }
 
     public static int main(string[] args) {
