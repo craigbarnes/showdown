@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
+  <!-- interface-requires gtk+ 3.14 -->
   <template class="ShowdownWindow" parent="GtkApplicationWindow">
     <property name="title" translatable="yes">Markdown Viewer</property>
     <property name="icon_name">showdown</property>
