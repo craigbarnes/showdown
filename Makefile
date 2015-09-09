@@ -11,7 +11,7 @@ VERSION    = $(or $(shell git describe --abbrev=0),$(error No version info))
 VALAFLAGS  = -X '-lmarkdown' -X '-Wno-incompatible-pointer-types'
 VALAFLAGS += --target-glib=2.42 --gresources=resources.xml
 VALAPKGS   = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
-VALAFILES  = showdown.vala window.vala open.vala utils.vala strings.vala
+VALAFILES  = $(addsuffix .vala, showdown window view open utils strings)
 
 all: showdown
 
