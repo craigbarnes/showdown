@@ -4,7 +4,6 @@ class Showdown.Window: Gtk.ApplicationWindow {
     [GtkChild] Gtk.HeaderBar header;
     [GtkChild] Gtk.MenuButton menu_button;
     [GtkChild] Gtk.Grid grid;
-    [GtkChild] Gtk.SearchEntry search_entry;
     WebKit.WebView webview;
     WebKit.FindController find_controller;
 
@@ -82,7 +81,7 @@ class Showdown.Window: Gtk.ApplicationWindow {
     }
 
     [GtkCallback]
-    void search_entry_changed() {
+    void search_entry_changed(Gtk.SearchEntry search_entry) {
         var find_options =
             WebKit.FindOptions.WRAP_AROUND +
             WebKit.FindOptions.CASE_INSENSITIVE;
