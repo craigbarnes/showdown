@@ -99,11 +99,8 @@ class Showdown.Application: Gtk.Application {
         app_menu.append_section(null, section2);
         app_menu.freeze();
         set_app_menu(app_menu);
-
-        const string[] new_window_accels = {"<Primary>N", null};
-        const string[] quit_accels = {"<Primary>Q", null};
-        set_accels_for_action("app.new_window", new_window_accels);
-        set_accels_for_action("app.quit", quit_accels);
+        set_accels_for_action("app.new_window", {"<Primary>N"});
+        set_accels_for_action("app.quit", {"<Primary>Q"});
 
         var config_dir = Environment.get_user_config_dir();
         var user_stylesheet_path = config_dir + "/showdown/stylesheet.css";
