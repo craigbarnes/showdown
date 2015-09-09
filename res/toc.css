@@ -15,12 +15,14 @@
 }
 
 @media only screen and (min-width: 920px) {
+    body {
+        max-width: 835px;
+    }
     #toc {
         float: left;
         margin-right: 40px;
         width: 220px;
         border-bottom: none;
-        font-size: 14px;
     }
 
     main {
