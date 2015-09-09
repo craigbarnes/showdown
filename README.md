@@ -95,7 +95,7 @@ Public License version 3 for more details.
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
 [Vala]: https://wiki.gnome.org/Projects/Vala
 [GTK]: http://www.gtk.org/
-[GLib] https://developer.gnome.org/glib/
+[GLib]: https://developer.gnome.org/glib/
 [GNU Make]: https://www.gnu.org/software/make/
 [Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
 [WebKit2GTK]: http://webkitgtk.org/
