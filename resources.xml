@@ -2,5 +2,6 @@
 <gresources>
     <gresource prefix="/org/showdown">
         <file>window.ui</file>
+        <file>menus.ui</file>
     </gresource>
 </gresources>

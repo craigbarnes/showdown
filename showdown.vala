@@ -96,17 +96,13 @@ class Showdown.Application: Gtk.Application {
         set_accels_for_action("win.print", {"<Primary>P"});
         set_accels_for_action("win.close", {"<Primary>W"});
 
-        // TODO: Convert to GtkBuilder menu
-        var section1 = new Menu();
-        section1.append("New Window", "app.new_window");
-        var section2 = new Menu();
-        section2.append("About", "app.about");
-        section2.append("Quit", "app.quit");
-        var app_menu = new Menu();
-        app_menu.append_section(null, section1);
-        app_menu.append_section(null, section2);
-        app_menu.freeze();
-        set_app_menu(app_menu);
+        var builder = new Gtk.Builder();
+        try {
+            builder.add_from_resource("/org/showdown/menus.ui");
+        } catch (Error e) {
+            error("Unable to load resource: %s", e.message);
+        }
+        set_app_menu(builder.get_object("app-menu") as MenuModel);
 
         try {
             FileUtils.get_contents (

@@ -21,7 +21,7 @@ showdown: $(VALAFILES) resources.c libmarkdown.vapi
 strings.vala: strings.vala.in template.html error.html main.css toc.css
 	sed -f strings.sed $< > $@
 
-resources.c: resources.xml window.ui
+resources.c: resources.xml window.ui menus.ui
 	glib-compile-resources --generate-source --target $@ $<
 
 showdown-%.tar.gz:
