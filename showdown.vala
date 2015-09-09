@@ -91,7 +91,12 @@ class Showdown.Application: Gtk.Application {
         add_action_entries(actions, this);
         set_accels_for_action("app.new_window", {"<Primary>N"});
         set_accels_for_action("app.quit", {"<Primary>Q"});
+        set_accels_for_action("win.open", {"<Primary>O"});
+        set_accels_for_action("win.reload", {"<Primary>R", "F5"});
+        set_accels_for_action("win.print", {"<Primary>P"});
+        set_accels_for_action("win.close", {"<Primary>W"});
 
+        // TODO: Convert to GtkBuilder menu
         var section1 = new Menu();
         section1.append("New Window", "app.new_window");
         var section2 = new Menu();

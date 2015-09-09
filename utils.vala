@@ -13,8 +13,4 @@ private string? read_file(File file, bool print_errors = false) {
     return ok ? (string)text : null;
 }
 
-private Gtk.Image get_menu_icon(string name) {
-    return new Gtk.Image.from_icon_name(name, Gtk.IconSize.MENU);
-}
-
 }

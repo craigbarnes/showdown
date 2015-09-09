@@ -1,8 +1,10 @@
+[GtkTemplate(ui = "/org/showdown/window.ui")]
 class Showdown.Window: Gtk.ApplicationWindow {
     public string? filename = null;
-    Gtk.HeaderBar header;
-    Gtk.SearchBar search_bar;
-    Gtk.ToggleButton search_button;
+    [GtkChild] Gtk.HeaderBar header;
+    [GtkChild] Gtk.MenuButton menu_button;
+    [GtkChild] Gtk.Grid grid;
+    [GtkChild] Gtk.SearchEntry search_entry;
     WebKit.WebView webview;
     WebKit.FindController find_controller;
 
@@ -10,14 +12,12 @@ class Showdown.Window: Gtk.ApplicationWindow {
         {"open", open},
         {"reload", reload},
         {"print", print},
+        {"close", close},
     };
 
     public Window(Application app) {
-        Object(application: app, title: "Showdown", icon_name: "showdown");
+        Object(application: app);
         add_action_entries(actions, this);
-
-        var search_entry = new Gtk.SearchEntry();
-        search_entry.width_chars = 42;
 
         search_entry.search_changed.connect(() => {
             var find_options =
@@ -30,48 +30,19 @@ class Showdown.Window: Gtk.ApplicationWindow {
             find_controller.search_next();
         });
 
-        search_bar = new Gtk.SearchBar();
-        search_bar.add(search_entry);
-
-        search_button = new Gtk.ToggleButton();
-        search_button.add(get_menu_icon("edit-find-symbolic"));
-        search_button.bind_property (
-            "active",
-            search_bar, "search-mode-enabled",
-            BindingFlags.BIDIRECTIONAL
-        );
-
+        // TODO: Convert to GtkBuilder menu
         var menu_model = new Menu();
         menu_model.append("_Open", "win.open");
         menu_model.append("_Reload", "win.reload");
         menu_model.append("_Print", "win.print");
-
-        var menu_button = new Gtk.MenuButton();
         menu_button.menu_model = menu_model;
-        menu_button.add(get_menu_icon("open-menu-symbolic"));
-
-        var accels = new Gtk.AccelGroup();
-        const Gdk.ModifierType CTRL = Gdk.ModifierType.CONTROL_MASK;
-        const Gtk.AccelFlags LOCKED = Gtk.AccelFlags.LOCKED;
-        search_button.add_accelerator("clicked", accels, 'f', CTRL, LOCKED);
-        accels.connect('r', CTRL, LOCKED, () => {reload(); return true;});
-        accels.connect('o', CTRL, LOCKED, () => {open(); return true;});
-        accels.connect('p', CTRL, LOCKED, () => {print(); return true;});
-        accels.connect('w', CTRL, LOCKED, () => {close(); return true;});
-        add_accel_group(accels);
-
-        header = new Gtk.HeaderBar();
-        header.title = "Markdown Viewer";
-        header.show_close_button = true;
-        header.pack_start(search_button);
-        header.pack_end(menu_button);
-        set_titlebar(header);
 
         var ucm = new WebKit.UserContentManager();
         webview = new WebKit.WebView.with_user_content_manager(ucm);
         webview.vexpand = true;
         webview.hexpand = true;
         find_controller = webview.get_find_controller();
+        grid.add(webview);
 
         if (app.user_stylesheet != null) {
             ucm.add_style_sheet(new WebKit.UserStyleSheet (
@@ -117,17 +88,6 @@ class Showdown.Window: Gtk.ApplicationWindow {
 
         var context = WebKit.WebContext.get_default();
         context.set_cache_model(WebKit.CacheModel.DOCUMENT_VIEWER);
-
-        var screen = Gdk.Screen.get_default();
-        var height = screen.get_height() * 0.92;
-        var width = screen.get_width() * 0.8;
-        set_default_size((int)width, (int)height);
-
-        var grid = new Gtk.Grid();
-        grid.orientation = Gtk.Orientation.VERTICAL;
-        grid.add(search_bar);
-        grid.add(webview);
-        add(grid);
 
         show_all();
     }

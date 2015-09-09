@@ -9,17 +9,20 @@ APPICONDIR = $(ICONDIR)/scalable/apps
 VERSION    = $(or $(shell git describe --abbrev=0),$(error No version info))
 
 VALAFLAGS  = -X '-lmarkdown' -X '-Wno-incompatible-pointer-types'
-VALAFLAGS += --target-glib=2.42
+VALAFLAGS += --target-glib=2.42 --gresources=resources.xml
 VALAPKGS   = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
 VALAFILES  = showdown.vala window.vala open.vala utils.vala strings.vala
 
 all: showdown
 
-showdown: $(VALAFILES) libmarkdown.vapi
-	valac $(VALAFLAGS) $(VALAPKGS) -o $@ $(VALAFILES)
+showdown: $(VALAFILES) resources.c libmarkdown.vapi
+	valac $(VALAFLAGS) $(VALAPKGS) -o $@ $(VALAFILES) resources.c
 
 strings.vala: strings.vala.in template.html error.html main.css toc.css
 	sed -f strings.sed $< > $@
+
+resources.c: resources.xml window.ui
+	glib-compile-resources --generate-source --target $@ $<
 
 showdown-%.tar.gz:
 	@git archive --prefix=showdown-$*/ -o $@ $*
@@ -48,7 +51,7 @@ dist:
 	@$(MAKE) --no-print-directory showdown-$(VERSION).tar.gz
 
 clean:
-	$(RM) showdown strings.vala *.vala.c showdown-*.tar.gz
+	$(RM) showdown strings.vala resources.c *.vala.c showdown-*.tar.gz
 
 check:
 	@desktop-file-validate showdown.desktop && echo 'Desktop file valid'
