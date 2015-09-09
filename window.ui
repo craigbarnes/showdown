@@ -10,7 +10,7 @@
         <property name="show_close_button">True</property>
         <child>
           <object class="GtkToggleButton" id="search_button">
-            <!-- TODO: <property name="tooltip-text" translatable="yes">...</property> -->
+            <property name="tooltip-text" translatable="yes">Search</property>
             <property name="can_focus">False</property>
             <accelerator key="f" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
             <child>
@@ -26,7 +26,6 @@
         </child>
         <child>
           <object class="GtkMenuButton" id="menu_button">
-            <!-- TODO: <property name="tooltip-text" translatable="yes">...</property> -->
             <accelerator key="F10" signal="clicked"/>
             <child>
               <object class="GtkImage">
