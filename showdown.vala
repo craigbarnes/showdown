@@ -87,7 +87,6 @@ class Showdown.Application: Gtk.Application {
 
     protected override void startup() {
         base.startup();
-
         add_action_entries(actions, this);
         set_accels_for_action("app.new_window", {"<Primary>N"});
         set_accels_for_action("app.quit", {"<Primary>Q"});
@@ -95,15 +94,7 @@ class Showdown.Application: Gtk.Application {
         set_accels_for_action("win.reload", {"<Primary>R", "F5"});
         set_accels_for_action("win.print", {"<Primary>P"});
         set_accels_for_action("win.close", {"<Primary>W"});
-
-        var builder = new Gtk.Builder();
-        try {
-            builder.add_from_resource("/org/showdown/menus.ui");
-        } catch (Error e) {
-            error("Unable to load resource: %s", e.message);
-        }
-        set_app_menu(builder.get_object("app-menu") as MenuModel);
-
+        app_menu = get_menu_from_resource("app-menu");
         try {
             FileUtils.get_contents (
                 Environment.get_user_config_dir() + "/showdown/stylesheet.css",

@@ -18,4 +18,21 @@
       </item>
     </section>
   </menu>
+
+  <menu id="header-menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Open</attribute>
+        <attribute name="action">win.open</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Reload</attribute>
+        <attribute name="action">win.reload</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Print</attribute>
+        <attribute name="action">win.print</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>

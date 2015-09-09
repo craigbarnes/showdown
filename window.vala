@@ -17,13 +17,7 @@ class Showdown.Window: Gtk.ApplicationWindow {
     public Window(Application app) {
         Object(application: app);
         add_action_entries(actions, this);
-
-        // TODO: Convert to GtkBuilder menu
-        var menu_model = new Menu();
-        menu_model.append("_Open", "win.open");
-        menu_model.append("_Reload", "win.reload");
-        menu_model.append("_Print", "win.print");
-        menu_button.menu_model = menu_model;
+        menu_button.menu_model = get_menu_from_resource("header-menu");
 
         var ucm = new WebKit.UserContentManager();
         webview = new WebKit.WebView.with_user_content_manager(ucm);
