@@ -50,7 +50,8 @@
             <child>
               <object class="GtkSearchEntry" id="search_entry">
                 <property name="width-chars">42</property>
-                <!-- TODO: <signal name="changed" handler="search_entry_changed"/> -->
+                <signal name="changed" handler="search_entry_changed"/>
+                <signal name="activate" handler="search_entry_activate"/>
               </object>
             </child>
           </object>

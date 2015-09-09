@@ -19,17 +19,6 @@ class Showdown.Window: Gtk.ApplicationWindow {
         Object(application: app);
         add_action_entries(actions, this);
 
-        search_entry.search_changed.connect(() => {
-            var find_options =
-                WebKit.FindOptions.WRAP_AROUND +
-                WebKit.FindOptions.CASE_INSENSITIVE;
-            find_controller.search(search_entry.text, find_options, 5000);
-        });
-
-        search_entry.activate.connect(() => {
-            find_controller.search_next();
-        });
-
         // TODO: Convert to GtkBuilder menu
         var menu_model = new Menu();
         menu_model.append("_Open", "win.open");
@@ -90,6 +79,19 @@ class Showdown.Window: Gtk.ApplicationWindow {
         context.set_cache_model(WebKit.CacheModel.DOCUMENT_VIEWER);
 
         show_all();
+    }
+
+    [GtkCallback]
+    void search_entry_changed() {
+        var find_options =
+            WebKit.FindOptions.WRAP_AROUND +
+            WebKit.FindOptions.CASE_INSENSITIVE;
+        find_controller.search(search_entry.text, find_options, 5000);
+    }
+
+    [GtkCallback]
+    void search_entry_activate() {
+        find_controller.search_next();
     }
 
     void open() {
