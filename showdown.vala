@@ -87,7 +87,10 @@ class Showdown.Application: Gtk.Application {
 
     protected override void startup() {
         base.startup();
+
         add_action_entries(actions, this);
+        set_accels_for_action("app.new_window", {"<Primary>N"});
+        set_accels_for_action("app.quit", {"<Primary>Q"});
 
         var section1 = new Menu();
         section1.append("New Window", "app.new_window");
@@ -99,13 +102,12 @@ class Showdown.Application: Gtk.Application {
         app_menu.append_section(null, section2);
         app_menu.freeze();
         set_app_menu(app_menu);
-        set_accels_for_action("app.new_window", {"<Primary>N"});
-        set_accels_for_action("app.quit", {"<Primary>Q"});
 
-        var config_dir = Environment.get_user_config_dir();
-        var user_stylesheet_path = config_dir + "/showdown/stylesheet.css";
         try {
-            FileUtils.get_contents(user_stylesheet_path, out user_stylesheet);
+            FileUtils.get_contents (
+                Environment.get_user_config_dir() + "/showdown/stylesheet.css",
+                out user_stylesheet
+            );
         } catch (FileError e) {
             user_stylesheet = null;
         }
