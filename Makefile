@@ -11,17 +11,15 @@ VERSION    = $(or $(shell git describe --abbrev=0),$(error No version info))
 VALAFLAGS  = -X '-lmarkdown' -X '-Wno-incompatible-pointer-types'
 VALAFLAGS += --target-glib=2.42 --gresources=resources.xml
 VALAPKGS   = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
-VALAFILES  = $(addsuffix .vala, showdown window view open utils strings)
+VALAFILES  = $(addsuffix .vala, showdown window view open utils)
+RESOURCES  = window.ui menus.ui template.html error.html main.css toc.css
 
 all: showdown
 
 showdown: $(VALAFILES) resources.c libmarkdown.vapi
 	valac $(VALAFLAGS) $(VALAPKGS) -o $@ $(VALAFILES) resources.c
 
-strings.vala: strings.vala.in template.html error.html main.css toc.css
-	sed -f strings.sed $< > $@
-
-resources.c: resources.xml window.ui menus.ui
+resources.c: resources.xml $(RESOURCES)
 	glib-compile-resources --generate-source --target $@ $<
 
 showdown-%.tar.gz:
@@ -51,7 +49,7 @@ dist:
 	@$(MAKE) --no-print-directory showdown-$(VERSION).tar.gz
 
 clean:
-	$(RM) showdown strings.vala resources.c *.vala.c showdown-*.tar.gz
+	$(RM) showdown resources.c *.vala.c showdown-*.tar.gz
 
 check:
 	@desktop-file-validate showdown.desktop && echo 'Desktop file valid'

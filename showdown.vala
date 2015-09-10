@@ -103,10 +103,21 @@ class Showdown.Application: Gtk.Application {
         } catch (FileError e) {
             user_stylesheet = null;
         }
+        document_template = get_string_from_resource("template.html");
+        error_template = get_string_from_resource("error.html");
+        default_stylesheet = get_string_from_resource("main.css");
+        toc_stylesheet = get_string_from_resource("toc.css");
     }
 
     public static int main(string[] args) {
         var app = new Application();
         return app.run(args);
     }
+}
+
+namespace Showdown {
+    static string document_template;
+    static string error_template;
+    static string default_stylesheet;
+    static string toc_stylesheet;
 }

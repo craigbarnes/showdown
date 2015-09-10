@@ -1,9 +1,7 @@
 [attr]code text whitespace=tab-in-indent,trailing-space,tabwidth=4
 
 *.vala code
-*.vala.in code
 *.vapi code
-*.sed code
 *.html code
 *.css code
 *.svg code

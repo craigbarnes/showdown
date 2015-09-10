@@ -27,4 +27,15 @@ private MenuModel get_menu_from_resource(string id) {
     return menu;
 }
 
+private string get_string_from_resource(string filename) {
+    Bytes bytes;
+    try {
+        bytes = resources_lookup_data("/org/showdown/" + filename, 0);
+    } catch (Error e) {
+        error(e.message);
+    }
+    // TODO: Copy first?
+    return (string)bytes.get_data();
+}
+
 }
