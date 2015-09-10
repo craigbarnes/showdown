@@ -9,6 +9,7 @@
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header">
         <property name="show_close_button">True</property>
+        <property name="title" translatable="yes">Markdown Viewer</property>
         <child>
           <object class="GtkToggleButton" id="search_button">
             <property name="tooltip-text" translatable="yes">Search</property>
