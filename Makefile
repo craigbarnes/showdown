@@ -9,18 +9,19 @@ APPICONDIR = $(ICONDIR)/scalable/apps
 VERSION    = $(or $(shell git describe --abbrev=0),$(error No version info))
 
 VALAFLAGS  = -X '-lmarkdown' -X '-Wno-incompatible-pointer-types'
-VALAFLAGS += --target-glib=2.42 --gresources=resources.xml
+VALAFLAGS += --target-glib=2.42 --gresources=res/resources.xml
 VALAPKGS   = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
 VALAFILES  = $(addsuffix .vala, showdown window view open utils)
-RESOURCES  = window.ui menus.ui template.html error.html main.css toc.css
+RESCOMPILE = glib-compile-resources --sourcedir res/
+RESOURCES  = $(shell $(RESCOMPILE) --generate-dependencies res/resources.xml)
 
 all: showdown
 
 showdown: $(VALAFILES) resources.c libmarkdown.vapi
 	valac $(VALAFLAGS) $(VALAPKGS) -o $@ $(VALAFILES) resources.c
 
-resources.c: resources.xml $(RESOURCES)
-	glib-compile-resources --generate-source --target $@ $<
+resources.c: res/resources.xml $(RESOURCES)
+	$(RESCOMPILE) --generate-source --target $@ $<
 
 showdown-%.tar.gz:
 	@git archive --prefix=showdown-$*/ -o $@ $*
