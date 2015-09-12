@@ -29,7 +29,6 @@ private string get_string_from_resource(string filename) {
     } catch (Error e) {
         error(e.message);
     }
-    // TODO: Copy first?
     return (string)bytes.get_data();
 }
 
