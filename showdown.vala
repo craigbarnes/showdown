@@ -95,18 +95,13 @@ class Showdown.Application: Gtk.Application {
         set_accels_for_action("win.print", {"<Primary>P"});
         set_accels_for_action("win.close", {"<Primary>W"});
         app_menu = get_menu_from_resource("app-menu");
-        try {
-            FileUtils.get_contents (
-                Environment.get_user_config_dir() + "/showdown/stylesheet.css",
-                out user_stylesheet
-            );
-        } catch (FileError e) {
-            user_stylesheet = null;
-        }
         document_template = get_string_from_resource("template.html");
         error_template = get_string_from_resource("error.html");
         default_stylesheet = get_string_from_resource("main.css");
         toc_stylesheet = get_string_from_resource("toc.css");
+        unowned string config_dir = Environment.get_user_config_dir();
+        var file = File.new_for_path(@"$config_dir/showdown/stylesheet.css");
+        user_stylesheet = read_file(file);
     }
 
     public static int main(string[] args) {
