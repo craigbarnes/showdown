@@ -1,6 +1,13 @@
 class Showdown.Application: Gtk.Application {
     internal string? user_stylesheet = null;
     private static string? wflag = null;
+
+    const ActionEntry[] actions = {
+        {"new_window", new_window},
+        {"about", about},
+        {"quit", quit},
+    };
+
     public static const OptionEntry[] options = {
         {
             "open-in-current-window",
@@ -78,12 +85,6 @@ class Showdown.Application: Gtk.Application {
             "website", "https://github.com/craigbarnes/showdown"
         );
     }
-
-    const ActionEntry[] actions = {
-        {"new_window", new_window},
-        {"about", about},
-        {"quit", quit},
-    };
 
     protected override void startup() {
         base.startup();

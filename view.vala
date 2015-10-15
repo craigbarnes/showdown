@@ -1,6 +1,8 @@
 using WebKit;
 
 class Showdown.WebView: WebKit.WebView {
+    const UserContentInjectedFrames FTOP = UserContentInjectedFrames.TOP_FRAME;
+    const UserStyleLevel USER = UserStyleLevel.USER;
     Showdown.Window parent_window;
 
     public WebView(Showdown.Window window) {
@@ -14,14 +16,10 @@ class Showdown.WebView: WebKit.WebView {
         settings.enable_page_cache = false;
         web_context.set_cache_model(WebKit.CacheModel.DOCUMENT_VIEWER);
         var app = parent_window.application as Showdown.Application;
-        if (app.user_stylesheet != null) {
-            user_content_manager.add_style_sheet(new UserStyleSheet (
-                app.user_stylesheet,
-                UserContentInjectedFrames.TOP_FRAME,
-                UserStyleLevel.USER,
-                null, // whitelist
-                null // blacklist
-            ));
+        var usstext = app.user_stylesheet;
+        if (usstext != null) {
+            var uss = new UserStyleSheet(usstext, FTOP, USER, null, null);
+            user_content_manager.add_style_sheet(uss);
         }
     }
 
