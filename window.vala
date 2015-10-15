@@ -24,11 +24,10 @@ class Showdown.Window: Gtk.ApplicationWindow {
 
     [GtkCallback]
     void search_entry_changed(Gtk.SearchEntry search_entry) {
-        var find_options =
-            WebKit.FindOptions.WRAP_AROUND +
-            WebKit.FindOptions.CASE_INSENSITIVE;
+        const WebKit.FindOptions WRAP = WebKit.FindOptions.WRAP_AROUND;
+        const WebKit.FindOptions ICASE = WebKit.FindOptions.CASE_INSENSITIVE;
         var find_controller = webview.get_find_controller();
-        find_controller.search(search_entry.text, find_options, 5000);
+        find_controller.search(search_entry.text, WRAP + ICASE, 5000);
     }
 
     [GtkCallback]
