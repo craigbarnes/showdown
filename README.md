@@ -24,7 +24,7 @@ Features
 Screenshot
 ----------
 
-![Showdown screenshot](https://craigbarnes.github.io/img/showdown.png)
+![Showdown screenshot](http://craigbarnes.bitbucket.org/img/showdown.png)
 
 Requirements
 ------------
