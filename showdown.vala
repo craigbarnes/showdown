@@ -10,13 +10,8 @@ class Showdown.Application: Gtk.Application {
 
     public static const OptionEntry[] options = {
         {
-            "open-in-current-window",
-            'w',
-            0,
-            OptionArg.FILENAME,
-            ref wflag,
-            "Open file in currently focused window",
-            null
+            "open-in-current-window", 'w', 0, OptionArg.FILENAME, ref wflag,
+            "Open file in existing window", "FILE"
         },
         {null}
     };
