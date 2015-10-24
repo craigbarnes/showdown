@@ -53,9 +53,13 @@ clean:
 	$(RM) showdown resources.c *.vala.c showdown-*.tar.gz
 
 check:
-	@desktop-file-validate showdown.desktop && echo 'Desktop file valid'
+	desktop-file-validate showdown.desktop
+	gtk-builder-tool validate res/window.ui
+	gtk-builder-tool validate res/menus.ui
 
 
-.PHONY: all install install-home uninstall post-install post-uninstall
-.PHONY: dist clean check
+.PHONY: \
+    all install install-home uninstall post-install post-uninstall \
+    dist clean check
+
 .DELETE_ON_ERROR:
