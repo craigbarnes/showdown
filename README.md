@@ -67,7 +67,7 @@ post-install/post-uninstall macros that should be used instead.
 Usage
 -----
 
-### Keyboard commands:
+### Keyboard commands
 
 Keys    | Command
 --------|------------------------------------------------
@@ -91,7 +91,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
 Public License version 3 for more details.
 
 
-[General Public License version 3]: http://www.gnu.org/licenses/gpl-3.0.html
+[General Public License version 3]: https://www.gnu.org/licenses/gpl-3.0.html
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
 [Vala]: https://wiki.gnome.org/Projects/Vala
 [GTK]: http://www.gtk.org/
