@@ -35,7 +35,6 @@ h1, h2, h3, h4, h5, h6 {
     margin: 20px 0 10px;
     padding: 0;
     font-weight: bold;
-    -webkit-font-smoothing: antialiased;
     cursor: text;
     position: relative;
 }
@@ -157,7 +156,7 @@ img {
     max-width: 100%;
 }
 
-code, tt {
+code {
     margin: 0 2px;
     padding: 0 5px;
     white-space: nowrap;
@@ -177,6 +176,10 @@ pre code {
     word-wrap: normal;
 }
 
+code, pre {
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
 pre {
     background-color: #f8f8f8;
     border: 1px solid #cccccc;
@@ -186,7 +189,7 @@ pre {
     word-wrap: normal;
 }
 
-pre code, pre tt {
+pre code {
     background-color: transparent;
     border: none;
 }
