@@ -10,10 +10,6 @@
     padding: 0.1em;
 }
 
-#toc > ul:first-of-type > li:first-child > a {
-    font-size: larger;
-}
-
 @media only screen and (min-width: 920px) {
     body {
         max-width: calc(50em + 280px);
