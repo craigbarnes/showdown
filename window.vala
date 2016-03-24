@@ -11,6 +11,9 @@ class Showdown.Window: Gtk.ApplicationWindow {
         {"reload", reload},
         {"print", print},
         {"close", close},
+        {"zoom_in", zoom_in},
+        {"zoom_out", zoom_out},
+        {"zoom_reset", zoom_reset},
     };
 
     public Window(Application app) {
@@ -32,6 +35,22 @@ class Showdown.Window: Gtk.ApplicationWindow {
     [GtkCallback]
     void search_entry_activate() {
         webview.get_find_controller().search_next();
+    }
+
+    void zoom_in() {
+        webview.zoom_level += 0.1;
+    }
+
+    void zoom_out() {
+        if (webview.zoom_level > 1.1) {
+            webview.zoom_level -= 0.1;
+        } else {
+            webview.zoom_level = 1;
+        }
+    }
+
+    void zoom_reset() {
+        webview.zoom_level = 1;
     }
 
     void open() {
