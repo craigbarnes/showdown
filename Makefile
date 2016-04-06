@@ -28,23 +28,23 @@ showdown-%.tar.gz:
 	@echo 'Generated: $@'
 
 install: all
-	mkdir -p $(DESTDIR)$(BINDIR) $(DESTDIR)$(APPICONDIR)
-	install -p -m 0755 showdown $(DESTDIR)$(BINDIR)/showdown
-	install -p -m 0644 showdown.svg $(DESTDIR)$(APPICONDIR)/showdown.svg
-	desktop-file-install --dir=$(DESTDIR)$(DESKTOPDIR) showdown.desktop
+	mkdir -p '$(DESTDIR)$(BINDIR)' '$(DESTDIR)$(APPICONDIR)'
+	install -p -m 0755 showdown '$(DESTDIR)$(BINDIR)/showdown'
+	install -p -m 0644 showdown.svg '$(DESTDIR)$(APPICONDIR)/showdown.svg'
+	desktop-file-install --dir='$(DESTDIR)$(DESKTOPDIR)' showdown.desktop
 
 install-home:
 	@$(MAKE) all install post-install PREFIX=$(HOME)/.local
 
 uninstall:
-	rm -f $(DESTDIR)$(BINDIR)/showdown
-	rm -f $(DESTDIR)$(APPICONDIR)/showdown.svg
-	rm -f $(DESTDIR)$(DESKTOPDIR)/showdown.desktop
+	rm -f '$(DESTDIR)$(BINDIR)/showdown'
+	rm -f '$(DESTDIR)$(APPICONDIR)/showdown.svg'
+	rm -f '$(DESTDIR)$(DESKTOPDIR)/showdown.desktop'
 
 post-install post-uninstall:
-	update-desktop-database $(DESKTOPDIR)
-	touch -c $(ICONDIR)
-	gtk-update-icon-cache -t $(ICONDIR)
+	update-desktop-database '$(DESKTOPDIR)'
+	touch -c '$(ICONDIR)'
+	gtk-update-icon-cache -t '$(ICONDIR)'
 
 dist:
 	@$(MAKE) --no-print-directory showdown-$(VERSION).tar.gz
