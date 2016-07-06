@@ -64,18 +64,6 @@ update the desktop file and icon caches:
 For packaging purposes, most distros have equivalent
 post-install/post-uninstall macros that should be used instead.
 
-Usage
------
-
-### Keyboard commands
-
-Keys    | Command
---------|------------------------------------------------
-Ctrl+o  | Open file
-Ctrl+f  | Show search bar
-Ctrl+r  | Reload document
-Ctrl+q  | Quit
-
 License
 -------
 
