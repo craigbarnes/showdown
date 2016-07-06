@@ -83,6 +83,8 @@ class Showdown.Application: Gtk.Application {
 
     protected override void startup() {
         base.startup();
+        Environment.set_application_name("Showdown");
+        Gtk.Window.set_default_icon_name("showdown");
         add_action_entries(actions, this);
         set_accels_for_action("app.new_window", {"<Primary>N"});
         set_accels_for_action("app.quit", {"<Primary>Q"});
