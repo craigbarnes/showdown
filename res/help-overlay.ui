@@ -6,28 +6,15 @@
       <object class="GtkShortcutsSection">
         <property name="max-height">8</property>
         <property name="visible">True</property>
+
         <child>
           <object class="GtkShortcutsGroup">
-            <property name="title" translatable="yes">Actions</property>
+            <property name="title" translatable="yes">Application</property>
             <property name="visible">True</property>
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="title" translatable="yes">Open file</property>
-                <property name="accelerator">&lt;Primary&gt;o</property>
-                <property name="visible">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="title" translatable="yes">Show search bar</property>
-                <property name="accelerator">&lt;Primary&gt;f</property>
-                <property name="visible">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="title" translatable="yes">Reload document</property>
-                <property name="accelerator">&lt;Primary&gt;r F5</property>
+                <property name="title" translatable="yes">New window</property>
+                <property name="accelerator">&lt;Primary&gt;n</property>
                 <property name="visible">True</property>
               </object>
             </child>
@@ -40,6 +27,84 @@
             </child>
           </object>
         </child>
+
+        <child>
+          <object class="GtkShortcutsGroup">
+            <property name="title" translatable="yes">Window</property>
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes">Open document</property>
+                <property name="accelerator">&lt;Primary&gt;o</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes">Menu</property>
+                <property name="accelerator">F10</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes">Close</property>
+                <property name="accelerator">&lt;Primary&gt;w</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkShortcutsGroup">
+            <property name="title" translatable="yes">Document</property>
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes">Search</property>
+                <property name="accelerator">&lt;Primary&gt;f</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes">Reload</property>
+                <property name="accelerator">&lt;Primary&gt;r F5</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes">Print</property>
+                <property name="accelerator">&lt;Primary&gt;p</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes">Zoom in</property>
+                <property name="accelerator">&lt;Primary&gt;plus</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes">Zoom out</property>
+                <property name="accelerator">&lt;Primary&gt;minus</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes">Zoom reset</property>
+                <property name="accelerator">&lt;Primary&gt;0</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
       </object>
     </child>
   </object>
