@@ -31,8 +31,8 @@ Requirements
 
 * [Vala] compiler
 * [GNU Make] `>= 3.81`
-* [GTK] `>= 3.14`
-* [GLib] `>= 2.42`
+* [GTK] `>= 3.20`
+* [GLib] `>= 2.48`
 * [WebKit2GTK] `>= 2.8.4`
 * [Discount] `>= 2.1.7`
 
@@ -73,7 +73,7 @@ Keys    | Command
 --------|------------------------------------------------
 Ctrl+o  | Open file
 Ctrl+f  | Show search bar
-Ctrl+r  | Return to document (e.g. after clicking a link)
+Ctrl+r  | Reload document
 Ctrl+q  | Quit
 
 License

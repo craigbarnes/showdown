@@ -19,7 +19,7 @@ class Showdown.Window: Gtk.ApplicationWindow {
     public Window(Application app) {
         Object(application: app);
         add_action_entries(actions, this);
-        menu_button.menu_model = get_menu_from_resource("header-menu");
+        menu_button.menu_model = app.get_menu_by_id("header-menu");
         webview = new Showdown.WebView(this);
         grid.add(webview);
         show_all();

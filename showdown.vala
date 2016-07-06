@@ -93,7 +93,6 @@ class Showdown.Application: Gtk.Application {
         set_accels_for_action("win.zoom_in", {"<Primary>plus", "<Primary>equal"});
         set_accels_for_action("win.zoom_out", {"<Primary>minus", "<Primary>dstroke"});
         set_accels_for_action("win.zoom_reset", {"<Primary>0"});
-        app_menu = get_menu_from_resource("app-menu");
         document_template = get_string_from_resource("template.html");
         error_template = get_string_from_resource("error.html");
         default_stylesheet = get_string_from_resource("main.css");

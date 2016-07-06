@@ -2,10 +2,13 @@
 <gresources>
     <gresource prefix="/org/showdown">
         <file>window.ui</file>
-        <file>menus.ui</file>
         <file>template.html</file>
         <file>error.html</file>
         <file>main.css</file>
         <file>toc.css</file>
+    </gresource>
+    <gresource prefix="/org/showdown/gtk">
+        <file>help-overlay.ui</file>
+        <file>menus.ui</file>
     </gresource>
 </gresources>

@@ -56,6 +56,7 @@ check:
 	desktop-file-validate showdown.desktop
 	gtk-builder-tool validate res/window.ui
 	gtk-builder-tool validate res/menus.ui
+	gtk-builder-tool validate res/help-overlay.ui
 
 
 .PHONY: \
