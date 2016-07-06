@@ -23,6 +23,14 @@ class Showdown.WebView: WebKit.WebView {
         }
     }
 
+    protected override bool context_menu (
+        ContextMenu context_menu,
+        Gdk.Event event,
+        HitTestResult hit_test_result
+    ) {
+        return true; // Prevent context menu being shown
+    }
+
     protected override bool decide_policy (
         PolicyDecision decision,
         PolicyDecisionType type
