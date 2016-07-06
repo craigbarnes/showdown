@@ -15,6 +15,12 @@ VALAFILES  = $(addsuffix .vala, showdown window view open utils)
 RESCOMPILE = glib-compile-resources --sourcedir res/
 RESOURCES  = $(shell $(RESCOMPILE) --generate-dependencies res/resources.xml)
 
+define POST-INSTALL-MESSAGE
+\n Installed to: $(DESTDIR)$(BINDIR)/showdown\n\n\
+ If this installation is for personal use, you should also run\n\
+ "make post-install" now to update the icon and .desktop caches.\n\n
+endef
+
 all: showdown
 
 showdown: $(VALAFILES) resources.c libmarkdown.vapi
@@ -32,6 +38,7 @@ install: all
 	install -p -m 0755 showdown '$(DESTDIR)$(BINDIR)/showdown'
 	install -p -m 0644 showdown.svg '$(DESTDIR)$(APPICONDIR)/showdown.svg'
 	desktop-file-install --dir='$(DESTDIR)$(DESKTOPDIR)' showdown.desktop
+	@printf '$(POST-INSTALL-MESSAGE)'
 
 install-home:
 	@$(MAKE) all install post-install PREFIX=$(HOME)/.local
