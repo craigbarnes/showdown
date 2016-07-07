@@ -54,11 +54,34 @@ class Showdown.Window: Gtk.ApplicationWindow {
     }
 
     void open() {
-        var dialog = new OpenDialog(this, filename);
+        var dialog = new Gtk.FileChooserDialog (
+            "Open", this, Gtk.FileChooserAction.OPEN,
+            "_Cancel", Gtk.ResponseType.CANCEL,
+            "_Open", Gtk.ResponseType.ACCEPT
+        );
+
+        if (filename != null) {
+            dialog.set_filename(filename);
+        } else {
+            dialog.set_current_folder(Environment.get_current_dir());
+        }
+
+        var md = new Gtk.FileFilter();
+        md.add_mime_type("text/markdown");
+        md.add_mime_type("text/x-markdown");
+        md.set_name("Markdown files");
+        dialog.add_filter(md);
+
+        var all = new Gtk.FileFilter();
+        all.add_mime_type("text/*");
+        all.set_name("All files");
+        dialog.add_filter(all);
+
         if (dialog.run() == Gtk.ResponseType.ACCEPT) {
             filename = dialog.get_filename();
             reload();
         }
+
         dialog.destroy();
     }
 
