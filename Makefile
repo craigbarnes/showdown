@@ -8,8 +8,10 @@ ICONDIR    = $(DATADIR)/icons/hicolor
 APPICONDIR = $(ICONDIR)/scalable/apps
 VERSION    = $(or $(shell git describe --abbrev=0),$(error No version info))
 
-VALAFLAGS  = -X '-Wno-incompatible-pointer-types' -X '-Wno-discarded-qualifiers'
-VALAFLAGS += -X '-lmarkdown' --target-glib=2.48 --gresources=res/resources.xml
+CWARNFLAGS = -Wno-incompatible-pointer-types -Wno-discarded-qualifiers
+LDFLAGS    = -lmarkdown
+VALAFLAGS  = --target-glib=2.48 --gresources=res/resources.xml
+VALAFLAGS += $(foreach f, $(CWARNFLAGS) $(LDFLAGS),-X '$(f)')
 VALAPKGS   = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
 VALAFILES  = $(addsuffix .vala, showdown window view utils)
 RESCOMPILE = glib-compile-resources --sourcedir res/
