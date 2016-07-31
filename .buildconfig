@@ -1,0 +1,9 @@
+[default]
+name = Default
+device = local
+runtime = host
+prefix = ~/.cache/gnome-builder/install/showdown/host
+default = true
+
+[default.environment]
+VALAFLAGS = -X -Wno-incompatible-pointer-types -X -Wno-discarded-qualifiers -X -lmarkdown --target-glib=2.48 --gresources=res/resources.xml --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
