@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://usefulinc.com/ns/doap#">
+    <name xml:lang="en">Showdown</name>
+    <shortdesc xml:lang="en">Simple Markdown viewer</shortdesc>
+    <programming-language>Vala</programming-language>
+    <category rdf:resource="http://api.gnome.org/doap-extensions#apps"/>
+    <homepage rdf:resource="https://github.com/craigbarnes/showdown"/>
+    <download-page rdf:resource="https://github.com/craigbarnes/showdown/releases"/>
+    <bug-database rdf:resource="https://github.com/craigbarnes/showdown/issues"/>
+</Project>
