@@ -47,6 +47,10 @@ First, install the requirements...
     # Fedora 21+:
     sudo dnf -y install vala gcc make webkitgtk4-devel libmarkdown-devel
 
+    # Arch Linux
+    # (Compile and install Discount, either from source or via AUR)
+    sudo pacman --needed -Sy vala gcc make webkitgtk
+
 then clone the repository:
 
     git clone git://github.com/craigbarnes/showdown.git
