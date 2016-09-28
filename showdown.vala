@@ -42,20 +42,17 @@ class Showdown.Application: Gtk.Application {
             unowned List<Gtk.Window> windows = get_windows();
             if (windows.length() > 0) {
                 unowned Showdown.Window w = windows.data as Showdown.Window;
-                w.filename = file.get_path();
-                w.reload();
+                w.load_file(file.get_path());
             } else {
                 var window = new Window(this);
-                window.filename = file.get_path();
-                window.reload();
+                window.load_file(file.get_path());
                 add_window(window);
             }
         } else {
             var window = new Window(this);
             if (args.length >= 2) {
                 var file = File.new_for_commandline_arg_and_cwd(args[1], cwd);
-                window.filename = file.get_path();
-                window.reload();
+                window.load_file(file.get_path());
             }
             add_window(window);
         }

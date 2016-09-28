@@ -39,12 +39,9 @@ class Showdown.WebView: WebKit.WebView {
             var d = decision as ResponsePolicyDecision;
             var mt = d.response.mime_type;
             if (mt == "text/markdown" || mt == "text/x-markdown") {
-                // TODO: Rework the reload() function
-                // to make this kind of hack unnecessary
                 try {
                     var filename = Filename.from_uri(d.response.uri, null);
-                    parent_window.filename = filename;
-                    parent_window.reload();
+                    parent_window.load_file(filename);
                 } catch (ConvertError e) {
                     stderr.printf("%s\n", e.message);
                 }

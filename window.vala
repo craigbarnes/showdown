@@ -1,10 +1,11 @@
 [GtkTemplate(ui = "/org/showdown/window.ui")]
 class Showdown.Window: Gtk.ApplicationWindow {
-    public string? filename = null;
+    string? filename {get; set; default = null;}
     [GtkChild] Gtk.HeaderBar header;
     [GtkChild] Gtk.MenuButton menu_button;
     [GtkChild] Gtk.Grid grid;
     WebKit.WebView webview;
+
 
     const ActionEntry[] actions = {
         {"open", open},
@@ -78,8 +79,7 @@ class Showdown.Window: Gtk.ApplicationWindow {
         dialog.add_filter(all);
 
         if (dialog.run() == Gtk.ResponseType.ACCEPT) {
-            filename = dialog.get_filename();
-            reload();
+            load_file(dialog.get_filename());
         }
 
         dialog.destroy();
@@ -123,6 +123,11 @@ class Showdown.Window: Gtk.ApplicationWindow {
         header.title = basename;
         header.subtitle = file.get_parent().get_path();
         webview.load_html(doc, file.get_uri());
+    }
+
+    internal void load_file(string filename) {
+        this.filename = filename;
+        reload();
     }
 
     void print() {
