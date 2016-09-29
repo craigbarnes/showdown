@@ -13,7 +13,7 @@ LDFLAGS    = -lmarkdown
 VALAFLAGS  = --target-glib=2.48 --gresources=res/resources.xml
 VALAFLAGS += $(foreach f, $(CWARNFLAGS) $(LDFLAGS),-X '$(f)')
 VALAPKGS   = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
-VALAFILES  = $(addsuffix .vala, showdown window view utils)
+VALAFILES  = $(addsuffix .vala, showdown window view)
 RESCOMPILE = glib-compile-resources --sourcedir res/
 RESOURCES  = $(shell $(RESCOMPILE) --generate-dependencies res/resources.xml)
 

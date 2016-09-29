@@ -89,24 +89,14 @@ class Showdown.Window: Gtk.ApplicationWindow {
         if (filename == null) {
             return;
         }
-        string? failed = null;
-        var file = File.new_for_path(filename);
-        if (file.query_exists() == false) {
-            failed = "File doesn't exist";
-        } else if (file.query_file_type(0) == FileType.DIRECTORY) {
-            failed = "Can't open a directory";
-        }
-        if (failed != null) {
-            header.title = "Markdown Viewer";
-            header.subtitle = "";
-            var html = error_template.printf(file.get_uri(), failed);
-            webview.load_alternate_html(html, "about:blank", null);
+        string text;
+        try {
+            FileUtils.get_contents(filename, out text);
+        } catch (Error e) {
+            show_error_page(e.message);
             return;
         }
-        var text = read_file(file, true);
-        if (text == null) {
-            return;
-        }
+
         var md = Markdown.parse(text);
         var body = md.render_html();
         var toc = md.render_html_toc();
@@ -118,11 +108,19 @@ class Showdown.Window: Gtk.ApplicationWindow {
             stylesheet += toc_stylesheet;
         }
 
+        var file = File.new_for_path(filename);
         var basename = file.get_basename();
         var doc = document_template.printf(basename, stylesheet, toc, body);
         header.title = basename;
         header.subtitle = file.get_parent().get_path();
         webview.load_html(doc, file.get_uri());
+    }
+
+    void show_error_page(string message) {
+        header.title = "Markdown Viewer";
+        header.subtitle = "";
+        var html = error_template.printf(Markup.escape_text(message));
+        webview.load_alternate_html(html, "about:blank", null);
     }
 
     internal void load_file(string filename) {

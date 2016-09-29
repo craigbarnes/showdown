@@ -78,6 +78,16 @@ class Showdown.Application: Gtk.Application {
         );
     }
 
+    private string get_string_from_resource(string filename) {
+        Bytes bytes;
+        try {
+            bytes = resources_lookup_data("/org/showdown/" + filename, 0);
+        } catch (Error e) {
+            error(e.message);
+        }
+        return (string)bytes.get_data();
+    }
+
     protected override void startup() {
         base.startup();
         Environment.set_application_name("Showdown");
@@ -96,9 +106,11 @@ class Showdown.Application: Gtk.Application {
         error_template = get_string_from_resource("error.html");
         default_stylesheet = get_string_from_resource("main.css");
         toc_stylesheet = get_string_from_resource("toc.css");
-        unowned string config_dir = Environment.get_user_config_dir();
-        var file = File.new_for_path(@"$config_dir/showdown/stylesheet.css");
-        user_stylesheet = read_file(file);
+        try {
+            unowned string config_dir = Environment.get_user_config_dir();
+            var user_stylesheet_path = @"$config_dir/showdown/stylesheet.css";
+            FileUtils.get_contents(user_stylesheet_path, out user_stylesheet);
+        } catch (Error e) {}
     }
 
     public static int main(string[] args) {
