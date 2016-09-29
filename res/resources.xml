@@ -11,4 +11,7 @@
         <file>help-overlay.ui</file>
         <file>menus.ui</file>
     </gresource>
+    <gresource prefix="/org/gnome/Showdown/icons">
+        <file>showdown.svg</file>
+    </gresource>
 </gresources>

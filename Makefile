@@ -39,7 +39,7 @@ showdown-%.tar.gz:
 install: all
 	mkdir -p '$(DESTDIR)$(BINDIR)' '$(DESTDIR)$(APPICONDIR)'
 	install -p -m 0755 showdown '$(DESTDIR)$(BINDIR)/showdown'
-	install -p -m 0644 share/showdown.svg '$(DESTDIR)$(APPICONDIR)/showdown.svg'
+	install -p -m 0644 res/showdown.svg '$(DESTDIR)$(APPICONDIR)/showdown.svg'
 	desktop-file-install --dir='$(DESTDIR)$(DESKTOPDIR)' share/$(APPID).desktop
 	@printf '$(POST-INSTALL-MESSAGE)'
 
