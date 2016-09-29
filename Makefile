@@ -7,6 +7,7 @@ DESKTOPDIR = $(DATADIR)/applications
 ICONDIR    = $(DATADIR)/icons/hicolor
 APPICONDIR = $(ICONDIR)/scalable/apps
 VERSION    = $(or $(shell git describe --abbrev=0),$(error No version info))
+APPID      = org.gnome.Showdown
 
 CWARNFLAGS = -Wno-incompatible-pointer-types -Wno-discarded-qualifiers
 LDFLAGS    = -lmarkdown
@@ -38,8 +39,8 @@ showdown-%.tar.gz:
 install: all
 	mkdir -p '$(DESTDIR)$(BINDIR)' '$(DESTDIR)$(APPICONDIR)'
 	install -p -m 0755 showdown '$(DESTDIR)$(BINDIR)/showdown'
-	install -p -m 0644 showdown.svg '$(DESTDIR)$(APPICONDIR)/showdown.svg'
-	desktop-file-install --dir='$(DESTDIR)$(DESKTOPDIR)' showdown.desktop
+	install -p -m 0644 share/showdown.svg '$(DESTDIR)$(APPICONDIR)/showdown.svg'
+	desktop-file-install --dir='$(DESTDIR)$(DESKTOPDIR)' share/$(APPID).desktop
 	@printf '$(POST-INSTALL-MESSAGE)'
 
 install-home:
@@ -48,7 +49,7 @@ install-home:
 uninstall:
 	rm -f '$(DESTDIR)$(BINDIR)/showdown'
 	rm -f '$(DESTDIR)$(APPICONDIR)/showdown.svg'
-	rm -f '$(DESTDIR)$(DESKTOPDIR)/showdown.desktop'
+	rm -f '$(DESTDIR)$(DESKTOPDIR)/$(APPID).desktop'
 
 post-install post-uninstall:
 	update-desktop-database '$(DESKTOPDIR)'
@@ -62,7 +63,7 @@ clean:
 	$(RM) showdown resources.c *.vala.c showdown-*.tar.gz
 
 check:
-	desktop-file-validate showdown.desktop
+	desktop-file-validate share/$(APPID).desktop
 	gtk-builder-tool validate res/window.ui
 	gtk-builder-tool validate res/menus.ui
 	gtk-builder-tool validate res/help-overlay.ui
