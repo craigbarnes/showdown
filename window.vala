@@ -1,4 +1,4 @@
-[GtkTemplate(ui = "/org/showdown/window.ui")]
+[GtkTemplate(ui = "/org/gnome/Showdown/window.ui")]
 class Showdown.Window: Gtk.ApplicationWindow {
     string? filename {get; set; default = null;}
     [GtkChild] Gtk.HeaderBar header;

@@ -18,7 +18,7 @@ class Showdown.Application: Gtk.Application {
 
     public Application() {
         Object (
-            application_id: "org.showdown",
+            application_id: "org.gnome.Showdown",
             flags: ApplicationFlags.HANDLES_COMMAND_LINE
         );
     }
@@ -81,7 +81,7 @@ class Showdown.Application: Gtk.Application {
     private string get_string_from_resource(string filename) {
         Bytes bytes;
         try {
-            bytes = resources_lookup_data("/org/showdown/" + filename, 0);
+            bytes = resources_lookup_data("/org/gnome/Showdown/" + filename, 0);
         } catch (Error e) {
             error(e.message);
         }
