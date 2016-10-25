@@ -9,5 +9,4 @@ tests:
         - flatpak install gnome org.gnome.Platform 3.22
         - flatpak install gnome org.gnome.Sdk 3.22
     script:
-        - make check
         - make flatpak FLATPAK_EXPORT_FLAGS=
