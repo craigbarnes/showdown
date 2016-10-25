@@ -4,6 +4,10 @@ tests:
         - apt-get update
         - apt-get install -qy flatpak curl make ca-certificates
           valac gcc libgtk-3-dev libwebkit2gtk-4.0-dev
+        - curl -sLO https://sdk.gnome.org/keys/gnome-sdk.gpg
+        - flatpak remote-add --gpg-import=gnome-sdk.gpg gnome https://sdk.gnome.org/repo/
+        - flatpak install gnome org.gnome.Platform 3.22
+        - flatpak install gnome org.gnome.Sdk 3.22
     script:
         - make check
         - make flatpak FLATPAK_EXPORT_FLAGS=
