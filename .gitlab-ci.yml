@@ -1,5 +1,7 @@
-tests:
+pages:
     image: debian:stretch
+    artifacts: {paths: [public]}
+    only: [master]
     before_script:
         - apt-get update
         - apt-get install -qy flatpak curl make ca-certificates
@@ -10,6 +12,8 @@ tests:
         - flatpak -v install gnome org.gnome.Sdk 3.22
     script:
         - make flatpak FLATPAK_EXPORT_FLAGS=
-        - flatpak -v remote-add --no-gpg-verify showdown build/flatpak-repo/
+        - mkdir public/
+        - mv build/flatpak-repo public/flatpak
+        - flatpak -v remote-add --no-gpg-verify showdown public/flatpak/
         - flatpak -v install showdown org.gnome.Showdown
         - flatpak info org.gnome.Showdown

@@ -18,7 +18,7 @@ build/discount-%/: | build/discount-%.tar.gz
 	cd build && gunzip -d < discount-$*.tar.gz | tar -xf -
 
 build/discount-%.tar.gz: | build/
-	curl -sL -o $@ https://github.com/Orc/discount/archive/v$*.tar.gz
+	curl -sSL -o $@ https://github.com/Orc/discount/archive/v$*.tar.gz
 
 build/:
 	mkdir -p $@
