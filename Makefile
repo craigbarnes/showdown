@@ -1,4 +1,7 @@
 -include local.mk
+include mk/compat.mk
+include mk/discount.mk
+include mk/flatpak.mk
 
 PREFIX     = /usr/local
 BINDIR     = $(PREFIX)/bin
@@ -6,13 +9,13 @@ DATADIR    = $(PREFIX)/share
 DESKTOPDIR = $(DATADIR)/applications
 ICONDIR    = $(DATADIR)/icons/hicolor
 APPICONDIR = $(ICONDIR)/scalable/apps
+APPICON    = showdown
 VERSION    = $(or $(shell git describe --abbrev=0),$(error No version info))
 APPID      = org.gnome.Showdown
 
 CWARNFLAGS = -Wno-incompatible-pointer-types -Wno-discarded-qualifiers
-LDFLAGS    = -lmarkdown
 VALAFLAGS  = --target-glib=2.48 --gresources=res/resources.xml
-VALAFLAGS += $(foreach f, $(CWARNFLAGS) $(LDFLAGS),-X '$(f)')
+VALAFLAGS += $(foreach f, $(CWARNFLAGS) $(DISCOUNT_FLAGS),-X '$(f)')
 VALAPKGS   = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
 VALAFILES  = $(addsuffix .vala, showdown window view)
 RESCOMPILE = glib-compile-resources --sourcedir res/
@@ -39,9 +42,9 @@ showdown-%.tar.gz:
 install: all
 	mkdir -p '$(DESTDIR)$(BINDIR)' '$(DESTDIR)$(APPICONDIR)'
 	install -p -m 0755 showdown '$(DESTDIR)$(BINDIR)/showdown'
-	install -p -m 0644 res/showdown.svg '$(DESTDIR)$(APPICONDIR)/showdown.svg'
-	desktop-file-install --dir='$(DESTDIR)$(DESKTOPDIR)' share/$(APPID).desktop
-	@printf '$(POST-INSTALL-MESSAGE)'
+	install -p -m 0644 res/showdown.svg '$(DESTDIR)$(APPICONDIR)/$(APPICON).svg'
+	desktop-file-install --dir='$(DESTDIR)$(DESKTOPDIR)' \
+	  --set-icon='$(APPICON)' share/$(APPID).desktop
 
 install-home:
 	@$(MAKE) all install post-install PREFIX=$(HOME)/.local
@@ -68,6 +71,8 @@ check:
 	gtk-builder-tool validate res/menus.ui
 	gtk-builder-tool validate res/help-overlay.ui
 
+
+.DEFAULT_GOAL = all
 
 .PHONY: \
     all install install-home uninstall post-install post-uninstall \

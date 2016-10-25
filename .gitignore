@@ -1,3 +1,4 @@
+build/
 *.vala.c
 local.mk
 resources.c
