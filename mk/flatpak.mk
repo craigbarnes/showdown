@@ -1,7 +1,9 @@
+FLATPAK_EXPORT_FLAGS ?= --gpg-sign=0330BEB4
+
 flatpak: | build/flatpak-repo/
 
 build/flatpak-repo/: | build/flatpak-build/files/bin/showdown
-	flatpak build-export --gpg-sign=0330BEB4 $@ build/flatpak-build/
+	flatpak build-export $(FLATPAK_EXPORT_FLAGS) $@ build/flatpak-build/
 
 build/flatpak-build/files/bin/showdown: | $(DISCOUNT_SRCDIR)/ build/flatpak-build/
 	flatpak build build/flatpak-build/ make USE_LOCAL_DISCOUNT=1

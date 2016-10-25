@@ -1,0 +1,7 @@
+tests:
+    image: debian:stretch
+    before_script:
+        - apt-get update
+        - apt-get install -qy flatpak curl make ca-certificates
+    script:
+        - make -j`nproc` flatpak FLATPAK_EXPORT_FLAGS=
