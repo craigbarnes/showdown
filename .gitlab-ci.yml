@@ -12,8 +12,6 @@ pages:
         - flatpak -v install gnome org.gnome.Sdk 3.22
     script:
         - make flatpak FLATPAK_EXPORT_FLAGS=
-        - mkdir public/
-        - mv build/flatpak-repo public/flatpak
         - flatpak -v remote-add --no-gpg-verify showdown public/flatpak/
         - flatpak -v install showdown org.gnome.Showdown
         - flatpak info org.gnome.Showdown

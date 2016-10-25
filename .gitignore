@@ -1,4 +1,5 @@
 build/
+public/
 *.vala.c
 local.mk
 resources.c

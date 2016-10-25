@@ -1,19 +1,22 @@
 FLATPAK_EXPORT_FLAGS ?= --gpg-sign=0330BEB4
 
-flatpak: | build/flatpak-repo/
+flatpak: | public/flatpak/
 
-build/flatpak-repo/: | build/flatpak-build/files/bin/showdown
-	flatpak build-export $(FLATPAK_EXPORT_FLAGS) $@ build/flatpak-build/
+public/flatpak/: | build/flatpak/files/bin/showdown public/
+	flatpak build-export $(FLATPAK_EXPORT_FLAGS) $@ build/flatpak/
 
-build/flatpak-build/files/bin/showdown: | $(DISCOUNT_SRCDIR)/ build/flatpak-build/
-	flatpak build build/flatpak-build/ make USE_LOCAL_DISCOUNT=1
-	flatpak build build/flatpak-build/ make install PREFIX=/app APPICON='$(APPID)'
-	flatpak build-finish build/flatpak-build/ --command=showdown \
+build/flatpak/files/bin/showdown: | $(DISCOUNT_SRCDIR)/ build/flatpak/
+	flatpak build build/flatpak/ make USE_LOCAL_DISCOUNT=1
+	flatpak build build/flatpak/ make install PREFIX=/app APPICON='$(APPID)'
+	flatpak build-finish build/flatpak/ --command=showdown \
 	  --filesystem=host:ro --share=ipc --share=network \
 	  --socket=x11 --socket=session-bus
 
-build/flatpak-build/: | build/
+build/flatpak/: | build/
 	flatpak build-init $@ '$(APPID)' org.gnome.Sdk org.gnome.Platform 3.22
+
+public/:
+	mkdir -p $@
 
 
 .PHONY: flatpak
