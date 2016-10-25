@@ -3,5 +3,7 @@ tests:
     before_script:
         - apt-get update
         - apt-get install -qy flatpak curl make ca-certificates
+          valac gcc libgtk-3-dev libwebkit2gtk-4.0-dev
     script:
-        - make -j`nproc` flatpak FLATPAK_EXPORT_FLAGS=
+        - make check
+        - make flatpak FLATPAK_EXPORT_FLAGS=
