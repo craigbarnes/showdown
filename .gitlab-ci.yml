@@ -5,7 +5,6 @@ pages:
     before_script:
         - apt-get update
         - apt-get install -qy flatpak curl make ca-certificates
-          valac gcc libgtk-3-dev libwebkit2gtk-4.0-dev
         - curl -sSLO https://sdk.gnome.org/keys/gnome-sdk.gpg
         - flatpak -v remote-add --gpg-import=gnome-sdk.gpg gnome https://sdk.gnome.org/repo/
         - flatpak -v install gnome org.gnome.Platform 3.22
