@@ -1,6 +1,6 @@
 [GtkTemplate(ui = "/org/gnome/Showdown/window.ui")]
 class Showdown.Window: Gtk.ApplicationWindow {
-    string? filename {get; set; default = null;}
+    string? filename = null;
     [GtkChild] Gtk.HeaderBar header;
     [GtkChild] Gtk.MenuButton menu_button;
     [GtkChild] Gtk.Grid grid;
