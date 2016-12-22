@@ -26,52 +26,17 @@ Screenshot
 
 ![Showdown screenshot](http://craigbarnes.bitbucket.org/img/showdown.png)
 
-Requirements
-------------
-
-* [Vala] compiler
-* [GNU Make] `>= 3.81`
-* [GTK] `>= 3.20`
-* [GLib] `>= 2.48`
-* [WebKit2GTK] `>= 2.8.4`
-* [Discount] `>= 2.1.7`
-
 Installation
 ------------
 
-First, install the requirements...
+The easiest way to install Showdown is via [Flatpak] (0.8+), using the command:
 
-    # Debian 8+/Ubuntu 15.04+:
-    sudo apt-get -y install valac gcc make libgtk-3-dev libwebkit2gtk-4.0-dev libmarkdown2-dev
-
-    # Fedora 21+:
-    sudo dnf -y install vala gcc make webkitgtk4-devel libmarkdown-devel
-
-    # Arch Linux
-    # (Compile and install Discount, either from source or via AUR)
-    sudo pacman --needed -Sy vala gcc make webkitgtk
-
-then clone the repository:
-
-    git clone git://github.com/craigbarnes/showdown.git
-    cd showdown
-
-...and compile and install:
-
-    make && sudo make install
-
-If you're installing for personal use, also run the following command to
-update the desktop file and icon caches:
-
-    sudo make post-install
-
-For packaging purposes, most distros have equivalent
-post-install/post-uninstall macros that should be used instead.
+    flatpak install https://craigbarnes.gitlab.io/showdown/showdown.flatpakref
 
 License
 -------
 
-Copyright (C) 2015 Craig Barnes
+Copyright (C) 2015-2016 Craig Barnes
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the GNU [General Public License version 3], as published
@@ -90,4 +55,5 @@ Public License version 3 for more details.
 [GLib]: https://developer.gnome.org/glib/
 [GNU Make]: https://www.gnu.org/software/make/
 [Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
-[WebKit2GTK]: http://webkitgtk.org/
+[WebKit2GTK]: https://webkitgtk.org/
+[Flatpak]: http://flatpak.org/

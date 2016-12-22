@@ -1,0 +1,10 @@
+[Flatpak Ref]
+Title = Showdown (Nightly)
+Description = Simple Markdown viewer
+Name = org.gnome.Showdown
+Url = https://craigbarnes.gitlab.io/showdown/flatpak/
+Homepage = https://craigbarnes.gitlab.io/showdown/
+Branch = master
+RuntimeRepo = https://sdk.gnome.org/gnome.flatpakrepo
+IsRuntime = False
+NoDeps = True
