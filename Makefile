@@ -44,6 +44,7 @@ install: all
 	install -p -m 0755 showdown '$(DESTDIR)$(BINDIR)/showdown'
 	install -p -m 0644 res/showdown.svg '$(DESTDIR)$(APPICONDIR)/$(APPICON).svg'
 	desktop-file-install --dir='$(DESTDIR)$(DESKTOPDIR)' \
+	  --set-key=Exec --set-value='$(BINDIR)/showdown %U' \
 	  --set-icon='$(APPICON)' share/$(APPID).desktop
 
 install-home:
