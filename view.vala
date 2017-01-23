@@ -8,6 +8,7 @@ class Showdown.WebView: WebKit.WebView {
     public WebView(Showdown.Window window) {
         Object(user_content_manager: new UserContentManager());
         parent_window = window;
+        visible = true;
         vexpand = true;
         hexpand = true;
         var settings = get_settings();
