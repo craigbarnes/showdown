@@ -2,14 +2,12 @@ pages:
     image: debian:stretch
     artifacts: {paths: [public]}
     only: [master]
-    before_script:
+    script:
         - apt-get update
         - apt-get install -qy flatpak curl make ca-certificates
-        - curl -sSLO https://sdk.gnome.org/keys/gnome-sdk.gpg
-        - flatpak -v remote-add --gpg-import=gnome-sdk.gpg gnome https://sdk.gnome.org/repo/
+        - flatpak -v remote-add gnome https://sdk.gnome.org/gnome.flatpakrepo
         - flatpak -v install gnome org.gnome.Platform 3.22
         - flatpak -v install gnome org.gnome.Sdk 3.22
-    script:
         - make flatpak FLATPAK_EXPORT_FLAGS=
         - flatpak -v remote-add --no-gpg-verify showdown public/flatpak/
         - flatpak -v install showdown org.gnome.Showdown
