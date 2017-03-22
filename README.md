@@ -24,7 +24,7 @@ Features
 Screenshot
 ----------
 
-![Showdown screenshot](http://craigbarnes.bitbucket.org/img/showdown.png)
+![Showdown screenshot](https://craigbarnes.bitbucket.io/img/showdown.png)
 
 Installation
 ------------
