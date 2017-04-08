@@ -29,6 +29,9 @@ endef
 
 all: showdown
 
+run: all
+	./showdown
+
 showdown: $(VALAFILES) resources.c libmarkdown.vapi
 	valac $(VALAFLAGS) $(VALAPKGS) -o $@ $(VALAFILES) resources.c
 
@@ -76,7 +79,7 @@ check:
 .DEFAULT_GOAL = all
 
 .PHONY: \
-    all install install-home uninstall post-install post-uninstall \
+    all run install install-home uninstall post-install post-uninstall \
     dist clean check
 
 .DELETE_ON_ERROR:
