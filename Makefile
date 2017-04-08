@@ -68,9 +68,9 @@ clean:
 
 check:
 	desktop-file-validate share/$(APPID).desktop
-	gtk-builder-tool validate res/window.ui
-	gtk-builder-tool validate res/menus.ui
-	gtk-builder-tool validate res/help-overlay.ui
+	$(foreach UI_FILE, $(filter %.ui, $(RESOURCES)), \
+	  NO_AT_BRIDGE=1 gtk-builder-tool validate $(UI_FILE); \
+	)
 
 
 .DEFAULT_GOAL = all
