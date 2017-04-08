@@ -1,9 +1,4 @@
-stages:
-    - build
-    - check
-
 pages:
-    stage: build
     image: debian:stretch
     artifacts: {paths: [public]}
     only: [master]
@@ -16,16 +11,4 @@ pages:
         - make flatpak FLATPAK_EXPORT_FLAGS=
         - flatpak -v remote-add --no-gpg-verify showdown public/flatpak/
         - flatpak -v install showdown org.gnome.Showdown
-        - flatpak info org.gnome.Showdown
-
-check-install:
-    stage: check
-    image: debian:stretch
-    only: [master]
-    script:
-        - apt-get update
-        - apt-get install -qy flatpak ca-certificates
-        - flatpak list --show-details
-        - flatpak install -y https://craigbarnes.gitlab.io/showdown/showdown.flatpakref
-        - flatpak list --show-details
         - flatpak info org.gnome.Showdown
