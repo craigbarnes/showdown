@@ -52,7 +52,7 @@ install: all
 	$(if $(DESTDIR),, $(POSTINSTALL))
 
 install-home:
-	@$(MAKE) all install post-install PREFIX=$(HOME)/.local
+	@$(MAKE) all install PREFIX=$(HOME)/.local
 
 uninstall:
 	rm -f '$(DESTDIR)$(BINDIR)/showdown'
