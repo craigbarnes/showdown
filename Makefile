@@ -21,10 +21,10 @@ VALAFILES  = $(addsuffix .vala, showdown window view)
 RESCOMPILE = glib-compile-resources --sourcedir res/
 RESOURCES  = $(shell $(RESCOMPILE) --generate-dependencies res/resources.xml)
 
-define POST-INSTALL-MESSAGE
-\n Installed to: $(DESTDIR)$(BINDIR)/showdown\n\n\
- If this installation is for personal use, you should also run\n\
- "make post-install" now to update the icon and .desktop caches.\n\n
+define POSTINSTALL
+ update-desktop-database '$(DESKTOPDIR)'
+ touch -c '$(ICONDIR)'
+ gtk-update-icon-cache -t '$(ICONDIR)'
 endef
 
 all: showdown
@@ -49,6 +49,7 @@ install: all
 	desktop-file-install --dir='$(DESTDIR)$(DESKTOPDIR)' \
 	  --set-key=Exec --set-value='$(BINDIR)/showdown %U' \
 	  --set-icon='$(APPICON)' share/$(APPID).desktop
+	$(if $(DESTDIR),, $(POSTINSTALL))
 
 install-home:
 	@$(MAKE) all install post-install PREFIX=$(HOME)/.local
@@ -57,11 +58,7 @@ uninstall:
 	rm -f '$(DESTDIR)$(BINDIR)/showdown'
 	rm -f '$(DESTDIR)$(APPICONDIR)/showdown.svg'
 	rm -f '$(DESTDIR)$(DESKTOPDIR)/$(APPID).desktop'
-
-post-install post-uninstall:
-	update-desktop-database '$(DESKTOPDIR)'
-	touch -c '$(ICONDIR)'
-	gtk-update-icon-cache -t '$(ICONDIR)'
+	$(if $(DESTDIR),, $(POSTINSTALL))
 
 dist:
 	@$(MAKE) --no-print-directory showdown-$(VERSION).tar.gz
@@ -77,9 +74,5 @@ check:
 
 
 .DEFAULT_GOAL = all
-
-.PHONY: \
-    all run install install-home uninstall post-install post-uninstall \
-    dist clean check
-
+.PHONY: all run install install-home uninstall dist clean check
 .DELETE_ON_ERROR:
