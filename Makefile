@@ -3,15 +3,27 @@ include mk/compat.mk
 include mk/discount.mk
 include mk/flatpak.mk
 
+# Installation directories (may be overridden on the command line)
 PREFIX     = /usr/local
 BINDIR     = $(PREFIX)/bin
 DATADIR    = $(PREFIX)/share
 DESKTOPDIR = $(DATADIR)/applications
 ICONDIR    = $(DATADIR)/icons/hicolor
 APPICONDIR = $(ICONDIR)/scalable/apps
+
+# The following 3 commands are run after the install and uninstall
+# targets, unless the DESTDIR variable is set. The presence of DESTDIR
+# usually indicates a distro packaging environment, in which case the
+# equivalent, distro-provided macros/hooks should be used instead.
+define POSTINSTALL
+ update-desktop-database '$(DESKTOPDIR)'
+ touch -c '$(ICONDIR)'
+ gtk-update-icon-cache -t '$(ICONDIR)'
+endef
+
+APPID      = org.gnome.Showdown
 APPICON    = showdown
 VERSION    = $(or $(shell git describe --abbrev=0),$(error No version info))
-APPID      = org.gnome.Showdown
 
 CWARNFLAGS = -Wno-incompatible-pointer-types -Wno-discarded-qualifiers
 VALAFLAGS  = --target-glib=2.48 --gresources=res/resources.xml
@@ -21,16 +33,10 @@ VALAFILES  = $(addsuffix .vala, showdown window view)
 RESCOMPILE = glib-compile-resources --sourcedir res/
 RESOURCES  = $(shell $(RESCOMPILE) --generate-dependencies res/resources.xml)
 
-define POSTINSTALL
- update-desktop-database '$(DESKTOPDIR)'
- touch -c '$(ICONDIR)'
- gtk-update-icon-cache -t '$(ICONDIR)'
-endef
-
 all: showdown
 
 run: all
-	./showdown
+	./showdown README.md
 
 showdown: $(VALAFILES) resources.c libmarkdown.vapi
 	valac $(VALAFLAGS) $(VALAPKGS) -o $@ $(VALAFILES) resources.c

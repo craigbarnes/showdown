@@ -26,12 +26,70 @@ Screenshot
 
 ![Showdown screenshot](https://craigbarnes.bitbucket.io/img/showdown.png)
 
-Installation
-------------
+Installing
+----------
 
 The easiest way to install Showdown is via [Flatpak] (0.8+), using the command:
 
     flatpak install https://craigbarnes.gitlab.io/showdown/showdown.flatpakref
+
+Building
+--------
+
+To build Showdown from source, first install the following dependencies:
+
+* [Vala]
+* [GNU Make] (3.81+)
+* [GTK] (3.20+)
+* [GLib] (2.48+)
+* [WebKit2GTK] (2.8.4+)
+* [Discount] (2.1.7+)
+
+...which are available via package manager on most distros:
+
+    # Debian 8+/Ubuntu 15.04+:
+    sudo apt-get -y install valac gcc make libgtk-3-dev libwebkit2gtk-4.0-dev libmarkdown2-dev
+
+    # Fedora 21+:
+    sudo dnf -y install vala gcc make webkitgtk4-devel libmarkdown-devel
+
+    # Arch Linux
+    # (Compile and install Discount, either from source or via AUR)
+    sudo pacman --needed -Sy vala gcc make webkitgtk
+
+...then download and extract the latest release tarball:
+
+    wget https://github.com/craigbarnes/showdown/releases/download/0.5/showdown-0.5.tar.gz
+    tar xzf showdown-0.5.tar.gz
+    cd showdown-0.5/
+
+...and compile and install:
+
+    make && sudo make install
+
+Packaging
+---------
+
+**Variables:**
+
+The Makefile supports most common packaging conventions, such as the
+[`DESTDIR`] variable and various other install path variables.
+
+For packaging, usually only `DESTDIR` and `PREFIX` will need to be
+changed. For example:
+
+    make
+    make install DESTDIR=./buildroot PREFIX=/usr
+
+**Post-install commands**
+
+The `Makefile` automatically updates the system icon and MIME type
+caches after installation, *unless* the `DESTDIR` variable is set.
+
+If `DESTDIR` is set, it is assumed that the installation is being used
+for packaging purposes, in which case the packager should use the
+equivalent, distro-provided macros/hooks instead. The icon and MIME
+type caches should also be updated after *uninstallation*.
 
 License
 -------
@@ -57,3 +115,4 @@ Public License version 3 for more details.
 [Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
 [WebKit2GTK]: https://webkitgtk.org/
 [Flatpak]: http://flatpak.org/
+[`DESTDIR`]: https://www.gnu.org/prep/standards/html_node/DESTDIR.html
