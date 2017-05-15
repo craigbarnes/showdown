@@ -1,5 +1,3 @@
-FLATPAK_EXPORT_FLAGS ?= --gpg-sign=0330BEB4
-
 FLATPAK_PERMS = \
     --filesystem=host:ro \
     --share=ipc \

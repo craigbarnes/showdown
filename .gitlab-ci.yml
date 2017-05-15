@@ -12,3 +12,4 @@ pages:
         - flatpak -v remote-add --no-gpg-verify showdown public/flatpak/
         - flatpak -v install showdown org.gnome.Showdown
         - flatpak info org.gnome.Showdown
+        - make -j`nproc` check-dist

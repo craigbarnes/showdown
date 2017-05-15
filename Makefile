@@ -2,6 +2,7 @@
 include mk/compat.mk
 include mk/discount.mk
 include mk/flatpak.mk
+include mk/dist.mk
 
 # Installation directories (may be overridden on the command line)
 PREFIX     = /usr/local
@@ -23,7 +24,6 @@ endef
 
 APPID      = org.gnome.Showdown
 APPICON    = showdown
-VERSION    = $(or $(shell git describe --abbrev=0),$(error No version info))
 
 CWARNFLAGS = -Wno-incompatible-pointer-types -Wno-discarded-qualifiers
 VALAFLAGS  = --target-glib=2.48 --gresources=res/resources.xml
@@ -44,10 +44,6 @@ showdown: $(VALAFILES) resources.c libmarkdown.vapi
 resources.c: res/resources.xml $(RESOURCES)
 	$(RESCOMPILE) --generate-source --target $@ $<
 
-showdown-%.tar.gz:
-	@git archive --prefix=showdown-$*/ -o $@ $*
-	@echo 'Generated: $@'
-
 install: all
 	mkdir -p '$(DESTDIR)$(BINDIR)' '$(DESTDIR)$(APPICONDIR)'
 	install -p -m 0755 showdown '$(DESTDIR)$(BINDIR)/showdown'
@@ -66,11 +62,8 @@ uninstall:
 	rm -f '$(DESTDIR)$(DESKTOPDIR)/$(APPID).desktop'
 	$(if $(DESTDIR),, $(POSTINSTALL))
 
-dist:
-	@$(MAKE) --no-print-directory showdown-$(VERSION).tar.gz
-
 clean:
-	$(RM) showdown resources.c *.vala.c showdown-*.tar.gz
+	$(RM) showdown resources.c *.vala.c
 
 check:
 	desktop-file-validate share/$(APPID).desktop
@@ -80,5 +73,5 @@ check:
 
 
 .DEFAULT_GOAL = all
-.PHONY: all run install install-home uninstall dist clean check
+.PHONY: all run install install-home uninstall clean check
 .DELETE_ON_ERROR:

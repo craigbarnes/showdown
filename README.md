@@ -81,7 +81,7 @@ changed. For example:
     make
     make install DESTDIR=./buildroot PREFIX=/usr
 
-**Post-install commands**
+**Post-install commands:**
 
 The `Makefile` automatically updates the system icon and MIME type
 caches after installation, *unless* the `DESTDIR` variable is set.
