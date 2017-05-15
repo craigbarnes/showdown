@@ -8,7 +8,7 @@ pages:
         - flatpak -v remote-add gnome https://sdk.gnome.org/gnome.flatpakrepo
         - flatpak -v install gnome org.gnome.Platform 3.22
         - flatpak -v install gnome org.gnome.Sdk 3.22
-        - make flatpak FLATPAK_EXPORT_FLAGS=
+        - make flatpak
         - flatpak -v remote-add --no-gpg-verify showdown public/flatpak/
         - flatpak -v install showdown org.gnome.Showdown
         - flatpak info org.gnome.Showdown
