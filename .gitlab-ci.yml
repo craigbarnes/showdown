@@ -1,4 +1,7 @@
+stages: [test, dist]
+
 tests:
+    stage: test
     image: registry.gitlab.com/craigbarnes/dockerfiles/vala
     script:
         - apt-get update
@@ -6,11 +9,13 @@ tests:
         - make
 
 tests-2:
+    stage: test
     image: registry.gitlab.com/craigbarnes/dockerfiles/vala
     script:
         - make USE_LOCAL_DISCOUNT=1
 
 pages:
+    stage: dist
     image: debian:stretch
     artifacts: {paths: [public]}
     only: [master]
