@@ -1,6 +1,10 @@
 class Showdown.Application: Gtk.Application {
-    internal string? user_stylesheet = null;
     private static string? wflag = null;
+    internal string? user_stylesheet = null;
+    internal string document_template;
+    internal string error_template;
+    internal string default_stylesheet;
+    internal string toc_stylesheet;
 
     const ActionEntry[] actions = {
         {"new_window", new_window},
@@ -21,6 +25,10 @@ class Showdown.Application: Gtk.Application {
             application_id: "org.gnome.Showdown",
             flags: ApplicationFlags.HANDLES_COMMAND_LINE
         );
+        document_template = get_string_from_resource("template.html");
+        error_template = get_string_from_resource("error.html");
+        default_stylesheet = get_string_from_resource("main.css");
+        toc_stylesheet = get_string_from_resource("toc.css");
     }
 
     public override int command_line(ApplicationCommandLine cmdline) {
@@ -102,10 +110,6 @@ class Showdown.Application: Gtk.Application {
         set_accels_for_action("win.zoom_in", {"<Primary>plus", "<Primary>equal"});
         set_accels_for_action("win.zoom_out", {"<Primary>minus", "<Primary>dstroke"});
         set_accels_for_action("win.zoom_reset", {"<Primary>0"});
-        document_template = get_string_from_resource("template.html");
-        error_template = get_string_from_resource("error.html");
-        default_stylesheet = get_string_from_resource("main.css");
-        toc_stylesheet = get_string_from_resource("toc.css");
         try {
             unowned string config_dir = Environment.get_user_config_dir();
             var user_stylesheet_path = @"$config_dir/showdown/stylesheet.css";
@@ -117,11 +121,4 @@ class Showdown.Application: Gtk.Application {
         var app = new Application();
         return app.run(args);
     }
-}
-
-namespace Showdown {
-    static string document_template;
-    static string error_template;
-    static string default_stylesheet;
-    static string toc_stylesheet;
 }

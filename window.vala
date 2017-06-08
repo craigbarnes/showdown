@@ -6,7 +6,6 @@ class Showdown.Window: Gtk.ApplicationWindow {
     [GtkChild] Gtk.Grid grid;
     WebKit.WebView webview;
 
-
     const ActionEntry[] actions = {
         {"open", open},
         {"reload", reload},
@@ -17,10 +16,16 @@ class Showdown.Window: Gtk.ApplicationWindow {
         {"zoom_reset", zoom_reset},
     };
 
-    public Window(Application app) {
-        Object(application: app);
+    Showdown.Application app {
+        get {
+            return application as Showdown.Application;
+        }
+    }
+
+    public Window(Gtk.Application application) {
+        Object(application: application);
         add_action_entries(actions, this);
-        menu_button.menu_model = app.get_menu_by_id("header-menu");
+        menu_button.menu_model = application.get_menu_by_id("header-menu");
         webview = new Showdown.WebView(this);
         grid.add(webview);
         show();
@@ -100,17 +105,17 @@ class Showdown.Window: Gtk.ApplicationWindow {
         var md = Markdown.parse(text);
         var body = md.render_html();
         var toc = md.render_html_toc();
-        var stylesheet = default_stylesheet;
+        var stylesheet = app.default_stylesheet;
 
         if (toc == null) {
             toc = "";
         } else {
-            stylesheet += toc_stylesheet;
+            stylesheet += app.toc_stylesheet;
         }
 
         var file = File.new_for_path(filename);
         var basename = file.get_basename();
-        var doc = document_template.printf(basename, stylesheet, toc, body);
+        var doc = app.document_template.printf(basename, stylesheet, toc, body);
         header.title = basename;
         header.subtitle = file.get_parent().get_path();
         webview.load_html(doc, file.get_uri());
@@ -119,7 +124,7 @@ class Showdown.Window: Gtk.ApplicationWindow {
     void show_error_page(string message) {
         header.title = "Markdown Viewer";
         header.subtitle = "";
-        var html = error_template.printf(Markup.escape_text(message));
+        var html = app.error_template.printf(Markup.escape_text(message));
         webview.load_alternate_html(html, "about:blank", null);
     }
 
