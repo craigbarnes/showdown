@@ -1,6 +1,13 @@
 tests:
     image: registry.gitlab.com/craigbarnes/dockerfiles/vala
     script:
+        - apt-get update
+        - apt-get install -qy libmarkdown2-dev
+        - make
+
+tests-2:
+    image: registry.gitlab.com/craigbarnes/dockerfiles/vala
+    script:
         - make USE_LOCAL_DISCOUNT=1
 
 pages:
