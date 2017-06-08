@@ -1,3 +1,10 @@
+tests:
+    image: debian:stretch
+    script:
+        - apt-get update
+        - apt-get install -qy valac gcc make libgtk-3-dev libwebkit2gtk-4.0-dev libmarkdown2-dev curl ca-certificates
+        - make USE_LOCAL_DISCOUNT=1
+
 pages:
     image: debian:stretch
     artifacts: {paths: [public]}
