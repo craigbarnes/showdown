@@ -83,11 +83,14 @@ class Showdown.Window: Gtk.ApplicationWindow {
         all.set_name("All files");
         dialog.add_filter(all);
 
-        if (dialog.run() == Gtk.ResponseType.ACCEPT) {
-            load_file(dialog.get_filename());
-        }
+        dialog.response.connect((response_id) => {
+            if (response_id == Gtk.ResponseType.ACCEPT) {
+                load_file(dialog.get_filename());
+            }
+            dialog.destroy();
+        });
 
-        dialog.destroy();
+        dialog.show();
     }
 
     internal void reload() {
