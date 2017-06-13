@@ -1,11 +1,11 @@
 using WebKit;
 
-class Showdown.WebView: WebKit.WebView {
+class Showdown.MarkdownView: WebKit.WebView {
     const UserContentInjectedFrames FTOP = UserContentInjectedFrames.TOP_FRAME;
     const UserStyleLevel USER = UserStyleLevel.USER;
     Showdown.Window parent_window;
 
-    public WebView(Showdown.Window window) {
+    public MarkdownView(Showdown.Window window) {
         Object(user_content_manager: new UserContentManager());
         parent_window = window;
         visible = true;

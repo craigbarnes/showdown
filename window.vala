@@ -4,7 +4,7 @@ class Showdown.Window: Gtk.ApplicationWindow {
     [GtkChild] Gtk.HeaderBar header;
     [GtkChild] Gtk.MenuButton menu_button;
     [GtkChild] Gtk.Grid grid;
-    WebKit.WebView webview;
+    MarkdownView mdview;
 
     const ActionEntry[] actions = {
         {"open", open},
@@ -26,8 +26,8 @@ class Showdown.Window: Gtk.ApplicationWindow {
         Object(application: application);
         add_action_entries(actions, this);
         menu_button.menu_model = application.get_menu_by_id("header-menu");
-        webview = new Showdown.WebView(this);
-        grid.add(webview);
+        mdview = new Showdown.MarkdownView(this);
+        grid.add(mdview);
         show();
     }
 
@@ -35,28 +35,28 @@ class Showdown.Window: Gtk.ApplicationWindow {
     void search_entry_changed(Gtk.SearchEntry entry) {
         const WebKit.FindOptions WRAP = WebKit.FindOptions.WRAP_AROUND;
         const WebKit.FindOptions ICASE = WebKit.FindOptions.CASE_INSENSITIVE;
-        webview.get_find_controller().search(entry.text, WRAP + ICASE, 5000);
+        mdview.get_find_controller().search(entry.text, WRAP + ICASE, 5000);
     }
 
     [GtkCallback]
     void search_entry_activate() {
-        webview.get_find_controller().search_next();
+        mdview.get_find_controller().search_next();
     }
 
     void zoom_in() {
-        webview.zoom_level += 0.1;
+        mdview.zoom_level += 0.1;
     }
 
     void zoom_out() {
-        if (webview.zoom_level > 1.1) {
-            webview.zoom_level -= 0.1;
+        if (mdview.zoom_level > 1.1) {
+            mdview.zoom_level -= 0.1;
         } else {
-            webview.zoom_level = 1;
+            mdview.zoom_level = 1;
         }
     }
 
     void zoom_reset() {
-        webview.zoom_level = 1;
+        mdview.zoom_level = 1;
     }
 
     void open() {
@@ -121,14 +121,14 @@ class Showdown.Window: Gtk.ApplicationWindow {
         var doc = app.document_template.printf(basename, stylesheet, toc, body);
         header.title = basename;
         header.subtitle = file.get_parent().get_path();
-        webview.load_html(doc, file.get_uri());
+        mdview.load_html(doc, file.get_uri());
     }
 
     void show_error_page(string message) {
         header.title = "Markdown Viewer";
         header.subtitle = "";
         var html = app.error_template.printf(Markup.escape_text(message));
-        webview.load_alternate_html(html, "about:blank", null);
+        mdview.load_alternate_html(html, "about:blank", null);
     }
 
     internal void load_file(string filename) {
@@ -137,7 +137,7 @@ class Showdown.Window: Gtk.ApplicationWindow {
     }
 
     void print() {
-        var p = new WebKit.PrintOperation(webview);
+        var p = new WebKit.PrintOperation(mdview);
         p.run_dialog(this);
     }
 }
