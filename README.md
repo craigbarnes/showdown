@@ -83,8 +83,9 @@ changed. For example:
 
 **Post-install commands:**
 
-The `Makefile` automatically updates the system icon and MIME type
-caches after installation, *unless* the `DESTDIR` variable is set.
+The `Makefile` automatically [updates][POSTINSTALL] the system icon and
+MIME type caches after installation, *unless* the `DESTDIR` variable is
+set.
 
 If `DESTDIR` is set, it is assumed that the installation is being used
 for packaging purposes, in which case the packager should use the
@@ -109,10 +110,11 @@ Public License version 3 for more details.
 [General Public License version 3]: https://www.gnu.org/licenses/gpl-3.0.html
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
 [Vala]: https://wiki.gnome.org/Projects/Vala
-[GTK]: http://www.gtk.org/
+[GTK]: https://www.gtk.org/
 [GLib]: https://developer.gnome.org/glib/
 [GNU Make]: https://www.gnu.org/software/make/
 [Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
 [WebKit2GTK]: https://webkitgtk.org/
 [Flatpak]: http://flatpak.org/
 [`DESTDIR`]: https://www.gnu.org/prep/standards/html_node/DESTDIR.html
+[POSTINSTALL]: https://github.com/craigbarnes/showdown/blob/master/Makefile#L19-L23
