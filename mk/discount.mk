@@ -1,4 +1,5 @@
-DISCOUNT_SRCDIR = build/discount-2.2.1
+DISCOUNT_SRCDIR = build/discount-2.2.2
+DISCOUNT_PKGNAME = libmarkdown
 PKGCONFIG ?= pkg-config --silence-errors 2>/dev/null
 
 ifdef USE_LOCAL_DISCOUNT
@@ -6,8 +7,8 @@ ifdef USE_LOCAL_DISCOUNT
  DISCOUNT_CFLAGS = -I$(DISCOUNT_SRCDIR)
  showdown: | $(DISCOUNT_SRCDIR)/libmarkdown.a
 else ifeq '$(shell $(PKGCONFIG) --exists libmarkdown && echo 1)' '1'
- DISCOUNT_LDFLAGS ?= $(shell $(PKGCONFIG) --libs libmarkdown)
- DISCOUNT_CFLAGS ?= $(shell $(PKGCONFIG) --cflags libmarkdown)
+ DISCOUNT_LDFLAGS ?= $(shell $(PKGCONFIG) --libs $(DISCOUNT_PKGNAME))
+ DISCOUNT_CFLAGS ?= $(shell $(PKGCONFIG) --cflags $(DISCOUNT_PKGNAME))
 else
  DISCOUNT_LDFLAGS ?= -lmarkdown
 endif
