@@ -21,12 +21,13 @@ pages:
     only: [master]
     script:
         - apt-get update
-        - apt-get install -qy flatpak curl make git ca-certificates
+        - apt-get install -qy flatpak curl make git gnupg ca-certificates
         - flatpak -v remote-add gnome https://sdk.gnome.org/gnome.flatpakrepo
         - flatpak -v install gnome org.gnome.Platform 3.22
         - flatpak -v install gnome org.gnome.Sdk 3.22
-        - make flatpak
-        - flatpak -v remote-add --no-gpg-verify showdown public/flatpak/
+        - echo "$GPG_PRIVATE_KEY" | gpg --import -
+        - make flatpak FLATPAK_EXPORT_FLAGS='--gpg-sign=43705BA1'
+        - echo "$GPG_PUBLIC_KEY" | flatpak -v remote-add --gpg-import=- showdown public/flatpak/
         - flatpak -v install showdown org.gnome.Showdown
         - flatpak info org.gnome.Showdown
         - make -j`nproc` check-dist
