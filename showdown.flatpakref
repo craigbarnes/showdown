@@ -4,6 +4,7 @@ Description = Simple Markdown viewer
 Name = org.gnome.Showdown
 Url = https://craigbarnes.gitlab.io/showdown/flatpak/
 Homepage = https://craigbarnes.gitlab.io/showdown/
+Icon = https://craigbarnes.gitlab.io/showdown/showdown.svg
 Branch = master
 RuntimeRepo = https://sdk.gnome.org/gnome.flatpakrepo
 IsRuntime = False

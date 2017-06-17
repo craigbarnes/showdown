@@ -11,7 +11,10 @@ flatpak: | public/flatpak/ public/showdown.flatpakref
 public/flatpak/: | build/flatpak/files/bin/showdown public/
 	flatpak build-export $(FLATPAK_EXPORT_FLAGS) $@ build/flatpak/
 
-public/showdown.flatpakref: showdown.flatpakref
+public/showdown.flatpakref: showdown.flatpakref | public/showdown.svg
+	cp $< $@
+
+public/showdown.svg: res/showdown.svg
 	cp $< $@
 
 build/flatpak/files/bin/showdown: | $(DISCOUNT_SRCDIR)/ build/flatpak/
