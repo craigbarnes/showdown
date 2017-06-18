@@ -44,18 +44,19 @@ To build Showdown from source, first install the following dependencies:
 * [GLib] (2.48+)
 * [WebKit2GTK] (2.8.4+)
 * [Discount] (2.1.7+)
+* [xmllint] (*optional* -- used to shrink XML [resources], if available)
 
 ...which are available via package manager on most distros:
 
     # Debian 8+/Ubuntu 15.04+:
-    sudo apt-get -y install valac gcc make libgtk-3-dev libwebkit2gtk-4.0-dev libmarkdown2-dev
+    sudo apt-get -y install valac gcc make libgtk-3-dev libwebkit2gtk-4.0-dev libmarkdown2-dev libxml2-utils
 
     # Fedora 21+:
-    sudo dnf -y install vala gcc make webkitgtk4-devel libmarkdown-devel
+    sudo dnf -y install vala gcc make webkitgtk4-devel libmarkdown-devel libxml2
 
     # Arch Linux
     # (Compile and install Discount, either from source or via AUR)
-    sudo pacman --needed -Sy vala gcc make webkitgtk
+    sudo pacman --needed -Sy vala gcc make webkitgtk libxml2
 
 ...then download and extract the latest release tarball:
 
@@ -116,5 +117,7 @@ Public License version 3 for more details.
 [Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
 [WebKit2GTK]: https://webkitgtk.org/
 [Flatpak]: http://flatpak.org/
+[xmllint]: http://xmlsoft.org/xmllint.html
+[resources]: https://github.com/craigbarnes/showdown/blob/master/res/resources.xml
 [`DESTDIR`]: https://www.gnu.org/prep/standards/html_node/DESTDIR.html
 [POSTINSTALL]: https://github.com/craigbarnes/showdown/blob/master/Makefile#L19-L23
