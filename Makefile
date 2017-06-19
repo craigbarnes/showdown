@@ -18,8 +18,8 @@ APPICONDIR = $(ICONDIR)/scalable/apps
 # equivalent, distro-provided macros/hooks should be used instead.
 define POSTINSTALL
  update-desktop-database '$(DESKTOPDIR)'
- touch -c '$(ICONDIR)'
- gtk-update-icon-cache -t '$(ICONDIR)'
+ touch -c '$(ICONDIR)' || :
+ gtk-update-icon-cache -tf '$(ICONDIR)' || :
 endef
 
 APPID      = org.gnome.Showdown
