@@ -23,7 +23,7 @@ build/flatpak/files/bin/showdown: | $(DISCOUNT_SRCDIR)/ build/flatpak/
 	flatpak build-finish build/flatpak/ --command=showdown $(FLATPAK_PERMS)
 
 build/flatpak/: | build/
-	flatpak build-init $@ '$(APPID)' org.gnome.Sdk org.gnome.Platform 3.22
+	flatpak build-init $@ '$(APPID)' org.gnome.Sdk org.gnome.Platform 3.24
 
 public/:
 	mkdir -p $@
