@@ -17,9 +17,9 @@ APPICONDIR = $(ICONDIR)/scalable/apps
 # usually indicates a distro packaging environment, in which case the
 # equivalent, distro-provided macros/hooks should be used instead.
 define POSTINSTALL
- update-desktop-database '$(DESKTOPDIR)' || :
+ update-desktop-database -q '$(DESKTOPDIR)' || :
  touch -c '$(ICONDIR)' || :
- gtk-update-icon-cache -tf '$(ICONDIR)' || :
+ gtk-update-icon-cache -qtf '$(ICONDIR)' || :
 endef
 
 APPID      = org.gnome.Showdown
