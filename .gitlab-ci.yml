@@ -1,15 +1,17 @@
 stages: [test, dist]
 
-tests:
+test:dynamic:
     stage: test
     image: registry.gitlab.com/craigbarnes/dockerfiles/vala
     script:
         - apt-get update
-        - apt-get install -qy libmarkdown2-dev
+        - apt-get install -qy libmarkdown2-dev meson
         - make
         - make install
+        - meson build/meson/
+        - ninja -C build/meson/ install
 
-tests-2:
+test:static:
     stage: test
     image: registry.gitlab.com/craigbarnes/dockerfiles/vala
     script:
