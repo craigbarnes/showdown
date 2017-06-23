@@ -6,6 +6,12 @@ resources = import('gnome').compile_resources (
     source_dir: 'res'
 )
 
+libmarkdown = dependency('libmarkdown', version: '>= 2.2.1', required: false)
+if libmarkdown.found() == false
+    cc = meson.get_compiler('c')
+    libmarkdown = cc.find_library('libmarkdown', required: true)
+endif
+
 executable (
     'showdown',
     install: true,
@@ -20,7 +26,7 @@ executable (
         dependency('glib-2.0', version: '>= 2.48'),
         dependency('gobject-2.0', version: '>= 2.48'),
         dependency('webkit2gtk-4.0', version: '>= 2.8.4'),
-        dependency('libmarkdown', version: '>= 2.2.1')
+        libmarkdown
     ],
     vala_args: [
         '--target-glib=2.48',
