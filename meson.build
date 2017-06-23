@@ -36,8 +36,15 @@ executable (
 )
 
 datadir = get_option('datadir')
-desktopdir = datadir + '/applications'
-appicondir = datadir + '/icons/hicolor/scalable/apps'
+desktopdir = join_paths(datadir, 'applications')
+icondir = join_paths(datadir, 'icons', 'hicolor')
+appicondir = join_paths(icondir, 'scalable', 'apps')
 
 install_data('res/showdown.svg', install_dir: appicondir)
 install_data('share/org.gnome.Showdown.desktop', install_dir: desktopdir)
+
+meson.add_install_script (
+    'mk/postinstall.sh',
+    join_paths(get_option('prefix'), desktopdir),
+    join_paths(get_option('prefix'), icondir)
+)
