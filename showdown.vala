@@ -1,6 +1,5 @@
 class Showdown.Application: Gtk.Application {
     private static string? wflag = null;
-    internal string? user_stylesheet = null;
     internal string document_template;
     internal string error_template;
     internal string default_stylesheet;
@@ -110,11 +109,7 @@ class Showdown.Application: Gtk.Application {
         set_accels_for_action("win.zoom_in", {"<Primary>plus", "<Primary>equal"});
         set_accels_for_action("win.zoom_out", {"<Primary>minus", "<Primary>dstroke"});
         set_accels_for_action("win.zoom_reset", {"<Primary>0"});
-        try {
-            unowned string config_dir = Environment.get_user_config_dir();
-            var user_stylesheet_path = @"$config_dir/showdown/stylesheet.css";
-            FileUtils.get_contents(user_stylesheet_path, out user_stylesheet);
-        } catch (Error e) {}
+        MarkdownView.load_user_assets();
     }
 
     public static int main(string[] args) {
