@@ -3,28 +3,28 @@ namespace Markdown {
     [Compact]
     [CCode(cname = "MMIOT", cprefix = "mkd_", free_function = "mkd_cleanup")]
     public class Document {
-        internal int compile(int flags);
-        private int document(out char **text);
-        private int toc(out char **text);
+        internal bool compile(int flags);
+        private int document(out unowned string text);
+        private int toc(out unowned string? text);
 
-        public string render_html() {
-            char **html;
+        [CCode(cname = "mkd_string")]
+        public Document.from_string(uint8[] bfr, int flags);
+
+        public unowned string render_html() {
+            unowned string html;
             int size = this.document(out html);
-            return (string)html;
+            return html;
         }
 
-        public string? render_html_toc() {
-            char **html;
+        public unowned string? render_html_toc() {
+            unowned string? html = null;
             int size = this.toc(out html);
-            return html != null ? (string)html : null;
+            return html;
         }
     }
 
-    [CCode(cname = "mkd_string")]
-    private Document _parse(char *bfr, int size, int flags);
-
     public Document parse(string text, int flags = 0x02001000) {
-        var document = _parse(text, text.length, flags);
+        var document = new Document.from_string(text.data, flags);
         document.compile(flags);
         return document;
     }
