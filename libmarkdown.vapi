@@ -23,7 +23,7 @@ namespace Markdown {
     [CCode(cname = "mkd_string")]
     private Document _parse(char *bfr, int size, int flags);
 
-    public Document parse(string text, int flags = 0x00001000) {
+    public Document parse(string text, int flags = 0x02001000) {
         var document = _parse(text, text.length, flags);
         document.compile(flags);
         return document;
