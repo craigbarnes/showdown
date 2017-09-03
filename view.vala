@@ -28,20 +28,20 @@ class Showdown.MarkdownView: WebKit.WebView {
 
     internal static void load_user_assets() {
         const UserContentInjectedFrames FTOP = UserContentInjectedFrames.TOP_FRAME;
-        const UserScriptInjectionTime ISTART = UserScriptInjectionTime.START;
-        const UserStyleLevel USER = UserStyleLevel.USER;
         unowned string config_dir = Environment.get_user_config_dir();
         var user_stylesheet_path = @"$config_dir/showdown/stylesheet.css";
         var user_script_path = @"$config_dir/showdown/script.js";
         try {
+            const UserStyleLevel USER = UserStyleLevel.USER;
             string text;
             FileUtils.get_contents(user_stylesheet_path, out text);
             user_stylesheet = new UserStyleSheet(text, FTOP, USER, null, null);
         } catch (Error e) {}
         try {
+            const UserScriptInjectionTime START = UserScriptInjectionTime.START;
             string text;
             FileUtils.get_contents(user_script_path, out text);
-            user_script = new UserScript(text, FTOP, ISTART, {"file://*"}, null);
+            user_script = new UserScript(text, FTOP, START, {"file://*"}, null);
         } catch (Error e) {}
     }
 
