@@ -97,9 +97,10 @@ class Showdown.Window: Gtk.ApplicationWindow {
         if (filename == null) {
             return;
         }
-        string text;
+        var file = File.new_for_path(filename);
+        uint8[] text;
         try {
-            FileUtils.get_contents(filename, out text);
+            file.load_contents(null, out text, null);
         } catch (Error e) {
             show_error_page(e.message);
             return;
@@ -116,7 +117,6 @@ class Showdown.Window: Gtk.ApplicationWindow {
             stylesheet += app.toc_stylesheet;
         }
 
-        var file = File.new_for_path(filename);
         var basename = file.get_basename();
         var doc = app.document_template.printf(basename, stylesheet, toc, body);
         header.title = basename;

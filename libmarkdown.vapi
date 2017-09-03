@@ -23,8 +23,8 @@ namespace Markdown {
         }
     }
 
-    public Document parse(string text, int flags = 0x02001000) {
-        var document = new Document.from_string(text.data, flags);
+    public Document parse(uint8[] text, int flags = 0x02001000) {
+        var document = new Document.from_string(text, flags);
         document.compile(flags);
         return document;
     }
