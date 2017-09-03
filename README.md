@@ -16,10 +16,11 @@ you can use:
 Features
 --------
 
-* Uses a GitHub-inspired stylesheet by default
-* Supports custom user stylesheets
-* Generates a hierarchical table of contents from the document outline
+* GitHub inspired default stylesheet.
+* Table of contents navigation.
 * Integrated search bar
+* User styles (`~/.config/showdown/stylesheet.css`)
+* User scripts (`~/.config/showdown/script.js`)
 
 Screenshot
 ----------
