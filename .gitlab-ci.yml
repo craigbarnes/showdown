@@ -2,20 +2,19 @@ stages: [test, dist]
 
 test:dynamic:
     stage: test
-    image: registry.gitlab.com/craigbarnes/dockerfiles/vala
+    image: registry.gitlab.com/craigbarnes/dockerfiles/vala-debian
     script:
-        - apt-get update
-        - apt-get install -qy libmarkdown2-dev meson
-        - make
+        - apt-get update && apt-get -y install libmarkdown2-dev
+        - make -j"$(nproc)"
         - make install
         - meson build/meson/
         - ninja -C build/meson/ install
 
 test:static:
     stage: test
-    image: registry.gitlab.com/craigbarnes/dockerfiles/vala
+    image: registry.gitlab.com/craigbarnes/dockerfiles/vala-debian
     script:
-        - make USE_LOCAL_DISCOUNT=1
+        - make -j"$(nproc)" USE_LOCAL_DISCOUNT=1
         - make install
 
 pages:
@@ -34,4 +33,4 @@ pages:
         - echo "$GPG_PUBLIC_KEY" | flatpak -v remote-add --gpg-import=- showdown public/flatpak/
         - flatpak -v install showdown org.gnome.Showdown
         - flatpak info org.gnome.Showdown
-        - make -j`nproc` check-dist
+        - make -j"$(nproc)" check-dist
