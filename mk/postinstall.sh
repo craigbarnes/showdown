@@ -11,7 +11,7 @@ if test -z "$DESTDIR"; then
     touch -c "$ICONDIR"
     gtk-update-icon-cache -qtf "$ICONDIR"
 else
-    echo 'DESTDIR is set; skipping install script'
+    echo 'DESTDIR is set; skipping post-install script'
 fi
 
 exit 0
