@@ -19,12 +19,10 @@ test:static:
 
 pages:
     stage: dist
-    image: debian:stretch
+    image: registry.gitlab.com/craigbarnes/dockerfiles/vala-debian
     artifacts: {paths: [public]}
     only: [master]
     script:
-        - apt-get update
-        - apt-get install -qy flatpak curl make git gnupg ca-certificates
         - flatpak -v remote-add gnome https://sdk.gnome.org/gnome.flatpakrepo
         - flatpak -v install gnome org.gnome.Platform 3.24
         - flatpak -v install gnome org.gnome.Sdk 3.24
