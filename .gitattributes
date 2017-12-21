@@ -1,11 +1,22 @@
 [attr]code text whitespace=tab-in-indent,trailing-space,tabwidth=4
+[attr]ui text whitespace=tab-in-indent,trailing-space,tabwidth=2
+[attr]make text
 
 *.vala code
+*.vala.in code
 *.vapi code
 *.html code
 *.css code
 *.svg code
+*.sh code
 *.md code
+*.xml code
+*.doap code
+*.ui ui
+GNUmakefile make
+*.mk make
+*.txt text
+*.desktop text
 
 .distinfo export-subst
 .git* export-ignore
