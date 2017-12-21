@@ -6,21 +6,21 @@ include mk/flatpak.mk
 include mk/dist.mk
 
 # Installation directories (may be overridden on the command line)
-PREFIX     = /usr/local
-BINDIR     = $(PREFIX)/bin
-DATADIR    = $(PREFIX)/share
-DESKTOPDIR = $(DATADIR)/applications
-ICONDIR    = $(DATADIR)/icons/hicolor
-APPICONDIR = $(ICONDIR)/scalable/apps
+prefix = /usr/local
+bindir = $(prefix)/bin
+datadir = $(prefix)/share
+appdir = $(datadir)/applications
+icondir = $(datadir)/icons/hicolor
+appicondir = $(icondir)/scalable/apps
 
 # The following 3 commands are run after the install and uninstall
 # targets, unless the DESTDIR variable is set. The presence of DESTDIR
 # usually indicates a distro packaging environment, in which case the
 # equivalent, distro-provided macros/hooks should be used instead.
 define POSTINSTALL
- update-desktop-database -q '$(DESKTOPDIR)' || :
- touch -c '$(ICONDIR)' || :
- gtk-update-icon-cache -qtf '$(ICONDIR)' || :
+ update-desktop-database -q '$(appdir)' || :
+ touch -c '$(icondir)' || :
+ gtk-update-icon-cache -qtf '$(icondir)' || :
 endef
 
 ifeq "" "$(filter-out install,$(or $(MAKECMDGOALS),all))"
@@ -86,21 +86,21 @@ build/:
 	@mkdir -p $@
 
 install: all
-	$(INSTALL_DIR) '$(DESTDIR)$(BINDIR)' '$(DESTDIR)$(APPICONDIR)'
-	$(INSTALL) -m755 showdown '$(DESTDIR)$(BINDIR)/showdown'
-	$(INSTALL) -m644 res/showdown.svg '$(DESTDIR)$(APPICONDIR)/$(APPICON).svg'
-	desktop-file-install --dir='$(DESTDIR)$(DESKTOPDIR)' \
-	  --set-key=Exec --set-value='$(BINDIR)/showdown %U' \
+	$(INSTALL_DIR) '$(DESTDIR)$(bindir)' '$(DESTDIR)$(appicondir)'
+	$(INSTALL) -m755 showdown '$(DESTDIR)$(bindir)/showdown'
+	$(INSTALL) -m644 res/showdown.svg '$(DESTDIR)$(appicondir)/$(APPICON).svg'
+	desktop-file-install --dir='$(DESTDIR)$(appdir)' \
+	  --set-key=Exec --set-value='$(bindir)/showdown %U' \
 	  --set-icon='$(APPICON)' share/$(APPID).desktop
 	$(if $(DESTDIR),, $(POSTINSTALL))
 
 install-home:
-	@$(MAKE) all install PREFIX=$(HOME)/.local
+	@$(MAKE) all install prefix=$(HOME)/.local
 
 uninstall:
-	$(RM) '$(DESTDIR)$(BINDIR)/showdown'
-	$(RM) '$(DESTDIR)$(APPICONDIR)/showdown.svg'
-	$(RM) '$(DESTDIR)$(DESKTOPDIR)/$(APPID).desktop'
+	$(RM) '$(DESTDIR)$(bindir)/showdown'
+	$(RM) '$(DESTDIR)$(appicondir)/showdown.svg'
+	$(RM) '$(DESTDIR)$(appdir)/$(APPID).desktop'
 	$(if $(DESTDIR),, $(POSTINSTALL))
 
 clean:

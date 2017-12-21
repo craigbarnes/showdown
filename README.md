@@ -75,13 +75,12 @@ Packaging
 **Variables:**
 
 The makefile supports most common packaging conventions, such as the
-[`DESTDIR`] variable and various other install path variables.
+[`DESTDIR`] variable and various other [install path variables]:
 
-For packaging, usually only `DESTDIR` and `PREFIX` will need to be
-changed. For example:
+Example usage:
 
-    make
-    make install DESTDIR=./buildroot PREFIX=/usr
+    make V=1
+    make install V=1 prefix=/usr DESTDIR=PKG
 
 **Post-install commands:**
 
@@ -121,4 +120,5 @@ Public License version 3 for more details.
 [xmllint]: http://xmlsoft.org/xmllint.html
 [resources]: https://github.com/craigbarnes/showdown/blob/master/res/resources.xml
 [`DESTDIR`]: https://www.gnu.org/prep/standards/html_node/DESTDIR.html
+[install path variables]: https://github.com/craigbarnes/showdown/blob/master/GNUmakefile#L8-L14
 [POSTINSTALL]: https://github.com/craigbarnes/showdown/blob/master/GNUmakefile#L19-L23
