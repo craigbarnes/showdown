@@ -20,3 +20,4 @@ GNUmakefile make
 
 .distinfo export-subst
 .git* export-ignore
+mk/dist.mk export-ignore

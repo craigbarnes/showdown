@@ -3,7 +3,7 @@ include mk/compat.mk
 include mk/util.mk
 include mk/discount.mk
 include mk/flatpak.mk
-include mk/dist.mk
+-include mk/dist.mk
 
 # Installation directories (may be overridden on the command line)
 prefix = /usr/local
