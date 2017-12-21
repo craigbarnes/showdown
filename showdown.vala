@@ -13,8 +13,14 @@ class Showdown.Application: Gtk.Application {
 
     public const OptionEntry[] options = {
         {
-            "open-in-current-window", 'w', 0, OptionArg.FILENAME, ref wflag,
+            "open-in-current-window", 'w', 0,
+            OptionArg.FILENAME, ref wflag,
             "Open file in existing window", "FILE"
+        },
+        {
+            "version", 'V', OptionFlags.NO_ARG,
+            OptionArg.CALLBACK, (void *)print_version_and_exit,
+            "Print version number and exit", null
         },
         {null}
     };
@@ -76,13 +82,19 @@ class Showdown.Application: Gtk.Application {
         Gtk.show_about_dialog (
             windows != null ? windows.data : null,
             "program-name", "Showdown",
-            "version", Showdown.Config.VERSION,
+            "version", Config.VERSION,
             "comments", "Simple Markdown viewer",
             "copyright", "Copyright 2015 Craig Barnes",
             "logo-icon-name", "showdown",
             "license-type", Gtk.License.GPL_3_0,
             "website", "https://github.com/craigbarnes/showdown"
         );
+    }
+
+    static void print_version_and_exit() {
+        stdout.printf("showdown %s\n", Config.VERSION);
+        stdout.puts("(C) 2012-2017 Craig Barnes\n");
+        Process.exit(0);
     }
 
     private string get_string_from_resource(string filename) {
