@@ -1,4 +1,6 @@
-ifneq "$(findstring s,$(firstword -$(MAKEFLAGS)))$(filter -s,$(MAKEFLAGS))" ""
+MAKE_S = $(findstring s,$(firstword -$(MAKEFLAGS)))$(filter -s,$(MAKEFLAGS))
+
+ifneq "$(MAKE_S)" ""
   # Make "-s" flag was used (silent build)
   Q = @
   E = @:

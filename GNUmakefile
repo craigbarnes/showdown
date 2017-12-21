@@ -27,7 +27,7 @@ ifeq "" "$(filter-out install,$(or $(MAKECMDGOALS),all))"
  # Don't run optcheck for "make install"
  OPTCHECK = :
 else
- OPTCHECK = mk/optcheck.sh
+ OPTCHECK = SILENT_BUILD='$(MAKE_S)' mk/optcheck.sh
 endif
 
 APPID = io.gitlab.craigbarnes.Showdown
@@ -108,7 +108,7 @@ uninstall:
 
 clean:
 	$(RM) -r build/
-	$(RM) showdown $(CLEANFILES)
+	$(RM) showdown src/*.vala.c $(CLEANFILES)
 
 # The tools used in this target require a display connection for some
 # reason, so it shouldn't be used for headless/automated testing.
