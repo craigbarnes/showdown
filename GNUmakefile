@@ -35,7 +35,7 @@ APPICON = showdown
 VERSION = $(shell mk/version.sh 0.5)
 
 VALAC ?= valac
-RESCOMPILE ?= glib-compile-resources
+RESGEN ?= glib-compile-resources
 INSTALL = install
 INSTALL_DIR = $(INSTALL) -d -m755
 RM = rm -f
@@ -68,13 +68,16 @@ run: all
 	./showdown README.md
 
 showdown: $(VALAFILES) build/resources.c src/libmarkdown.vapi
-	$(VALAC) $(VALAFLAGS) $(VALAPKGS) -o $@ $(filter %.vala %.c, $^)
+	$(E) VALAC $@
+	$(Q) $(VALAC) $(VALAFLAGS) $(VALAPKGS) -o $@ $(filter %.vala %.c, $^)
 
 build/resources.c: res/resources.xml $(RESOURCES) | build/
-	$(RESCOMPILE) --sourcedir res/ --generate-source --target $@ $<
+	$(E) RESGEN $@
+	$(Q) $(RESGEN) --sourcedir res/ --generate-source --target $@ $<
 
 build/version.vala: src/version.vala.in build/version.txt | build/
-	printf "$$(cat src/version.vala.in)" "$$(cat build/version.txt)" > $@
+	$(E) GEN $@
+	$(Q) printf "$$(cat $<)" "$$(cat build/version.txt)" > $@
 
 build/version.txt: FORCE | build/
 	@$(OPTCHECK) '$(VERSION)' $@
