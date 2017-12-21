@@ -76,7 +76,7 @@ class Showdown.Application: Gtk.Application {
         Gtk.show_about_dialog (
             windows != null ? windows.data : null,
             "program-name", "Showdown",
-            "version", "0.5",
+            "version", Showdown.Config.VERSION,
             "comments", "Simple Markdown viewer",
             "copyright", "Copyright 2015 Craig Barnes",
             "logo-icon-name", "showdown",

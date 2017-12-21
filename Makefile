@@ -22,14 +22,22 @@ define POSTINSTALL
  gtk-update-icon-cache -qtf '$(ICONDIR)' || :
 endef
 
+ifeq "" "$(filter-out install,$(or $(MAKECMDGOALS),all))"
+ # Don't run optcheck for "make install"
+ OPTCHECK = :
+else
+ OPTCHECK = mk/optcheck.sh
+endif
+
 APPID      = org.gnome.Showdown
 APPICON    = showdown
+VERSION    = $(shell mk/version.sh 0.5)
 
 CWARNFLAGS = -Wno-incompatible-pointer-types -Wno-discarded-qualifiers
 VALAFLAGS  = --target-glib=2.48 --gresources=res/resources.xml
 VALAFLAGS += $(foreach f, $(CWARNFLAGS) $(DISCOUNT_FLAGS),-X '$(f)')
 VALAPKGS   = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
-VALAFILES  = $(addsuffix .vala, showdown window view)
+VALAFILES  = $(addsuffix .vala, showdown window view version)
 RESCOMPILE = glib-compile-resources --sourcedir res/
 
 RESOURCES = $(addprefix res/, \
@@ -50,6 +58,12 @@ showdown: $(VALAFILES) resources.c libmarkdown.vapi
 resources.c: res/resources.xml $(RESOURCES)
 	$(RESCOMPILE) --generate-source --target $@ $<
 
+version.vala: version.vala.in version.txt
+	printf "$$(cat version.vala.in)" "$$(cat version.txt)" > $@
+
+version.txt: FORCE
+	@$(OPTCHECK) '$(VERSION)' $@
+
 install: all
 	mkdir -p '$(DESTDIR)$(BINDIR)' '$(DESTDIR)$(APPICONDIR)'
 	install -p -m 0755 showdown '$(DESTDIR)$(BINDIR)/showdown'
@@ -69,7 +83,7 @@ uninstall:
 	$(if $(DESTDIR),, $(POSTINSTALL))
 
 clean:
-	$(RM) showdown resources.c *.vala.c
+	$(RM) showdown resources.c *.vala.c version.vala version.txt
 
 check:
 	desktop-file-validate share/$(APPID).desktop
@@ -79,5 +93,5 @@ check:
 
 
 .DEFAULT_GOAL = all
-.PHONY: all run install install-home uninstall clean check
+.PHONY: all run install install-home uninstall clean check FORCE
 .DELETE_ON_ERROR:

@@ -7,4 +7,5 @@
 *.svg code
 *.md code
 
+.distinfo export-subst
 .git* export-ignore
