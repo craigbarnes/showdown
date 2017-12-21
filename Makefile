@@ -94,6 +94,8 @@ uninstall:
 clean:
 	$(RM) showdown resources.c *.vala.c version.vala version.txt
 
+# The tools used in this target require a display connection for some
+# reason, so it shouldn't be used for headless/automated testing.
 check:
 	desktop-file-validate share/$(APPID).desktop
 	$(foreach UI_FILE, $(filter %.ui, $(RESOURCES)), \
