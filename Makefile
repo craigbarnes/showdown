@@ -39,7 +39,7 @@ INSTALL = install
 INSTALL_DIR = $(INSTALL) -d -m755
 RM = rm -f
 
-VALAFILES = $(addsuffix .vala, showdown window view version)
+VALAFILES = $(addsuffix .vala, showdown window view build/version)
 VALAPKGS = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
 CWARNFLAGS = -Wno-incompatible-pointer-types -Wno-discarded-qualifiers
 
@@ -61,17 +61,20 @@ all: showdown
 run: all
 	./showdown README.md
 
-showdown: $(VALAFILES) resources.c libmarkdown.vapi
+showdown: $(VALAFILES) build/resources.c libmarkdown.vapi
 	$(VALAC) $(VALAFLAGS) $(VALAPKGS) -o $@ $(filter %.vala %.c, $^)
 
-resources.c: res/resources.xml $(RESOURCES)
+build/resources.c: res/resources.xml $(RESOURCES) | build/
 	$(RESCOMPILE) --sourcedir res/ --generate-source --target $@ $<
 
-version.vala: version.vala.in version.txt
-	printf "$$(cat version.vala.in)" "$$(cat version.txt)" > $@
+build/version.vala: version.vala.in build/version.txt | build/
+	printf "$$(cat version.vala.in)" "$$(cat build/version.txt)" > $@
 
-version.txt: FORCE
+build/version.txt: FORCE | build/
 	@$(OPTCHECK) '$(VERSION)' $@
+
+build/:
+	@mkdir -p $@
 
 install: all
 	$(INSTALL_DIR) '$(DESTDIR)$(BINDIR)' '$(DESTDIR)$(APPICONDIR)'
@@ -92,7 +95,8 @@ uninstall:
 	$(if $(DESTDIR),, $(POSTINSTALL))
 
 clean:
-	$(RM) showdown resources.c *.vala.c version.vala version.txt
+	$(RM) -r build/
+	$(RM) showdown
 
 # The tools used in this target require a display connection for some
 # reason, so it shouldn't be used for headless/automated testing.

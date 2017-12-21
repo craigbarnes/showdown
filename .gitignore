@@ -1,8 +1,4 @@
 build/
 public/
-*.vala.c
 local.mk
-resources.c
-version.vala
-version.txt
 showdown

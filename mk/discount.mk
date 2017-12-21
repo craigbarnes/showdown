@@ -24,8 +24,5 @@ build/discount-%/: | build/discount-%.tar.gz
 build/discount-%.tar.gz: | build/
 	curl -sSL -o $@ https://github.com/Orc/discount/archive/v$*.tar.gz
 
-build/:
-	mkdir -p $@
-
 
 .SECONDARY: $(DISCOUNT_SRCDIR)/
