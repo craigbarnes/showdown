@@ -10,8 +10,6 @@ test:dynamic:
         - apt-get update && apt-get -y install libmarkdown2-dev
         - make
         - make install
-        - meson build/meson/
-        - ninja -C build/meson/ install
 
 test:static:
     stage: test
