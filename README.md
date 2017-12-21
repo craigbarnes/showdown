@@ -47,7 +47,7 @@ To build Showdown from source, first install the following dependencies:
 * [Discount] (2.1.7+)
 * [xmllint] (*optional* -- used to shrink XML [resources], if available)
 
-...which are available via package manager on most distros:
+...which are available via package manager on most Linux distros:
 
     # Debian 8+/Ubuntu 15.04+:
     sudo apt-get -y install valac gcc make libgtk-3-dev libwebkit2gtk-4.0-dev libmarkdown2-dev libxml2-utils

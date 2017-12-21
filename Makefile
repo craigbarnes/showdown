@@ -29,16 +29,25 @@ else
  OPTCHECK = mk/optcheck.sh
 endif
 
-APPID      = org.gnome.Showdown
-APPICON    = showdown
-VERSION    = $(shell mk/version.sh 0.5)
+APPID = org.gnome.Showdown
+APPICON = showdown
+VERSION = $(shell mk/version.sh 0.5)
 
+VALAC ?= valac
+RESCOMPILE ?= glib-compile-resources
+INSTALL = install
+INSTALL_DIR = $(INSTALL) -d -m755
+RM = rm -f
+
+VALAFILES = $(addsuffix .vala, showdown window view version)
+VALAPKGS = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
 CWARNFLAGS = -Wno-incompatible-pointer-types -Wno-discarded-qualifiers
-VALAFLAGS  = --target-glib=2.48 --gresources=res/resources.xml
-VALAFLAGS += $(foreach f, $(CWARNFLAGS) $(DISCOUNT_FLAGS),-X '$(f)')
-VALAPKGS   = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
-VALAFILES  = $(addsuffix .vala, showdown window view version)
-RESCOMPILE = glib-compile-resources --sourcedir res/
+
+VALAFLAGS = \
+    --target-glib=2.48 \
+    --gresources=res/resources.xml \
+    $(foreach f, $(CWARNFLAGS) $(DISCOUNT_FLAGS),-X '$(f)') \
+    $(VALAFLAGS_EXTRA)
 
 RESOURCES = $(addprefix res/, \
     window.ui menus.ui help-overlay.ui \
@@ -53,10 +62,10 @@ run: all
 	./showdown README.md
 
 showdown: $(VALAFILES) resources.c libmarkdown.vapi
-	valac $(VALAFLAGS) $(VALAPKGS) -o $@ $(VALAFILES) resources.c
+	$(VALAC) $(VALAFLAGS) $(VALAPKGS) -o $@ $(filter %.vala %.c, $^)
 
 resources.c: res/resources.xml $(RESOURCES)
-	$(RESCOMPILE) --generate-source --target $@ $<
+	$(RESCOMPILE) --sourcedir res/ --generate-source --target $@ $<
 
 version.vala: version.vala.in version.txt
 	printf "$$(cat version.vala.in)" "$$(cat version.txt)" > $@
@@ -65,9 +74,9 @@ version.txt: FORCE
 	@$(OPTCHECK) '$(VERSION)' $@
 
 install: all
-	mkdir -p '$(DESTDIR)$(BINDIR)' '$(DESTDIR)$(APPICONDIR)'
-	install -p -m 0755 showdown '$(DESTDIR)$(BINDIR)/showdown'
-	install -p -m 0644 res/showdown.svg '$(DESTDIR)$(APPICONDIR)/$(APPICON).svg'
+	$(INSTALL_DIR) '$(DESTDIR)$(BINDIR)' '$(DESTDIR)$(APPICONDIR)'
+	$(INSTALL) -m755 showdown '$(DESTDIR)$(BINDIR)/showdown'
+	$(INSTALL) -m644 res/showdown.svg '$(DESTDIR)$(APPICONDIR)/$(APPICON).svg'
 	desktop-file-install --dir='$(DESTDIR)$(DESKTOPDIR)' \
 	  --set-key=Exec --set-value='$(BINDIR)/showdown %U' \
 	  --set-icon='$(APPICON)' share/$(APPID).desktop
@@ -77,9 +86,9 @@ install-home:
 	@$(MAKE) all install PREFIX=$(HOME)/.local
 
 uninstall:
-	rm -f '$(DESTDIR)$(BINDIR)/showdown'
-	rm -f '$(DESTDIR)$(APPICONDIR)/showdown.svg'
-	rm -f '$(DESTDIR)$(DESKTOPDIR)/$(APPID).desktop'
+	$(RM) '$(DESTDIR)$(BINDIR)/showdown'
+	$(RM) '$(DESTDIR)$(APPICONDIR)/showdown.svg'
+	$(RM) '$(DESTDIR)$(DESKTOPDIR)/$(APPID).desktop'
 	$(if $(DESTDIR),, $(POSTINSTALL))
 
 clean:
