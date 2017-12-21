@@ -1,19 +1,16 @@
-TAGS = 0.5 0.3 0.2 0.1
-DIST_TARBALLS = $(addprefix showdown-, $(addsuffix .tar.gz, $(TAGS)))
+DIST_VERSIONS = 0.5 0.3 0.2 0.1
+DIST_TARBALLS = $(addprefix showdown-, $(addsuffix .tar.gz, $(DIST_VERSIONS)))
 
-dist: $(addprefix public/dist/, $(DIST_TARBALLS) sha1sums.txt)
+dist: $(firstword $(DIST_TARBALLS))
+dist-all: $(DIST_TARBALLS)
 
-check-dist: dist
-	cd public/dist/ && sha1sum -c sha1sums.txt
+check-dist: dist-all
+	@sha256sum -c mk/sha256sums.txt
 
-public/dist/showdown-%.tar.gz: | public/dist/
-	git archive --prefix=showdown-$*/ -o $@ $*
-
-public/dist/sha1sums.txt: mk/sha1sums.txt | public/dist/
-	cp $< $@
-
-public/dist/: | public/
-	mkdir -p $@
+$(DIST_TARBALLS): showdown-%.tar.gz:
+	$(E) ARCHIVE $@
+	$(Q) git archive --prefix='showdown-$*/' -o '$@' '$*'
 
 
-.PHONY: dist check-dist
+CLEANFILES += showdown-*.tar.gz
+.PHONY: dist dist-all check-dist

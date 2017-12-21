@@ -32,4 +32,3 @@ pages:
         - echo "$GPG_PUBLIC_KEY" | flatpak -v remote-add --gpg-import=- showdown public/flatpak/
         - flatpak -v install showdown io.gitlab.craigbarnes.Showdown
         - flatpak info io.gitlab.craigbarnes.Showdown
-        - make check-dist

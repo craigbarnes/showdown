@@ -61,8 +61,8 @@ To build Showdown from source, first install the following dependencies:
 
 ...then download and extract the latest release tarball:
 
-    wget https://craigbarnes.gitlab.io/showdown/dist/showdown-0.5.tar.gz
-    tar xzf showdown-0.5.tar.gz
+    curl -LO https://craigbarnes.gitlab.io/dist/showdown/showdown-0.5.tar.gz
+    tar -xzf showdown-0.5.tar.gz
     cd showdown-0.5/
 
 ...and compile and install:

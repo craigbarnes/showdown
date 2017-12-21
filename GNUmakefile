@@ -1,5 +1,6 @@
 -include local.mk
 include mk/compat.mk
+include mk/util.mk
 include mk/discount.mk
 include mk/flatpak.mk
 include mk/dist.mk
@@ -101,7 +102,7 @@ uninstall:
 
 clean:
 	$(RM) -r build/
-	$(RM) showdown
+	$(RM) showdown $(CLEANFILES)
 
 # The tools used in this target require a display connection for some
 # reason, so it shouldn't be used for headless/automated testing.
