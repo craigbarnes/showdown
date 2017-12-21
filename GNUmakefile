@@ -67,7 +67,7 @@ all: showdown
 run: all
 	./showdown README.md
 
-showdown: $(VALAFILES) build/resources.c src/libmarkdown.vapi
+showdown: $(VALAFILES) src/libmarkdown.vapi build/resources.c build/flags.txt
 	$(E) VALAC $@
 	$(Q) $(VALAC) $(VALAFLAGS) $(VALAPKGS) -o $@ $(filter %.vala %.c, $^)
 
@@ -81,6 +81,9 @@ build/version.vala: src/version.vala.in build/version.txt | build/
 
 build/version.txt: FORCE | build/
 	@$(OPTCHECK) '$(VERSION)' $@
+
+build/flags.txt: FORCE | build/
+	@$(OPTCHECK) '$(VALAC) $(VALAFLAGS) $(VALAPKGS)' $@
 
 build/:
 	@mkdir -p $@

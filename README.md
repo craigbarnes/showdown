@@ -75,7 +75,7 @@ Packaging
 **Variables:**
 
 The makefile supports most common packaging conventions, such as the
-[`DESTDIR`] variable and various other [install path variables]:
+[`DESTDIR`] variable and various other [install path variables].
 
 Example usage:
 
