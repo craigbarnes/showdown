@@ -74,7 +74,7 @@ Packaging
 
 **Variables:**
 
-The Makefile supports most common packaging conventions, such as the
+The makefile supports most common packaging conventions, such as the
 [`DESTDIR`] variable and various other install path variables.
 
 For packaging, usually only `DESTDIR` and `PREFIX` will need to be
@@ -85,7 +85,7 @@ changed. For example:
 
 **Post-install commands:**
 
-The `Makefile` automatically [updates][POSTINSTALL] the system icon and
+The makefile automatically [updates][POSTINSTALL] the system icon and
 MIME type caches after installation, *unless* the `DESTDIR` variable is
 set.
 
@@ -121,4 +121,4 @@ Public License version 3 for more details.
 [xmllint]: http://xmlsoft.org/xmllint.html
 [resources]: https://github.com/craigbarnes/showdown/blob/master/res/resources.xml
 [`DESTDIR`]: https://www.gnu.org/prep/standards/html_node/DESTDIR.html
-[POSTINSTALL]: https://github.com/craigbarnes/showdown/blob/master/Makefile#L19-L23
+[POSTINSTALL]: https://github.com/craigbarnes/showdown/blob/master/GNUmakefile#L19-L23

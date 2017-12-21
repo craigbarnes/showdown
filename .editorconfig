@@ -9,11 +9,11 @@ max_line_length = 80
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.ui]
+[res/*.ui]
 indent_style = space
 indent_size = 2
 
-[Makefile]
+[{GNUmakefile,mk/*.mk}]
 indent_style = tab
 indent_size = 8
 
