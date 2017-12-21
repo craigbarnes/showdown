@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-    <gresource prefix="/org/gnome/Showdown">
+    <gresource prefix="/io/gitlab/craigbarnes/Showdown">
         <file preprocess="xml-stripblanks">window.ui</file>
         <file>template.html</file>
         <file>error.html</file>
         <file>main.css</file>
         <file>toc.css</file>
     </gresource>
-    <gresource prefix="/org/gnome/Showdown/gtk">
+    <gresource prefix="/io/gitlab/craigbarnes/Showdown/gtk">
         <file preprocess="xml-stripblanks">help-overlay.ui</file>
         <file preprocess="xml-stripblanks">menus.ui</file>
     </gresource>
-    <gresource prefix="/org/gnome/Showdown/icons">
+    <gresource prefix="/io/gitlab/craigbarnes/Showdown/icons">
         <file preprocess="xml-stripblanks">showdown.svg</file>
     </gresource>
 </gresources>

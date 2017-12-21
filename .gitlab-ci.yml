@@ -32,6 +32,6 @@ pages:
         - echo "$GPG_PRIVATE_KEY" | gpg --import -
         - make flatpak FLATPAK_EXPORT_FLAGS='--gpg-sign=43705BA1'
         - echo "$GPG_PUBLIC_KEY" | flatpak -v remote-add --gpg-import=- showdown public/flatpak/
-        - flatpak -v install showdown org.gnome.Showdown
-        - flatpak info org.gnome.Showdown
+        - flatpak -v install showdown io.gitlab.craigbarnes.Showdown
+        - flatpak info io.gitlab.craigbarnes.Showdown
         - make check-dist

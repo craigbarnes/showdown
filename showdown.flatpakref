@@ -1,7 +1,7 @@
 [Flatpak Ref]
 Title = Showdown (Nightly)
 Description = Simple Markdown viewer
-Name = org.gnome.Showdown
+Name = io.gitlab.craigbarnes.Showdown
 Url = https://craigbarnes.gitlab.io/showdown/flatpak/
 Homepage = https://craigbarnes.gitlab.io/showdown/
 Icon = https://craigbarnes.gitlab.io/showdown/showdown.svg

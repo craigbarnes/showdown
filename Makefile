@@ -29,7 +29,7 @@ else
  OPTCHECK = mk/optcheck.sh
 endif
 
-APPID = org.gnome.Showdown
+APPID = io.gitlab.craigbarnes.Showdown
 APPICON = showdown
 VERSION = $(shell mk/version.sh 0.5)
 

@@ -27,7 +27,7 @@ class Showdown.Application: Gtk.Application {
 
     public Application() {
         Object (
-            application_id: "org.gnome.Showdown",
+            application_id: "io.gitlab.craigbarnes.Showdown",
             flags: ApplicationFlags.HANDLES_COMMAND_LINE
         );
         document_template = get_string_from_resource("template.html");
@@ -99,7 +99,7 @@ class Showdown.Application: Gtk.Application {
     private string get_string_from_resource(string filename) {
         Bytes bytes;
         try {
-            bytes = resources_lookup_data("/org/gnome/Showdown/" + filename, 0);
+            bytes = resources_lookup_data("/io/gitlab/craigbarnes/Showdown/" + filename, 0);
         } catch (Error e) {
             error(e.message);
         }
