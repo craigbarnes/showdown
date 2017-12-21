@@ -4,8 +4,10 @@
   <template class="ShowdownWindow" parent="GtkApplicationWindow">
     <property name="title" translatable="yes">Markdown Viewer</property>
     <property name="icon_name">showdown</property>
-    <property name="width-request">1100</property>
-    <property name="height-request">700</property>
+    <property name="width-request">640</property>
+    <property name="height-request">480</property>
+    <property name="default-width">1100</property>
+    <property name="default-height">700</property>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header">
         <property name="visible">True</property>
