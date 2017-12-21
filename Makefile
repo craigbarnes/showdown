@@ -39,8 +39,7 @@ INSTALL = install
 INSTALL_DIR = $(INSTALL) -d -m755
 RM = rm -f
 
-VALAFILES = $(addsuffix .vala, showdown window view build/version)
-VALAPKGS = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir . --pkg libmarkdown
+VALAPKGS = --pkg gtk+-3.0 --pkg webkit2gtk-4.0 --vapidir src --pkg libmarkdown
 CWARNFLAGS = -Wno-incompatible-pointer-types -Wno-discarded-qualifiers
 
 VALAFLAGS = \
@@ -48,6 +47,12 @@ VALAFLAGS = \
     --gresources=res/resources.xml \
     $(foreach f, $(CWARNFLAGS) $(DISCOUNT_FLAGS),-X '$(f)') \
     $(VALAFLAGS_EXTRA)
+
+VALAFILES = \
+    src/showdown.vala \
+    src/window.vala \
+    src/view.vala \
+    build/version.vala
 
 RESOURCES = $(addprefix res/, \
     window.ui menus.ui help-overlay.ui \
@@ -61,14 +66,14 @@ all: showdown
 run: all
 	./showdown README.md
 
-showdown: $(VALAFILES) build/resources.c libmarkdown.vapi
+showdown: $(VALAFILES) build/resources.c src/libmarkdown.vapi
 	$(VALAC) $(VALAFLAGS) $(VALAPKGS) -o $@ $(filter %.vala %.c, $^)
 
 build/resources.c: res/resources.xml $(RESOURCES) | build/
 	$(RESCOMPILE) --sourcedir res/ --generate-source --target $@ $<
 
-build/version.vala: version.vala.in build/version.txt | build/
-	printf "$$(cat version.vala.in)" "$$(cat build/version.txt)" > $@
+build/version.vala: src/version.vala.in build/version.txt | build/
+	printf "$$(cat src/version.vala.in)" "$$(cat build/version.txt)" > $@
 
 build/version.txt: FORCE | build/
 	@$(OPTCHECK) '$(VERSION)' $@
