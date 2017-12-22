@@ -32,7 +32,7 @@ Installing
 
 The easiest way to install Showdown is via [Flatpak] (0.8+), using the command:
 
-    flatpak install https://craigbarnes.gitlab.io/showdown/showdown.flatpakref
+    flatpak install --user https://craigbarnes.gitlab.io/showdown/showdown.flatpakref
 
 Building
 --------
