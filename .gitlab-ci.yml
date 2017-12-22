@@ -1,7 +1,7 @@
 stages: [test, dist]
 
 before_script:
-    - export MAKEFLAGS="-j$(mk/nproc.sh)"
+    - export V=1 MAKEFLAGS="-j$(mk/nproc.sh)"
 
 test:dynamic:
     stage: test
@@ -9,14 +9,20 @@ test:dynamic:
     script:
         - apt-get update && apt-get -y install libmarkdown2-dev
         - make
+        - ldd showdown | grep libmarkdown
+        - du showdown
         - make install
+        - showdown -V
 
 test:static:
     stage: test
     image: registry.gitlab.com/craigbarnes/dockerfiles/vala-debian
     script:
         - make USE_LOCAL_DISCOUNT=1
+        - ldd showdown | grep libmarkdown
+        - du showdown
         - make install
+        - showdown -V
 
 pages:
     stage: dist
