@@ -12,7 +12,6 @@ test:dynamic:
         - ldd showdown | grep libmarkdown
         - du showdown
         - make install
-        - showdown -V
 
 test:static:
     stage: test
@@ -22,7 +21,6 @@ test:static:
         - ldd showdown | grep libmarkdown
         - du showdown
         - make install
-        - showdown -V
 
 pages:
     stage: dist
