@@ -25,8 +25,8 @@ pages:
     only: [master]
     script:
         - flatpak -v remote-add gnome https://sdk.gnome.org/gnome.flatpakrepo
-        - flatpak -v install gnome org.gnome.Platform 3.24
-        - flatpak -v install gnome org.gnome.Sdk 3.24
+        - flatpak -v install gnome org.gnome.Platform 3.26
+        - flatpak -v install gnome org.gnome.Sdk 3.26
         - echo "$GPG_PRIVATE_KEY" | gpg --import -
         - make flatpak FLATPAK_EXPORT_FLAGS='--gpg-sign=43705BA1'
         - echo "$GPG_PUBLIC_KEY" | flatpak -v remote-add --gpg-import=- showdown public/flatpak/
