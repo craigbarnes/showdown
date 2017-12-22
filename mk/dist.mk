@@ -1,4 +1,4 @@
-DIST_VERSIONS = 0.5 0.3 0.2 0.1
+DIST_VERSIONS = 0.6 0.5 0.3 0.2 0.1
 DIST_TARBALLS = $(addprefix showdown-, $(addsuffix .tar.gz, $(DIST_VERSIONS)))
 
 dist: $(firstword $(DIST_TARBALLS))
