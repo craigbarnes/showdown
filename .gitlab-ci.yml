@@ -8,7 +8,6 @@ build:debian:
     image: registry.gitlab.com/craigbarnes/dockerfiles/vala-debian
     script:
         - make USE_LOCAL_DISCOUNT=1
-        - ! (ldd showdown | grep libmarkdown)
         - du -h showdown
         - make install
         - apt-get update && apt-get -y install libmarkdown2-dev
