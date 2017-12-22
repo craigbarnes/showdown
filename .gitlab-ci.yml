@@ -10,7 +10,7 @@ test:dynamic:
         - apt-get update && apt-get -y install libmarkdown2-dev
         - make
         - ldd showdown | grep libmarkdown
-        - du showdown
+        - du -h showdown
         - make install
 
 test:static:
@@ -18,8 +18,7 @@ test:static:
     image: registry.gitlab.com/craigbarnes/dockerfiles/vala-debian
     script:
         - make USE_LOCAL_DISCOUNT=1
-        - ldd showdown | grep libmarkdown
-        - du showdown
+        - du -h showdown
         - make install
 
 pages:
