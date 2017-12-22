@@ -11,6 +11,12 @@ $(DIST_TARBALLS): showdown-%.tar.gz:
 	$(E) ARCHIVE $@
 	$(Q) git archive --prefix='showdown-$*/' -o '$@' '$*'
 
+# Note: gtk-builder-tool is not suitable for automated/headless testing
+check-ui-files:
+	$(foreach UI_FILE, $(filter %.ui, $(RESOURCES)), \
+	  NO_AT_BRIDGE=1 gtk-builder-tool validate $(UI_FILE); \
+	)
+
 
 CLEANFILES += showdown-*.tar.gz
-.PHONY: dist dist-all check-dist
+.PHONY: dist dist-all check-dist check-ui-files

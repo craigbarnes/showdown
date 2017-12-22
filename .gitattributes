@@ -20,7 +20,7 @@ GNUmakefile make
 
 .distinfo export-subst
 .git* export-ignore
-mk/dist.mk export-ignore
+mk/dev.mk export-ignore
 mk/flatpak.mk export-ignore
 mk/sha256sums.txt export-ignore
 showdown.doap export-ignore

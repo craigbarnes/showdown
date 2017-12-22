@@ -3,7 +3,7 @@ include mk/compat.mk
 include mk/util.mk
 include mk/discount.mk
 -include mk/flatpak.mk
--include mk/dist.mk
+-include mk/dev.mk
 
 # Installation directories (may be overridden on the command line)
 prefix = /usr/local
@@ -110,13 +110,8 @@ clean:
 	$(RM) -r build/
 	$(RM) showdown src/*.vala.c $(CLEANFILES)
 
-# The tools used in this target require a display connection for some
-# reason, so it shouldn't be used for headless/automated testing.
 check:
 	desktop-file-validate share/$(APPID).desktop
-	$(foreach UI_FILE, $(filter %.ui, $(RESOURCES)), \
-	  NO_AT_BRIDGE=1 gtk-builder-tool validate $(UI_FILE); \
-	)
 
 
 .DEFAULT_GOAL = all
