@@ -32,7 +32,7 @@ endif
 
 APPID = io.gitlab.craigbarnes.Showdown
 APPICON = showdown
-VERSION = 0.6
+VERSION = $(shell mk/version.sh 0.6)
 
 VALAC ?= valac
 RESGEN ?= glib-compile-resources
