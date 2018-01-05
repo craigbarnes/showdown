@@ -1,17 +1,7 @@
 Showdown
 ========
 
-Showdown is a simple [Markdown] viewer written in [Vala] and [GTK]. It
-converts Markdown into HTML, then presents it in a [WebKit2GTK] view. So
-instead of doing this:
-
-    markdown somefile.md > tmp.html
-    $BROWSER tmp.html
-    rm tmp.html
-
-you can use:
-
-    showdown somefile.md
+Showdown is a simple [Markdown] viewer written in [Vala] and [GTK].
 
 Features
 --------
@@ -32,7 +22,7 @@ Installing
 
 The easiest way to install Showdown is via [Flatpak] (0.8+), using the command:
 
-    flatpak install --user https://craigbarnes.gitlab.io/showdown/showdown.flatpakref
+    flatpak --user install https://craigbarnes.gitlab.io/showdown/showdown.flatpakref
 
 Building
 --------
