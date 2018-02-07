@@ -46,8 +46,7 @@ To build Showdown from source, first install the following dependencies:
     sudo dnf -y install vala gcc make webkitgtk4-devel libmarkdown-devel libxml2
 
     # Arch Linux
-    # (Compile and install Discount, either from source or via AUR)
-    sudo pacman --needed -Sy vala gcc make webkitgtk libxml2
+    sudo pacman --needed -Sy vala gcc make webkit2gtk discount libxml2
 
 ...then download and extract the latest release tarball:
 
