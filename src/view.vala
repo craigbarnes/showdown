@@ -19,11 +19,9 @@ class Showdown.MarkdownView: WebKit.WebView {
             user_content_manager.add_style_sheet(user_stylesheet);
         }
         if (user_script != null) {
-            settings.enable_javascript = true;
             user_content_manager.add_script(user_script);
-        } else {
-            settings.enable_javascript = false;
         }
+        settings.enable_javascript = true;
     }
 
     internal static void load_user_assets() {
@@ -76,6 +74,17 @@ class Showdown.MarkdownView: WebKit.WebView {
                 }
             }
             decision.ignore();
+            return false;
+        }else if (type == PolicyDecisionType.NAVIGATION_ACTION) {
+            var d = decision as NavigationPolicyDecision;
+            var uri = d.get_navigation_action().get_request().get_uri();
+            var pos = uri.index_of_char('#');
+            if(pos != -1){
+                var anchor = uri.substring(pos+1);
+                var script = "document.getElementById(\"".concat(anchor,"\").scrollIntoView();"); //script from https://stackoverflow.com/a/13736194
+                run_javascript(script, null);
+            }
+            d.use();
             return false;
         }
         return true;
