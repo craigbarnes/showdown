@@ -1,4 +1,6 @@
-build/
-public/
-local.mk
-showdown
+/build/
+/public/
+/local.mk
+/showdown
+
+/.flatpak-builder/

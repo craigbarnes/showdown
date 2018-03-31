@@ -1,0 +1,68 @@
+{
+    "app-id": "io.gitlab.craigbarnes.Showdown",
+    "branch": "stable",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "3.28",
+    "sdk": "org.gnome.Sdk",
+    "command": "showdown",
+    "rename-icon": "showdown",
+
+    "finish-args": [
+        "--filesystem=host:ro",
+        "--share=ipc",
+        "--share=network",
+        "--socket=x11",
+        "--socket=wayland",
+        "--socket=session-bus",
+
+        "--filesystem=xdg-run/dconf",
+        "--filesystem=~/.config/dconf:ro",
+        "--talk-name=ca.desrt.dconf",
+        "--env=DCONF_USER_CONFIG_DIR=.config/dconf"
+    ],
+
+    "build-options": {
+        "cflags": "-O2 -g",
+        "env": {
+            "MAKEFLAGS": "-j$(mk/nproc.sh)",
+            "V": "1"
+        }
+    },
+
+    "modules": [
+        {
+            "name": "libmarkdown",
+            "buildsystem": "simple",
+            "sources": [{
+                "type": "archive",
+                "url": "https://github.com/Orc/discount/archive/v2.2.2.tar.gz",
+                "sha256": "94dabda30832b027e49eb26b4a0f36ae3a73247fc9bd066d7f83af8e50e29734"
+            }],
+            "build-commands": [
+                "./configure.sh --prefix=/app --shared --pkg-config",
+                "make",
+                "sed -e 's|/sbin/ldconfig|/sbin/ldconfig -n|' -i librarian.sh",
+                "make install",
+                "install -m644 libmarkdown.pc /app/lib/pkgconfig/libmarkdown.pc"
+            ],
+            "cleanup": [
+                "/bin",
+                "/include",
+                "/lib/pkgconfig"
+            ]
+        },
+        {
+            "name": "showdown",
+            "buildsystem": "simple",
+            "sources": [{
+                "type": "archive",
+                "url": "https://craigbarnes.gitlab.io/dist/showdown/showdown-0.6.tar.gz",
+                "sha256": "b183dfef6d6e0584753632186804a4989f6a3865da22079b21b1f93e251336df"
+            }],
+            "build-commands": [
+                "make",
+                "make install prefix=/app POSTINSTALL=:"
+            ]
+        }
+    ]
+}
