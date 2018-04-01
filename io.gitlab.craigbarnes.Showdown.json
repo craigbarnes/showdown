@@ -35,7 +35,7 @@
             "buildsystem": "simple",
             "sources": [{
                 "type": "archive",
-                "url": "https://github.com/Orc/discount/archive/v2.2.2.tar.gz",
+                "url": "https://github.com/Orc/discount/archive/v2.2.3a.tar.gz",
                 "sha256": "94dabda30832b027e49eb26b4a0f36ae3a73247fc9bd066d7f83af8e50e29734"
             }],
             "build-commands": [
