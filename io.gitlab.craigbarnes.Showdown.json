@@ -1,11 +1,12 @@
 {
     "app-id": "io.gitlab.craigbarnes.Showdown",
-    "branch": "stable",
+    "branch": "master",
     "runtime": "org.gnome.Platform",
     "runtime-version": "3.28",
     "sdk": "org.gnome.Sdk",
     "command": "showdown",
     "rename-icon": "showdown",
+    "rename-appdata-file": "io.gitlab.craigbarnes.Showdown.appdata.xml",
 
     "finish-args": [
         "--filesystem=host:ro",
@@ -55,13 +56,15 @@
             "name": "showdown",
             "buildsystem": "simple",
             "sources": [{
-                "type": "archive",
-                "url": "https://craigbarnes.gitlab.io/dist/showdown/showdown-0.6.tar.gz",
-                "sha256": "b183dfef6d6e0584753632186804a4989f6a3865da22079b21b1f93e251336df"
+                "type": "git",
+                "url": "git://github.com/craigbarnes/showdown.git",
+                "branch": "master"
             }],
             "build-commands": [
                 "make",
-                "make install prefix=/app POSTINSTALL=:"
+                "make install prefix=/app POSTINSTALL=:",
+                "install -d -m755 /app/share/metainfo",
+                "install -m644 share/io.gitlab.craigbarnes.Showdown.appdata.xml /app/share/metainfo"
             ]
         }
     ]
