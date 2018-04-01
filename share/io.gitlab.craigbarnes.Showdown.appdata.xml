@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <name>Showdown</name>
+  <summary>Simple Markdown viewer</summary>
+  <id>io.gitlab.craigbarnes.Showdown</id>
+  <project_license>GPL-3.0</project_license>
+  <metadata_license>CC0-1.0</metadata_license>
+  <developer_name>Craig Barnes</developer_name>
+  <description>
+    <p>
+      Showdown is a simple application for rendering and viewing
+      Markdown files.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>GitHub inspired default stylesheet</li>
+      <li>Table of contents navigation</li>
+      <li>Integrated search bar</li>
+      <li>Custom user stylesheets and scripts</li>
+    </ul>
+  </description>
+  <kudos>
+    <kudo>AppMenu</kudo>
+    <kudo>HiDpiIcon</kudo>
+    <kudo>ModernToolkit</kudo>
+  </kudos>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://craigbarnes.bitbucket.io/img/showdown.png</image>
+    </screenshot>
+  </screenshots>
+  <provides>
+    <binary>showdown</binary>
+  </provides>
+  <url type="homepage">https://github.com/craigbarnes/showdown</url>
+  <url type="bugtracker">https://github.com/craigbarnes/showdown/issues</url>
+</component>
