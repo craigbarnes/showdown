@@ -1,5 +1,3 @@
-stages: [build, dist]
-
 before_script:
     - git fetch --tags
     - export V=1 MAKEFLAGS="-j$(mk/nproc.sh)"
@@ -19,7 +17,7 @@ build:debian:
         - make install
 
 pages:
-    stage: dist
+    stage: build
     image: registry.gitlab.com/craigbarnes/dockerfiles/flatpak-debian
     artifacts: {paths: [public]}
     only: [master]
