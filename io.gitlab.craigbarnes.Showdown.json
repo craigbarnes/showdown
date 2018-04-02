@@ -62,9 +62,7 @@
             }],
             "build-commands": [
                 "make",
-                "make install prefix=/app POSTINSTALL=:",
-                "install -d -m755 /app/share/metainfo",
-                "install -m644 share/io.gitlab.craigbarnes.Showdown.appdata.xml /app/share/metainfo"
+                "make install prefix=/app POSTINSTALL=:"
             ]
         }
     ]

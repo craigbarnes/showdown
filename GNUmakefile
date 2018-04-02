@@ -10,6 +10,7 @@ prefix = /usr/local
 bindir = $(prefix)/bin
 datadir = $(prefix)/share
 appdir = $(datadir)/applications
+appdatadir = $(datadir)/metainfo
 icondir = $(datadir)/icons/hicolor
 appicondir = $(icondir)/scalable/apps
 
@@ -89,12 +90,16 @@ build/:
 	@mkdir -p $@
 
 install: all
-	$(INSTALL_DIR) '$(DESTDIR)$(bindir)' '$(DESTDIR)$(appicondir)'
+	$(INSTALL_DIR) '$(DESTDIR)$(bindir)'
+	$(INSTALL_DIR) '$(DESTDIR)$(appdir)'
+	$(INSTALL_DIR) '$(DESTDIR)$(appicondir)'
+	$(INSTALL_DIR) '$(DESTDIR)$(appdatadir)'
 	$(INSTALL) -m755 showdown '$(DESTDIR)$(bindir)/showdown'
 	$(INSTALL) -m644 res/showdown.svg '$(DESTDIR)$(appicondir)/$(APPICON).svg'
 	desktop-file-install --dir='$(DESTDIR)$(appdir)' \
 	  --set-key=Exec --set-value='$(bindir)/showdown %U' \
 	  --set-icon='$(APPICON)' share/$(APPID).desktop
+	$(INSTALL) -m644 share/$(APPID).appdata.xml '$(DESTDIR)$(appdatadir)'
 	$(if $(DESTDIR),, $(POSTINSTALL))
 
 install-home:
@@ -104,6 +109,7 @@ uninstall:
 	$(RM) '$(DESTDIR)$(bindir)/showdown'
 	$(RM) '$(DESTDIR)$(appicondir)/showdown.svg'
 	$(RM) '$(DESTDIR)$(appdir)/$(APPID).desktop'
+	$(RM) '$(DESTDIR)$(appdatadir)/$(APPID).appdata.xml'
 	$(if $(DESTDIR),, $(POSTINSTALL))
 
 clean:
@@ -112,6 +118,7 @@ clean:
 
 check:
 	desktop-file-validate share/$(APPID).desktop
+	appstream-util --nonet validate-relax share/$(APPID).appdata.xml
 
 
 .DEFAULT_GOAL = all
