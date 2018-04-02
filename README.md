@@ -27,15 +27,20 @@ The easiest way to install Showdown is via [Flatpak] (0.8+), using the command:
 Building
 --------
 
-To build Showdown from source, first install the following dependencies:
+To build Showdown from source, first install the following runtime
+dependencies:
 
-* [Vala]
-* [GNU Make] (3.81+)
 * [GTK] (3.20+)
 * [GLib] (2.48+)
 * [WebKit2GTK] (2.8.4+)
 * [Discount] (2.1.7+)
-* [xmllint] (*optional* -- used to shrink XML [resources], if available)
+
+...and the following build dependencies:
+
+* [Vala]
+* [GNU Make] (3.81+)
+* [desktop-file-utils] (`desktop-file-install`)
+* [libxml2] (`xmllint`)
 
 ...which are available via package manager on most Linux distros:
 
@@ -106,8 +111,8 @@ Public License version 3 for more details.
 [Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
 [WebKit2GTK]: https://webkitgtk.org/
 [Flatpak]: http://flatpak.org/
-[xmllint]: http://xmlsoft.org/xmllint.html
-[resources]: https://github.com/craigbarnes/showdown/blob/master/res/resources.xml
+[desktop-file-utils]: https://www.freedesktop.org/wiki/Software/desktop-file-utils/
+[libxml2]: http://www.xmlsoft.org/
 [`DESTDIR`]: https://www.gnu.org/prep/standards/html_node/DESTDIR.html
 [install path variables]: https://github.com/craigbarnes/showdown/blob/master/GNUmakefile#L8-L14
 [POSTINSTALL]: https://github.com/craigbarnes/showdown/blob/master/GNUmakefile#L19-L23
