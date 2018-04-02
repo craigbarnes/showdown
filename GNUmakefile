@@ -78,7 +78,7 @@ build/resources.c: res/resources.xml $(RESOURCES) | build/
 
 build/version.vala: src/version.vala.in build/version.txt | build/
 	$(E) GEN $@
-	$(Q) printf "$$(cat $<)" "$$(cat build/version.txt)" > $@
+	$(Q) printf "$$(cat $<)\n" "$$(cat build/version.txt)" > $@
 
 build/version.txt: FORCE | build/
 	@$(OPTCHECK) '$(VERSION)' $@

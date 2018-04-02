@@ -1,6 +1,7 @@
 stages: [build, dist]
 
 before_script:
+    - git fetch --tags
     - export V=1 MAKEFLAGS="-j$(mk/nproc.sh)"
 
 build:debian:
@@ -8,6 +9,7 @@ build:debian:
     image: registry.gitlab.com/craigbarnes/dockerfiles/vala-debian
     script:
         - make USE_LOCAL_DISCOUNT=1
+        - cat build/version.txt
         - du -h showdown
         - make install
         - apt-get update && apt-get -y install libmarkdown2-dev
