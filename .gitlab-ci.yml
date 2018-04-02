@@ -18,13 +18,10 @@ build:debian:
 
 pages:
     stage: dist
-    image: registry.gitlab.com/craigbarnes/dockerfiles/vala-debian
+    image: registry.gitlab.com/craigbarnes/dockerfiles/flatpak-debian
     artifacts: {paths: [public]}
     only: [master]
     script:
-        - flatpak -v remote-add gnome https://sdk.gnome.org/gnome.flatpakrepo
-        - flatpak -v install gnome org.gnome.Platform 3.28
-        - flatpak -v install gnome org.gnome.Sdk 3.28
         - echo "$GPG_PRIVATE_KEY" | gpg --import -
         - mkdir -p public/
         - flatpak-builder --gpg-sign=43705BA1 --repo=public/flatpak/
