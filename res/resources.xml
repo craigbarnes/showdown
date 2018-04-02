@@ -11,7 +11,7 @@
         <file preprocess="xml-stripblanks">help-overlay.ui</file>
         <file preprocess="xml-stripblanks">menus.ui</file>
     </gresource>
-    <gresource prefix="/io/gitlab/craigbarnes/Showdown/icons">
+    <gresource prefix="/io/gitlab/craigbarnes/Showdown/icons/scalable/apps">
         <file preprocess="xml-stripblanks">showdown.svg</file>
     </gresource>
 </gresources>
