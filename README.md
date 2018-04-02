@@ -39,8 +39,8 @@ dependencies:
 
 * [Vala]
 * [GNU Make] (3.81+)
-* [desktop-file-utils] (`desktop-file-install`)
-* [libxml2] (`xmllint`)
+* `desktop-file-install` (from [desktop-file-utils])
+* `xmllint` (from [libxml2])
 
 ...which are available via package manager on most Linux distros:
 
