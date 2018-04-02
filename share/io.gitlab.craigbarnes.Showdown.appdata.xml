@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component type="desktop">
+<component type="desktop-application">
   <name>Showdown</name>
   <summary>Simple Markdown viewer</summary>
   <id>io.gitlab.craigbarnes.Showdown</id>
@@ -11,27 +11,23 @@
       Showdown is a simple application for rendering and viewing
       Markdown files.
     </p>
-    <p>Features:</p>
-    <ul>
-      <li>GitHub inspired default stylesheet</li>
-      <li>Table of contents navigation</li>
-      <li>Integrated search bar</li>
-      <li>Custom user stylesheets and scripts</li>
-    </ul>
   </description>
-  <kudos>
-    <kudo>AppMenu</kudo>
-    <kudo>HiDpiIcon</kudo>
-    <kudo>ModernToolkit</kudo>
-  </kudos>
+  <launchable type="desktop-id">
+    io.gitlab.craigbarnes.Showdown.desktop
+  </launchable>
+  <provides>
+    <binary>showdown</binary>
+  </provides>
   <screenshots>
     <screenshot type="default">
       <image>https://craigbarnes.bitbucket.io/img/showdown.png</image>
     </screenshot>
   </screenshots>
-  <provides>
-    <binary>showdown</binary>
-  </provides>
+  <kudos>
+    <kudo>AppMenu</kudo>
+    <kudo>HiDpiIcon</kudo>
+    <kudo>ModernToolkit</kudo>
+  </kudos>
   <url type="homepage">https://github.com/craigbarnes/showdown</url>
   <url type="bugtracker">https://github.com/craigbarnes/showdown/issues</url>
 </component>
