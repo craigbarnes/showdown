@@ -84,7 +84,7 @@ class Showdown.Application: Gtk.Application {
             "program-name", "Showdown",
             "version", Config.VERSION,
             "comments", "Simple Markdown viewer",
-            "copyright", "Copyright 2015-2017 Craig Barnes",
+            "copyright", "Copyright 2015-2018 Craig Barnes",
             "logo-icon-name", "showdown",
             "license-type", Gtk.License.GPL_3_0,
             "website", "https://github.com/craigbarnes/showdown"
