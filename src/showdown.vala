@@ -1,5 +1,4 @@
 class Showdown.Application: Gtk.Application {
-    private static string? wflag = null;
     internal string document_template;
     internal string error_template;
     internal string default_stylesheet;
@@ -11,7 +10,8 @@ class Showdown.Application: Gtk.Application {
         {"quit", quit},
     };
 
-    public const OptionEntry[] options = {
+    static string? wflag = null;
+    const OptionEntry[] options = {
         {
             "open-in-current-window", 'w', 0,
             OptionArg.FILENAME, ref wflag,
@@ -96,7 +96,7 @@ class Showdown.Application: Gtk.Application {
         Process.exit(0);
     }
 
-    private string get_string_from_resource(string filename) {
+    static string get_string_from_resource(string filename) {
         Bytes bytes;
         try {
             bytes = resources_lookup_data("/io/gitlab/craigbarnes/Showdown/" + filename, 0);

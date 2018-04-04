@@ -93,7 +93,7 @@ class Showdown.Window: Gtk.ApplicationWindow {
         dialog.show();
     }
 
-    internal void reload() {
+    void reload() {
         if (filename == null) {
             return;
         }
