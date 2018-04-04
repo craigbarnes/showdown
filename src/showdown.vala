@@ -97,11 +97,13 @@ class Showdown.Application: Gtk.Application {
     }
 
     static string get_string_from_resource(string filename) {
+        const string resprefix = "/io/gitlab/craigbarnes/Showdown/";
+        const ResourceLookupFlags flags = ResourceLookupFlags.NONE;
         Bytes bytes;
         try {
-            bytes = resources_lookup_data("/io/gitlab/craigbarnes/Showdown/" + filename, 0);
+            bytes = resources_lookup_data(resprefix + filename, flags);
         } catch (Error e) {
-            error(e.message);
+            error("%s\n", e.message);
         }
         return (string)bytes.get_data();
     }
