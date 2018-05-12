@@ -14,18 +14,12 @@
         <property name="show_close_button">True</property>
         <property name="title" translatable="yes">Markdown Viewer</property>
         <child>
-          <object class="GtkToggleButton" id="search_button">
+          <object class="GtkButton" id="open_button">
             <property name="visible">True</property>
-            <property name="tooltip-text" translatable="yes">Search</property>
             <property name="can_focus">False</property>
-            <accelerator key="f" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
-            <child>
-              <object class="GtkImage">
-                <property name="visible">True</property>
-                <property name="icon_name">edit-find-symbolic</property>
-                <property name="icon_size">1</property>
-              </object>
-            </child>
+            <property name="label" translatable="yes">Open</property>
+            <property name="action_name">win.open</property>
+            <accelerator key="o" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
           </object>
           <packing>
             <property name="pack_type">start</property>
@@ -40,6 +34,24 @@
                 <property name="visible">True</property>
                 <property name="icon_size">1</property>
                 <property name="icon_name">open-menu-symbolic</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToggleButton" id="search_button">
+            <property name="visible">True</property>
+            <property name="tooltip-text" translatable="yes">Search</property>
+            <property name="can_focus">False</property>
+            <accelerator key="f" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon_name">edit-find-symbolic</property>
+                <property name="icon_size">1</property>
               </object>
             </child>
           </object>
