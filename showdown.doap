@@ -4,7 +4,7 @@
     <shortdesc xml:lang="en">Simple Markdown viewer</shortdesc>
     <programming-language>Vala</programming-language>
     <category rdf:resource="http://api.gnome.org/doap-extensions#apps"/>
-    <homepage rdf:resource="https://github.com/craigbarnes/showdown"/>
-    <download-page rdf:resource="https://github.com/craigbarnes/showdown/releases"/>
-    <bug-database rdf:resource="https://github.com/craigbarnes/showdown/issues"/>
+    <homepage rdf:resource="https://gitlab.com/craigbarnes/showdown"/>
+    <download-page rdf:resource="https://gitlab.com/craigbarnes/showdown/tags"/>
+    <bug-database rdf:resource="https://gitlab.com/craigbarnes/showdown/issues"/>
 </Project>

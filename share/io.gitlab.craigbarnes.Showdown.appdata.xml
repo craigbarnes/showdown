@@ -28,6 +28,6 @@
     <kudo>HiDpiIcon</kudo>
     <kudo>ModernToolkit</kudo>
   </kudos>
-  <url type="homepage">https://github.com/craigbarnes/showdown</url>
-  <url type="bugtracker">https://github.com/craigbarnes/showdown/issues</url>
+  <url type="homepage">https://gitlab.com/craigbarnes/showdown</url>
+  <url type="bugtracker">https://gitlab.com/craigbarnes/showdown/issues</url>
 </component>

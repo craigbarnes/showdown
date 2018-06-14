@@ -87,7 +87,7 @@ class Showdown.Application: Gtk.Application {
             "copyright", "Copyright 2015-2018 Craig Barnes",
             "logo-icon-name", "showdown",
             "license-type", Gtk.License.GPL_3_0,
-            "website", "https://github.com/craigbarnes/showdown"
+            "website", "https://gitlab.com/craigbarnes/showdown"
         );
     }
 

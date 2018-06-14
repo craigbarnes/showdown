@@ -6,7 +6,7 @@ Showdown is a simple [Markdown] viewer written in [Vala] and [GTK].
 Features
 --------
 
-* GitHub inspired default stylesheet.
+* Minimalist default stylesheet.
 * Table of contents navigation.
 * Integrated search bar
 * User styles (`~/.config/showdown/stylesheet.css`)
@@ -114,5 +114,5 @@ Public License version 3 for more details.
 [desktop-file-utils]: https://www.freedesktop.org/wiki/Software/desktop-file-utils/
 [libxml2]: http://www.xmlsoft.org/
 [`DESTDIR`]: https://www.gnu.org/prep/standards/html_node/DESTDIR.html
-[install path variables]: https://github.com/craigbarnes/showdown/blob/master/GNUmakefile#L9-L15
-[POSTINSTALL]: https://github.com/craigbarnes/showdown/blob/master/GNUmakefile#L21-L25
+[install path variables]: https://gitlab.com/craigbarnes/showdown/blob/master/GNUmakefile#L9-L15
+[POSTINSTALL]: https://gitlab.com/craigbarnes/showdown/blob/master/GNUmakefile#L21-L25
