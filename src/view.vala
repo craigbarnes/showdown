@@ -45,18 +45,13 @@ class Showdown.MarkdownView: WebKit.WebView {
         } catch (Error e) {}
     }
 
-    protected override bool context_menu (
-        ContextMenu context_menu,
-        Gdk.Event event,
-        HitTestResult hit_test_result
-    ) {
+    protected override
+    bool context_menu(ContextMenu m, Gdk.Event e, HitTestResult r) {
         return true; // Prevent context menu being shown
     }
 
-    protected override bool decide_policy (
-        PolicyDecision decision,
-        PolicyDecisionType type
-    ) {
+    protected override
+    bool decide_policy(PolicyDecision decision, PolicyDecisionType type) {
         if (type == PolicyDecisionType.RESPONSE) {
             var d = decision as ResponsePolicyDecision;
             var mt = d.response.mime_type;
