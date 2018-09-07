@@ -29,5 +29,5 @@ pages:
         - flatpak build-update-repo --gpg-sign=43705BA1 public/flatpak/
         - cp res/showdown.svg showdown.flatpakref public/
         - echo "$GPG_PUBLIC_KEY" | flatpak -v remote-add --gpg-import=- showdown public/flatpak/
-        - flatpak -v install showdown io.gitlab.craigbarnes.Showdown
+        - flatpak -y -v install showdown io.gitlab.craigbarnes.Showdown
         - flatpak info io.gitlab.craigbarnes.Showdown
