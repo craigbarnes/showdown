@@ -2,7 +2,6 @@ class Showdown.Application: Gtk.Application {
     internal string document_template;
     internal string error_template;
     internal string default_stylesheet;
-    internal string toc_stylesheet;
 
     const ActionEntry[] actions = {
         {"new_window", new_window},
@@ -33,7 +32,6 @@ class Showdown.Application: Gtk.Application {
         document_template = get_string_from_resource("template.html");
         error_template = get_string_from_resource("error.html");
         default_stylesheet = get_string_from_resource("main.css");
-        toc_stylesheet = get_string_from_resource("toc.css");
         unowned string config_dir = Environment.get_user_config_dir();
         var user_stylesheet_path = @"$config_dir/showdown/stylesheet.css";
         try {

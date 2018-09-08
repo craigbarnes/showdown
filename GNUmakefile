@@ -59,7 +59,7 @@ VALAFILES = \
 RESOURCES = $(addprefix res/, \
     window.ui menus.ui help-overlay.ui \
     template.html error.html \
-    main.css toc.css \
+    main.css \
     showdown.svg \
 )
 

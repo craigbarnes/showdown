@@ -5,7 +5,6 @@
         <file>template.html</file>
         <file>error.html</file>
         <file>main.css</file>
-        <file>toc.css</file>
     </gresource>
     <gresource prefix="/io/gitlab/craigbarnes/Showdown/gtk">
         <file preprocess="xml-stripblanks">help-overlay.ui</file>
