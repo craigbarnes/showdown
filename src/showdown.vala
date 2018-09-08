@@ -34,6 +34,13 @@ class Showdown.Application: Gtk.Application {
         error_template = get_string_from_resource("error.html");
         default_stylesheet = get_string_from_resource("main.css");
         toc_stylesheet = get_string_from_resource("toc.css");
+        unowned string config_dir = Environment.get_user_config_dir();
+        var user_stylesheet_path = @"$config_dir/showdown/stylesheet.css";
+        try {
+            string user_stylesheet;
+            FileUtils.get_contents(user_stylesheet_path, out user_stylesheet);
+            default_stylesheet += user_stylesheet;
+        } catch (Error e) {}
     }
 
     public override int command_line(ApplicationCommandLine cmdline) {
@@ -121,7 +128,7 @@ class Showdown.Application: Gtk.Application {
         set_accels_for_action("win.zoom_in", {"<Primary>plus", "<Primary>equal"});
         set_accels_for_action("win.zoom_out", {"<Primary>minus", "<Primary>dstroke"});
         set_accels_for_action("win.zoom_reset", {"<Primary>0"});
-        MarkdownView.load_user_assets();
+        MarkdownView.load_user_script();
     }
 
     public static int main(string[] args) {

@@ -110,15 +110,17 @@ class Showdown.Window: Gtk.ApplicationWindow {
         var body = md.render_html();
         var toc = md.render_html_toc();
         var stylesheet = app.default_stylesheet;
+        var body_class = "";
 
         if (toc == null) {
             toc = "";
         } else {
-            stylesheet += app.toc_stylesheet;
+            body_class = "toc";
         }
 
+        var template = app.document_template;
         var basename = file.get_basename();
-        var doc = app.document_template.printf(basename, stylesheet, toc, body);
+        var doc = template.printf(basename, stylesheet, body_class, toc, body);
         header.title = basename;
         header.subtitle = file.get_parent().get_path();
         mdview.load_html(doc, file.get_uri());

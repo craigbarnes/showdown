@@ -198,3 +198,37 @@ pre code {
 #toc {
     display: none;
 }
+
+body.toc #toc {
+    display: block;
+    margin-bottom: 25px;
+    padding-bottom: 30px;
+    border-bottom: 2px dashed #ccc;
+}
+
+body.toc #toc ul {
+    margin: 0 0 0 1.2em;
+    padding: 0.1em;
+}
+
+@media only screen and (min-width: 920px) {
+    body.toc {
+        max-width: calc(50em + 280px);
+    }
+    body.toc #toc {
+        float: left;
+        margin-right: 40px;
+        width: 220px;
+        border-bottom: none;
+    }
+
+    body.toc main {
+        float: left;
+        width: calc(100% - 280px);
+        max-width: 75em;
+    }
+
+    body.toc h1 {
+        margin-top: 0;
+    }
+}

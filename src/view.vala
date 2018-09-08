@@ -26,17 +26,10 @@ class Showdown.MarkdownView: WebKit.WebView {
         }
     }
 
-    internal static void load_user_assets() {
+    internal static void load_user_script() {
         const UserContentInjectedFrames FTOP = UserContentInjectedFrames.TOP_FRAME;
         unowned string config_dir = Environment.get_user_config_dir();
-        var user_stylesheet_path = @"$config_dir/showdown/stylesheet.css";
         var user_script_path = @"$config_dir/showdown/script.js";
-        try {
-            const UserStyleLevel USER = UserStyleLevel.USER;
-            string text;
-            FileUtils.get_contents(user_stylesheet_path, out text);
-            user_stylesheet = new UserStyleSheet(text, FTOP, USER, null, null);
-        } catch (Error e) {}
         try {
             const UserScriptInjectionTime START = UserScriptInjectionTime.START;
             string text;
