@@ -116,7 +116,7 @@ clean:
 	$(RM) -r build/
 	$(RM) showdown src/*.vala.c $(CLEANFILES)
 
-check:
+check: all
 	desktop-file-validate share/$(APPID).desktop
 	appstream-util --nonet validate-relax share/$(APPID).appdata.xml
 
