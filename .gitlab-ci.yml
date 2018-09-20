@@ -18,7 +18,7 @@ build:debian:
 
 pages:
     stage: build
-    image: registry.gitlab.com/craigbarnes/dockerfiles/flatpak-debian
+    image: registry.gitlab.com/craigbarnes/dockerfiles/flatpak
     artifacts: {paths: [public]}
     only: [master]
     script:
