@@ -32,9 +32,10 @@ class Showdown.MarkdownView: WebKit.WebView {
         var user_script_path = @"$config_dir/showdown/script.js";
         try {
             const UserScriptInjectionTime START = UserScriptInjectionTime.START;
+            const string whitelist[] = {"file://*"};
             string text;
             FileUtils.get_contents(user_script_path, out text);
-            user_script = new UserScript(text, FTOP, START, {"file://*"}, null);
+            user_script = new UserScript(text, FTOP, START, whitelist, null);
         } catch (Error e) {}
     }
 
