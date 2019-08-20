@@ -1,4 +1,4 @@
-DISCOUNT_SRCDIR = build/discount-2.2.3a
+DISCOUNT_SRCDIR = build/discount-2.2.6
 DISCOUNT_PKGNAME = libmarkdown
 PKGCONFIG ?= pkg-config --silence-errors 2>/dev/null
 
