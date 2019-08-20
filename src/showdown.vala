@@ -9,6 +9,17 @@ class Showdown.Application: Gtk.Application {
         {"quit", quit},
     };
 
+    const AccelEntry[] accels = {
+        {"app.new_window", "<Primary>N"},
+        {"app.quit", "<Primary>Q"},
+        {"win.reload", "<Primary>R", "F5"},
+        {"win.print", "<Primary>P"},
+        {"win.close", "<Primary>W"},
+        {"win.zoom_in", "<Primary>plus", "<Primary>equal"},
+        {"win.zoom_out", "<Primary>minus", "<Primary>dstroke"},
+        {"win.zoom_reset", "<Primary>0"},
+    };
+
     static string? wflag = null;
     const OptionEntry[] options = {
         {
@@ -118,14 +129,10 @@ class Showdown.Application: Gtk.Application {
         Environment.set_application_name("Showdown");
         Gtk.Window.set_default_icon_name("showdown");
         add_action_entries(actions, this);
-        set_accels_for_action("app.new_window", {"<Primary>N"});
-        set_accels_for_action("app.quit", {"<Primary>Q"});
-        set_accels_for_action("win.reload", {"<Primary>R", "F5"});
-        set_accels_for_action("win.print", {"<Primary>P"});
-        set_accels_for_action("win.close", {"<Primary>W"});
-        set_accels_for_action("win.zoom_in", {"<Primary>plus", "<Primary>equal"});
-        set_accels_for_action("win.zoom_out", {"<Primary>minus", "<Primary>dstroke"});
-        set_accels_for_action("win.zoom_reset", {"<Primary>0"});
+        foreach (var a in accels) {
+            string? accel_strings[3] = {a.accel1, a.accel2, null};
+            set_accels_for_action(a.action, accel_strings);
+        }
         MarkdownView.load_user_script();
     }
 
@@ -133,4 +140,10 @@ class Showdown.Application: Gtk.Application {
         var app = new Application();
         return app.run(args);
     }
+}
+
+struct Showdown.AccelEntry {
+    string action;
+    string accel1;
+    string? accel2;
 }
