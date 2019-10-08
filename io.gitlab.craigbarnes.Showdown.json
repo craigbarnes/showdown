@@ -41,7 +41,7 @@
             }],
             "build-commands": [
                 "./configure.sh --prefix=/app --shared --pkg-config",
-                "make",
+                "make -j1",
                 "sed -e 's|/sbin/ldconfig|/sbin/ldconfig -n|' -i librarian.sh",
                 "make install",
                 "install -m644 libmarkdown.pc /app/lib/pkgconfig/libmarkdown.pc"
