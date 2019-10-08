@@ -23,11 +23,12 @@ pages:
     only: [master]
     script:
         - echo "$GPG_PRIVATE_KEY" | gpg --import -
+        - echo "$GPG_PUBLIC_KEY" > pubkey.asc
         - mkdir -p public/
         - flatpak-builder --gpg-sign=43705BA1 --repo=public/flatpak/
           build/flatpak/ io.gitlab.craigbarnes.Showdown.json
         - flatpak build-update-repo --gpg-sign=43705BA1 public/flatpak/
         - cp res/showdown.svg showdown.flatpakref public/
-        - echo "$GPG_PUBLIC_KEY" | flatpak -v remote-add --gpg-import=- showdown public/flatpak/
+        - flatpak -v remote-add --gpg-import=pubkey.asc showdown public/flatpak/
         - flatpak -y -v install showdown io.gitlab.craigbarnes.Showdown
         - flatpak info io.gitlab.craigbarnes.Showdown
