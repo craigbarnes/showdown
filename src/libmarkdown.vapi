@@ -12,13 +12,13 @@ namespace Markdown {
 
         public unowned string render_html() {
             unowned string html;
-            int size = this.document(out html);
+            document(out html);
             return html;
         }
 
         public unowned string? render_html_toc() {
             unowned string? html = null;
-            int size = this.toc(out html);
+            toc(out html);
             return html;
         }
     }
