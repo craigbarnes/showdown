@@ -3,14 +3,17 @@ class Showdown.Window: Gtk.ApplicationWindow {
     string? filename = null;
     [GtkChild] Gtk.HeaderBar header;
     [GtkChild] Gtk.MenuButton menu_button;
+    [GtkChild] Gtk.SearchBar search_bar;
     [GtkChild] Gtk.Grid grid;
     MarkdownView mdview;
 
     const ActionEntry[] actions = {
         {"open", open},
+        {"close", close},
         {"reload", reload},
         {"print", print},
-        {"close", close},
+        {"toggle_searchbar", toggle_searchbar},
+        {"toggle_headerbar", toggle_headerbar},
         {"zoom_in", zoom_in},
         {"zoom_out", zoom_out},
         {"zoom_reset", zoom_reset},
@@ -41,6 +44,14 @@ class Showdown.Window: Gtk.ApplicationWindow {
     [GtkCallback]
     void search_entry_activate() {
         mdview.get_find_controller().search_next();
+    }
+
+    void toggle_searchbar() {
+        search_bar.search_mode_enabled = !search_bar.search_mode_enabled;
+    }
+
+    void toggle_headerbar() {
+        header.visible = !header.visible;
     }
 
     void zoom_in() {

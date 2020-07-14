@@ -41,6 +41,13 @@
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes">Close</property>
+                <property name="accelerator">&lt;Primary&gt;w</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
                 <property name="title" translatable="yes">Menu</property>
                 <property name="accelerator">F10</property>
                 <property name="visible">True</property>
@@ -48,8 +55,8 @@
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="title" translatable="yes">Close</property>
-                <property name="accelerator">&lt;Primary&gt;w</property>
+                <property name="title" translatable="yes">Toggle header bar</property>
+                <property name="accelerator">F12</property>
                 <property name="visible">True</property>
               </object>
             </child>

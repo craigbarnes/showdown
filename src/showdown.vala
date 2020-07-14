@@ -12,9 +12,12 @@ class Showdown.Application: Gtk.Application {
     const AccelEntry[] accels = {
         {"app.new_window", "<Primary>N"},
         {"app.quit", "<Primary>Q"},
+        {"win.open", "<Primary>O"},
+        {"win.close", "<Primary>W"},
         {"win.reload", "<Primary>R", "F5"},
         {"win.print", "<Primary>P"},
-        {"win.close", "<Primary>W"},
+        {"win.toggle_searchbar", "<Primary>F"},
+        {"win.toggle_headerbar", "F12"},
         {"win.zoom_in", "<Primary>plus", "<Primary>equal"},
         {"win.zoom_out", "<Primary>minus", "<Primary>dstroke"},
         {"win.zoom_reset", "<Primary>0"},

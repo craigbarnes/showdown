@@ -19,7 +19,6 @@
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Open</property>
             <property name="action_name">win.open</property>
-            <accelerator key="o" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
           </object>
           <packing>
             <property name="pack_type">start</property>
@@ -46,7 +45,6 @@
             <property name="visible">True</property>
             <property name="tooltip-text" translatable="yes">Search</property>
             <property name="can_focus">False</property>
-            <accelerator key="f" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
             <child>
               <object class="GtkImage">
                 <property name="visible">True</property>
