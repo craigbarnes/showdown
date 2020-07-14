@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.14 -->
-  <menu id="app-menu">
+  <menu id="header-menu">
     <section>
       <item>
         <attribute name="label" translatable="yes">_New Window</attribute>
         <attribute name="action">app.new_window</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Reload</attribute>
+        <attribute name="action">win.reload</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Print</attribute>
+        <attribute name="action">win.print</attribute>
       </item>
     </section>
     <section>
@@ -20,19 +28,6 @@
       <item>
         <attribute name="label" translatable="yes">_Quit</attribute>
         <attribute name="action">app.quit</attribute>
-      </item>
-    </section>
-  </menu>
-
-  <menu id="header-menu">
-    <section>
-      <item>
-        <attribute name="label" translatable="yes">_Reload</attribute>
-        <attribute name="action">win.reload</attribute>
-      </item>
-      <item>
-        <attribute name="label" translatable="yes">_Print</attribute>
-        <attribute name="action">win.print</attribute>
       </item>
     </section>
   </menu>
