@@ -110,9 +110,9 @@ Public License version 3 for more details.
 [GNU Make]: https://www.gnu.org/software/make/
 [Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
 [WebKit2GTK]: https://webkitgtk.org/
-[Flatpak]: http://flatpak.org/
+[Flatpak]: https://flatpak.org/
 [desktop-file-utils]: https://www.freedesktop.org/wiki/Software/desktop-file-utils/
 [libxml2]: http://www.xmlsoft.org/
 [`DESTDIR`]: https://www.gnu.org/prep/standards/html_node/DESTDIR.html
 [install path variables]: https://gitlab.com/craigbarnes/showdown/blob/master/GNUmakefile#L9-L15
-[POSTINSTALL]: https://gitlab.com/craigbarnes/showdown/blob/master/GNUmakefile#L21-L25
+[POSTINSTALL]: https://gitlab.com/craigbarnes/showdown/blob/master/GNUmakefile#L21-25
