@@ -28,6 +28,7 @@ class Showdown.Window: Gtk.ApplicationWindow {
     public Window(Gtk.Application application) {
         Object(application: application);
         add_action_entries(actions, this);
+        header.visible = app.default_headerbar_visibility;
         menu_button.menu_model = application.get_menu_by_id("header-menu");
         mdview = new Showdown.MarkdownView(this);
         grid.add(mdview);

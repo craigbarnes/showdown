@@ -2,6 +2,7 @@ class Showdown.Application: Gtk.Application {
     internal string document_template;
     internal string error_template;
     internal string default_stylesheet;
+    internal bool default_headerbar_visibility = true;
 
     const ActionEntry[] actions = {
         {"new_window", new_window},
@@ -24,11 +25,17 @@ class Showdown.Application: Gtk.Application {
     };
 
     static string? wflag = null;
+    static bool hide_headerbar = false;
     const OptionEntry[] options = {
         {
-            "open-in-current-window", 'w', 0,
+            "open-in-current-window", 'w', OptionFlags.NONE,
             OptionArg.FILENAME, ref wflag,
             "Open file in existing window", "FILE"
+        },
+        {
+            "hide-headerbar", 'B', OptionFlags.NONE,
+            OptionArg.NONE, ref hide_headerbar,
+            "Hide headerbar in all windows by default", null
         },
         {
             "version", 'V', OptionFlags.NO_ARG,
@@ -69,6 +76,9 @@ class Showdown.Application: Gtk.Application {
             stderr.printf("Failed to parse options: %s\n", e.message);
             Process.exit(1);
         }
+        if (hide_headerbar) {
+            default_headerbar_visibility = false;
+        }
         if (wflag != null) {
             var file = File.new_for_commandline_arg_and_cwd(wflag, cwd);
             unowned List<Gtk.Window> windows = get_windows();
@@ -82,8 +92,8 @@ class Showdown.Application: Gtk.Application {
             }
         } else {
             var window = new Window(this);
-            if (args.length >= 2) {
-                var file = File.new_for_commandline_arg_and_cwd(args[1], cwd);
+            if (argv.length >= 2) {
+                var file = File.new_for_commandline_arg_and_cwd(argv[1], cwd);
                 window.load_file(file.get_path());
             }
             add_window(window);
