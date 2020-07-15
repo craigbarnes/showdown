@@ -22,6 +22,7 @@ class Showdown.Application: Gtk.Application {
         {"win.zoom_in", "<Primary>plus", "<Primary>equal"},
         {"win.zoom_out", "<Primary>minus", "<Primary>dstroke"},
         {"win.zoom_reset", "<Primary>0"},
+        {"win.show-help-overlay", "F1"},
     };
 
     static string? wflag = null;
