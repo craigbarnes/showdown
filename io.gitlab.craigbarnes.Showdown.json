@@ -13,13 +13,9 @@
         "--share=ipc",
         "--share=network",
         "--socket=x11",
+        "--socket=fallback-x11",
         "--socket=wayland",
-        "--socket=session-bus",
-
-        "--filesystem=xdg-run/dconf",
-        "--filesystem=~/.config/dconf:ro",
-        "--talk-name=ca.desrt.dconf",
-        "--env=DCONF_USER_CONFIG_DIR=.config/dconf"
+        "--device=dri"
     ],
 
     "build-options": {

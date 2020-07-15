@@ -3,8 +3,9 @@ FLATPAK_PERMS = \
     --share=ipc \
     --share=network \
     --socket=x11 \
+    --socket=fallback-x11 \
     --socket=wayland \
-    --socket=session-bus
+    --device=dri
 
 flatpak: | public/flatpak/ public/showdown.flatpakref
 
