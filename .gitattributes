@@ -18,7 +18,7 @@ GNUmakefile make
 *.txt text
 *.desktop text
 
-.distinfo export-subst
+mk/version.sh export-subst
 .git* export-ignore
 mk/dev.mk export-ignore
 mk/flatpak.mk export-ignore
