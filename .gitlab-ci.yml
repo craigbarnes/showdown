@@ -1,6 +1,7 @@
-before_script:
-    - git fetch --tags
-    - export V=1 MAKEFLAGS="-j$(mk/nproc.sh)"
+default:
+    before_script:
+        - git fetch --tags
+        - export V=1 MAKEFLAGS="-j$(mk/nproc.sh)"
 
 build:debian:
     stage: build
