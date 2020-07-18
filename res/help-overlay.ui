@@ -2,6 +2,7 @@
 <interface>
   <!-- interface-requires gtk+ 3.20 -->
   <object class="GtkShortcutsWindow" id="help_overlay">
+    <accelerator key="F1" signal="close"/>
     <child>
       <object class="GtkShortcutsSection">
         <property name="max-height">8</property>
