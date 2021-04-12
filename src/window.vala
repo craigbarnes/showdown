@@ -1,10 +1,10 @@
 [GtkTemplate(ui = "/io/gitlab/craigbarnes/Showdown/window.ui")]
 class Showdown.Window: Gtk.ApplicationWindow {
     string? filename = null;
-    [GtkChild] Gtk.HeaderBar header;
-    [GtkChild] Gtk.MenuButton menu_button;
-    [GtkChild] Gtk.SearchBar search_bar;
-    [GtkChild] Gtk.Grid grid;
+    [GtkChild] unowned Gtk.HeaderBar header;
+    [GtkChild] unowned Gtk.MenuButton menu_button;
+    [GtkChild] unowned Gtk.SearchBar search_bar;
+    [GtkChild] unowned Gtk.Grid grid;
     MarkdownView mdview;
 
     const ActionEntry[] actions = {

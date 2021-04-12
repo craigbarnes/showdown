@@ -12,7 +12,6 @@ class Showdown.MarkdownView: WebKit.WebView {
         vexpand = true;
         hexpand = true;
         var settings = get_settings();
-        settings.enable_plugins = false;
         settings.enable_page_cache = false;
         web_context.set_cache_model(WebKit.CacheModel.DOCUMENT_VIEWER);
         if (user_stylesheet != null) {
