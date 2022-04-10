@@ -1,3 +1,17 @@
+Project Status
+==============
+
+**Unmaintained**
+
+I've lost all interest in working on GTK projects and probably
+won't be making any further updates to the showdown code.
+
+The [CADT] development model is stronger than ever in the GNOME
+ecosystem and I no longer find it worth the effort to fix the
+constant breakage it causes.
+
+- - -
+
 Showdown
 ========
 
@@ -95,6 +109,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
 Public License version 3 for more details.
 
 
+[CADT]: https://www.jwz.org/doc/cadt.html
 [General Public License version 3]: https://www.gnu.org/licenses/gpl-3.0.html
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
 [Vala]: https://wiki.gnome.org/Projects/Vala
